@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:41:55 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 14:22:56 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -114,6 +114,8 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:21:27
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:25:54 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:28:39 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:41:54 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:02:19 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:22:56 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -353,7 +355,7 @@ Text              ""  0  "Text String"  0
 
 ## SEQUENCE START
 #Program Start Sequence Start
-{Start of Program}         {MOM_set_seq_off rewind_stop_code start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET}  {$gPB(event,start_prog,name)}
+{Start of Program}         {MOM_set_seq_off PB_CMD__combine_rotary_init rewind_stop_code start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET}  {$gPB(event,start_prog,name)}
 #Program Start Sequence End
 
 #Operation Start Sequence Start
@@ -393,9 +395,9 @@ Text              ""  0  "Text String"  0
 #Control Functions End
 
 #Motions Start
-{Linear Move}              {PB_CMD_suppress_linear_block_plane_code linear_move}  {$gPB(event,linear,name)}
+{Linear Move}              {PB_CMD_suppress_linear_block_plane_code PB_CMD__combine_rotary_output linear_move}  {$gPB(event,linear,name)}
 {Circular Move}            {circular_move}  {$gPB(event,circular,name)}
-{Rapid Move}               {rapid_move rapid_traverse rapid_spindle}  {$gPB(event,rapid,name)}
+{Rapid Move}               {PB_CMD__combine_rotary_output rapid_move rapid_traverse rapid_spindle}  {$gPB(event,rapid,name)}
 #Motions End
 
 #Cycles Start
@@ -446,7 +448,7 @@ Text              ""  0  "Text String"  0
 
 ## EVENTS ELEMENT EXECUTION START
 {Start of Program} \
-        {4 NULL 0 {G_cutcom G_plane G_mode}}
+        {5 NULL 0 {G_cutcom G_plane G_mode}}
 {Spindle RPM} \
         {0 NULL 0 {S M_spindle}}
 {Return Move} \
@@ -983,9 +985,12 @@ Text              ""  0  "Text String"  0
       {"MOM_set_seq_off" "" "MOM Command"} \
       {"MOM_set_seq_on" "" "MOM Command"} \
       {"PB_CMD_FEEDRATE_NUMBER" "" "Custom Command"} \
-      {"PB_CMD_safety_check" "" "Custom Command"} \
+      {"PB_CMD_before_motion" "" "Custom Command"} \
       {"PB_CMD___log_revisions" "" "Custom Command"} \
       {"PB_CMD__choose_preferred_solution" "" "Custom Command"} \
+      {"PB_CMD__combine_rotary_check" "" "Custom Command"} \
+      {"PB_CMD__combine_rotary_init" "" "Custom Command"} \
+      {"PB_CMD__combine_rotary_output" "" "Custom Command"} \
       {"PB_CMD__config_post_options" "" "Custom Command"} \
       {"PB_CMD__log_revisions" "" "Custom Command"} \
       {"PB_CMD__manage_part_attributes" "" "Custom Command"} \
@@ -1028,6 +1033,7 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_revert_dual_head_kin_vars" "" "Custom Command"} \
       {"PB_CMD_revise_new_iks" "" "Custom Command"} \
       {"PB_CMD_run_postprocess" "" "Custom Command"} \
+      {"PB_CMD_safety_check" "" "Custom Command"} \
       {"PB_CMD_set_csys" "" "Custom Command"} \
       {"PB_CMD_set_cycle_plane" "" "Custom Command"} \
       {"PB_CMD_set_principal_axis" "" "Custom Command"} \
