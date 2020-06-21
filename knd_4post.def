@@ -8,13 +8,13 @@ FORMATTING
 {
   WORD_SEPARATOR " "
   END_OF_LINE ""
-  SEQUENCE sequence_number 1  1 1 9999
+  SEQUENCE sequence_number 1  1 1 999999
 
 ################ FORMAT DECLARATIONS #################
   FORMAT AbsCoord "&__5.3_"
   FORMAT Coordinate "&__5.3_"
   FORMAT Digit_2 "&_02_00"
-  FORMAT Digit_4 "&__4_00"
+  FORMAT Digit_4 "&__6_00"
   FORMAT Digit_5 "&__5_00"
   FORMAT Dwell_SECONDS "&__4_30"
   FORMAT EventNum "&+03_00"
@@ -375,7 +375,7 @@ FORMATTING
   {
       FORMAT      Digit_4
       FORCE       always
-      MAX         9999 Truncate
+      MAX         999999 Truncate
       LEADER      [$mom_sys_leader(N)]
       ZERO_FORMAT Zero_int
   }
@@ -708,6 +708,16 @@ FORMATTING
        Text[G53 G90 G0 Z0]
   }
 
+  BLOCK_TEMPLATE end_of_path_2
+  {
+       G_return[$mom_sys_cycle_ret_code($mom_cycle_retract_mode)]\opt
+       Text[G40]
+       Text[G54]
+       Text[G90]
+       Text[G00]
+       Text[G80]
+  }
+
   BLOCK_TEMPLATE end_of_program
   {
        M[$mom_sys_rewind_code]
@@ -970,16 +980,6 @@ FORMATTING
   BLOCK_TEMPLATE tool_preselect
   {
        T[$mom_next_tool_number]
-  }
-
-  BLOCK_TEMPLATE end_of_path_2
-  {
-       G_return[$mom_sys_cycle_ret_code($mom_cycle_retract_mode)]\opt
-       Text[G40]
-       Text[G54]
-       Text[G90]
-       Text[G00]
-       Text[G80]
   }
 
   BLOCK_TEMPLATE post_cycle_set

@@ -1,4 +1,4 @@
-## POSTBUILDER_VERSION=2008.0.3.0
+## POSTBUILDER_VERSION=2008.1.1.0
 ##############################################################################
 #                                                                            #
 #  This file is used by Post Builder to edit the parameters associated       #
@@ -8,8 +8,8 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2017Äê5ÔÂ19ÈÕ 19:03:41 中国标准时间
-#  with Post Builder version 10.0.0.
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:11:02 中国标准时间
+#  with Post Builder version 10.0.3.
 #============================================================================#
 
 
@@ -106,6 +106,7 @@ Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:57:34
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:58:06 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:59:18 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 19:03:41 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:11:02 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -115,14 +116,15 @@ Listfileflag_warn              OFF
 Listfileflag                   OFF
 Listfileflag_alt_unit_post_name knd_4post__IN.pui
 Listfileflag_group             OFF
-Listfileflag_verbose           0
+Listfileflag_verbose           OFF
 Listfileflag_tool              0
 Listfileflag_oper              0
 Listfileflag_lpt_ext           lpt
 Listfileflag_ncfile_ext        NC
 Listfileflag_usertcl_name      new_post_user.tcl
-Listfileflag_review            0
+Listfileflag_review            OFF
 Listfileflag_start_path        0
+Listfileflag_warn_opt          FILE
 Listfileflag_head              OFF
 Listfileflag_use_default_unit_fragment 1
 Listfileflag_end_path          0
@@ -130,7 +132,7 @@ Listfilelines                  40
 Listfileflag_oper_time         0
 Listfileflag_tool_chng         0
 Listfilecolumn                 30
-Listfileflag_usertcl_check     0
+Listfileflag_usertcl_check     OFF
 Listfileflag_setup_time        0
 Listfilename                   listfile.lpt
 ## LISTING FILE END
@@ -248,14 +250,15 @@ Listfilename                   listfile.lpt
 "$mom_sys_cycle_ret_code(AUTO)"           "$gPB(g_code,cycle_retract_auto,name)"
 "$mom_sys_cycle_ret_code(MANUAL)"         "$gPB(g_code,cycle_retract_manual,name)"
 "$mom_sys_reset_code"                     "$gPB(g_code,reset,name)"
-"$mom_sys_feed_rate_mode_code(IPM)"       "$gPB(g_code,fr_ipm,name)"
-"$mom_sys_feed_rate_mode_code(IPR)"       "$gPB(g_code,fr_ipr,name)"
-"$mom_sys_feed_rate_mode_code(FRN)"       "$gPB(g_code,fr_frn,name)"
 "$mom_sys_spindle_mode_code(SFM)"         "$gPB(g_code,spindle_css,name)"
 "$mom_sys_spindle_mode_code(RPM)"         "$gPB(g_code,spindle_rpm,name)"
 "$mom_sys_return_code"                    "$gPB(g_code,ret_home,name)"
+"$mom_sys_feed_rate_mode_code(FRN)"       "$gPB(g_code,fr_frn,name)"
 "$mom_sys_feed_rate_mode_code(MMPM)"      "$gPB(g_code,feedmode_mm,pm)"
 "$mom_sys_feed_rate_mode_code(MMPR)"      "$gPB(g_code,feedmode_mm,pr)"
+"$mom_sys_feed_rate_mode_code(DPM)"       "$gPB(g_code,feedmode,dpm)"
+"$mom_sys_feed_rate_mode_code(IPM)"       "$gPB(g_code,feedmode_in,pm)"
+"$mom_sys_feed_rate_mode_code(IPR)"       "$gPB(g_code,feedmode_in,pr)"
 ## GCODES END
 
 ## MCODES START
@@ -340,13 +343,6 @@ Text              ""  0  "Text String"  0
 }
 #Cycle Block Share Common Block End
 ## CYCLE EVENT END
-
-## BLOCK MODALITY START
-## BLOCK MODALITY END
-
-## COMPOSITE BLOCKS START
-{}
-## COMPOSITE BLOCKS END
 
 ## SEQUENCE START
 #Program Start Sequence Start
@@ -699,12 +695,12 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_adjust_cancel_code" "49" "Cancel Tool Len Adjust"}
 {G_feed} \
       {"$mom_sys_feed_rate_mode_code($feed_mode)" "\$mom_sys_feed_rate_mode_code(MMPM)" "Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(IPM)" "94" "IPM Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(IPR)" "95" "IPR Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(FRN)" "93" "FRN Feed Rate Mode"} \
       {"$mom_sys_feed_rate_mode_code(DPM)" "94" "DPM Feed Rate Mode"} \
       {"$mom_sys_feed_rate_mode_code(MMPM)" "94" "MMPM Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(MMPR)" "95" "MMPR Feed Rate Mode"}
+      {"$mom_sys_feed_rate_mode_code(MMPR)" "95" "MMPR Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(FRN)" "93" "FRN Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(IPM)" "94" "IPM Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(IPR)" "95" "IPR Feed Rate Mode"}
 {G_spin} \
       {"$mom_sys_spindle_mode_code($mom_spindle_status)" "\$mom_sys_spindle_mode_code(RPM)" "Spindle output Mode (RPM/SFM)"} \
       {"$mom_sys_spindle_mode_code(SFM)" "96" "Spindle output (CSS)"} \
@@ -944,7 +940,7 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_seqnum_start" "1" ""} \
       {"$mom_sys_seqnum_incr" "1" ""} \
       {"$mom_sys_seqnum_freq" "1" ""} \
-      {"$mom_sys_seqnum_max" "9999" ""} \
+      {"$mom_sys_seqnum_max" "999999" ""} \
       {"$mom_sys_lathe_x_double" "1" ""} \
       {"$mom_sys_lathe_i_double" "1" ""} \
       {"$mom_sys_lathe_y_double" "1" ""} \
@@ -983,13 +979,18 @@ Text              ""  0  "Text String"  0
       {"MOM_set_seq_on" "" "MOM Command"} \
       {"PB_CMD_FEEDRATE_NUMBER" "" "Custom Command"} \
       {"PB_CMD___log_revisions" "" "Custom Command"} \
+      {"PB_CMD__choose_preferred_solution" "" "Custom Command"} \
+      {"PB_CMD__config_post_options" "" "Custom Command"} \
       {"PB_CMD__log_revisions" "" "Custom Command"} \
       {"PB_CMD__manage_part_attributes" "" "Custom Command"} \
+      {"PB_CMD__validate_motion" "" "Custom Command"} \
       {"PB_CMD_abort_event" "" "Custom Command"} \
       {"PB_CMD_ask_machine_type" "" "Custom Command"} \
       {"PB_CMD_clamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_clamp_fourth_axis" "" "Custom Command"} \
       {"PB_CMD_custom_command" "" "Custom Command"} \
+      {"PB_CMD_custom_command_1" "" "Custom Command"} \
+      {"PB_CMD_custom_command_2" "" "Custom Command"} \
       {"PB_CMD_enable_ball_center_output" "" "Custom Command"} \
       {"PB_CMD_end_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_fifth_axis_rotate_move" "" "Custom Command"} \
@@ -1020,6 +1021,7 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_reverse_rotation_vector" "" "Custom Command"} \
       {"PB_CMD_revert_dual_head_kin_vars" "" "Custom Command"} \
       {"PB_CMD_revise_new_iks" "" "Custom Command"} \
+      {"PB_CMD_run_postprocess" "" "Custom Command"} \
       {"PB_CMD_set_csys" "" "Custom Command"} \
       {"PB_CMD_set_cycle_plane" "" "Custom Command"} \
       {"PB_CMD_set_principal_axis" "" "Custom Command"} \
@@ -1028,10 +1030,8 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_suppress_linear_block_plane_code" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
-      {"PB_CMD_custom_command_1" "" "Custom Command"} \
-      {"PB_CMD_custom_command_2" "" "Custom Command"}
-{Operator Message} \
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
+{Operator_Message} \
       {"" "" ""}
 {PB_Spindle} \
       {"" "" ""}
@@ -1044,60 +1044,6 @@ Text              ""  0  "Text String"  0
       {"$pb_rapid_1" "rapid_traverse" ""} \
       {"$pb_rapid_2" "rapid_spindle" ""}
 ## MOM SYS VARIABLES END
-
-## MOM SIM VARIABLES START
-    "$mom_sim_caxis_offset"                   "0.0"
-    "$mom_sim_control_equal_sign"             "="
-    "$mom_sim_control_var_leader"             "\#"
-    "$mom_sim_from_home"                      "29"
-    "$mom_sim_incr_linear_addrs"              ""
-    "$mom_sim_initial_motion"                 "RAPID"
-    "$mom_sim_input_mode"                     "ABS"
-    "$mom_sim_local_wcs"                      "52"
-    "$mom_sim_mach_cs"                        "53"
-    "$mom_sim_macro_modal"                    "ON"
-    "$mom_sim_mode_leader"                    "XYZ"
-    "$mom_sim_mt_axis(X)"                     "X"
-    "$mom_sim_mt_axis(Y)"                     "Y"
-    "$mom_sim_mt_axis(Z)"                     "Z"
-    "$mom_sim_num_machine_axes"               "4"
-    "$mom_sim_output_extended_nc"             "0"
-    "$mom_sim_output_vnc_msg"                 "0"
-    "$mom_sim_power_on_wcs"                   "1"
-    "$mom_sim_pre_com_list"                   ""
-    "$mom_sim_precod_list"                    ""
-    "$mom_sim_prog_rewind_stop_code"          "%"
-    "$mom_sim_rapid_dogleg"                   "0"
-    "$mom_sim_return_home"                    "30"
-    "$mom_sim_set_cutcom"                     "ON"
-    "$mom_sim_set_cycle"                      "ON"
-    "$mom_sim_set_f"                          "1"
-    "$mom_sim_set_s"                          "1"
-    "$mom_sim_set_scale"                      "ON"
-    "$mom_sim_spindle_comp"                   "SPINDLE"
-    "$mom_sim_spindle_direction"              "CLW"
-    "$mom_sim_spindle_jct"                    "TOOL_MOUNT_JCT"
-    "$mom_sim_spindle_mode"                   "REV_PER_MIN"
-    "$mom_sim_stroke_limit"                   "ON"
-    "$mom_sim_tl_adjust"                      "ON"
-    "$mom_sim_user_com_list"                  ""
-    "$mom_sim_vnc_msg_prefix"                 "VNC_MSG::"
-    "$mom_sim_wcs_0"                          "53"
-    "$mom_sim_wcs_1"                          "54"
-    "$mom_sim_wcs_2"                          "55"
-    "$mom_sim_wcs_3"                          "56"
-    "$mom_sim_wcs_4"                          "57"
-    "$mom_sim_wcs_5"                          "58"
-    "$mom_sim_wcs_6"                          "59"
-    "$mom_sim_wcs_rotate"                     "ON"
-    "$mom_sim_wcs_x"                          "0.0"
-    "$mom_sim_wcs_y"                          "0.0"
-    "$mom_sim_wcs_z"                          "0.0"
-    "$mom_sim_zcs_base"                       "X_SLIDE"
-## MOM SIM VARIABLES END
-
-## VNC COMMANDS START
-## VNC COMMANDS END
 
 ## FUNCTION INFO START
 ## FUNCTION INFO END
