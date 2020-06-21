@@ -706,7 +706,7 @@ FORMATTING
 
   BLOCK_TEMPLATE end_of_path_1
   {
-       Text[G53 G90 G0 Z0]
+       Text[G00 Z200]
   }
 
   BLOCK_TEMPLATE end_of_path_2
