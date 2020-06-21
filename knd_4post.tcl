@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:20:00 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:21:27 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -2566,6 +2566,12 @@ proc MOM_helix_move { } {
 
    if { [string compare "none" $mom_sys_helix_pitch_type] } {
       MOM_force once I J K
+
+   switch $mom_pos_arc_plane {
+      XY { MOM_suppress once K ; MOM_force once I J }
+      YZ { MOM_suppress once I ; MOM_force once J K }
+      ZX { MOM_suppress once J ; MOM_force once I K }
+   }
 
 #<08-01-06 gsl>
       switch $mom_sys_cir_vector {
