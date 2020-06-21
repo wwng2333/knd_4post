@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:25:54 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:28:39 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1503,6 +1503,10 @@ proc MOM_start_of_path { } {
    }
 
    PB_CMD_start_of_operation_force_addresses
+   global mom_operation_name
+   MOM_output_literal "($mom_operation_name)"
+   global mom_tool_name
+   MOM_output_literal "($mom_tool_name)"
 }
 
 

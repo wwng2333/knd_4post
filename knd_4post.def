@@ -997,6 +997,16 @@ FORMATTING
        M_coolant[$mom_sys_coolant_code(ON)]
   }
 
+  BLOCK_TEMPLATE comment_blk
+  {
+       " "
+  }
+
+  BLOCK_TEMPLATE comment_blk_1
+  {
+       " "
+  }
+
   BLOCK_TEMPLATE comment_data
   {
        LF_XABS[$mom_pos(0)]
