@@ -811,7 +811,7 @@ FORMATTING
 
   BLOCK_TEMPLATE rapid_spindle
   {
-       G_adjust[$mom_sys_adjust_code]
+       G_adjust[$mom_sys_adjust_code]\opt
        G_motion[$mom_sys_rapid_code]
        G_mode[$mom_sys_output_code($mom_output_mode)]\opt
        X[$mom_pos(0)]
@@ -822,7 +822,7 @@ FORMATTING
 
   BLOCK_TEMPLATE rapid_spindle_x 
   {
-       G_adjust[$mom_sys_adjust_code]
+       G_adjust[$mom_sys_adjust_code]\opt
        G_motion[$mom_sys_rapid_code]
        G_mode[$mom_sys_output_code($mom_output_mode)]\opt
        X[$mom_pos(0)]
@@ -831,7 +831,7 @@ FORMATTING
 
   BLOCK_TEMPLATE rapid_spindle_y 
   {
-       G_adjust[$mom_sys_adjust_code]
+       G_adjust[$mom_sys_adjust_code]\opt
        G_motion[$mom_sys_rapid_code]
        G_mode[$mom_sys_output_code($mom_output_mode)]\opt
        Y[$mom_pos(1)]
@@ -840,7 +840,7 @@ FORMATTING
 
   BLOCK_TEMPLATE rapid_spindle_z 
   {
-       G_adjust[$mom_sys_adjust_code]
+       G_adjust[$mom_sys_adjust_code]\opt
        G_motion[$mom_sys_rapid_code]
        G_mode[$mom_sys_output_code($mom_output_mode)]\opt
        Z[$mom_pos(2)]

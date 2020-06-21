@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:15:14 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:17:31 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1337,7 +1337,7 @@ proc MOM_rapid_move { } {
    set rapid_traverse_yz_blk {G_motion G_mode Y Z fourth_axis}
    set rapid_traverse_xz_blk {G_motion G_mode X Z fourth_axis}
    set rapid_traverse_mod {}
-   set rapid_spindle_mod {G_adjust}
+   set rapid_spindle_mod {}
 
    global mom_sys_control_out mom_sys_control_in
    set co "$mom_sys_control_out"
@@ -2158,14 +2158,7 @@ MOM_force once F
 #=============================================================
 proc PB_CMD_custom_command_1 { } {
 #=============================================================
-MOM_force once G43
-}
-
-
-#=============================================================
-proc PB_CMD_custom_command_2 { } {
-#=============================================================
-MOM_force once G43
+MOM_force once G_adjust
 }
 
 
