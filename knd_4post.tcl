@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:28:39 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:41:54 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1502,6 +1502,7 @@ proc MOM_start_of_path { } {
       PB_CMD_kin_start_of_path
    }
 
+   PB_CMD_safety_check
    PB_CMD_start_of_operation_force_addresses
    global mom_operation_name
    MOM_output_literal "($mom_operation_name)"
@@ -4006,6 +4007,25 @@ return
    MOM_run_postprocess "[file dirname $::mom_event_handler_file_name]/MORI_HORI_Sub.tcl"\
                        "[file dirname $::mom_event_handler_file_name]/MORI_HORI_Sub.def"\
                        "${::mom_output_file_directory}sub_program.out"
+}
+
+
+#=============================================================
+proc PB_CMD_safety_check { } {
+#=============================================================
+    global mom_spindle_speed
+    global mom_operation_name
+    global mom_tool_number
+
+    if { $mom_spindle_speed == 0 } {
+        set errmes "\n\n $mom_operation_name 的 转速 等于0 S=0 请检查\n\n"
+        MOM_abort "$errmes"
+    }
+
+    if { $mom_tool_number == 0 } {
+        set errmes "\n\n $mom_operation_name 的 刀具号 未设定 请检查\n\n"
+        MOM_abort "$errmes"
+    }
 }
 
 
