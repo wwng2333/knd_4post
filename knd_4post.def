@@ -14,8 +14,9 @@ FORMATTING
   FORMAT AbsCoord "&__5.3_"
   FORMAT Coordinate "&__5.3_"
   FORMAT Digit_2 "&_02_00"
-  FORMAT Digit_4 "&__6_00"
+  FORMAT Digit_4 "&__4_00"
   FORMAT Digit_5 "&__5_00"
+  FORMAT Digit_6 "&__6_00"
   FORMAT Dwell_SECONDS "&__4_30"
   FORMAT EventNum "&+03_00"
   FORMAT Feed "&__7.2_"
@@ -371,15 +372,6 @@ FORMATTING
       ZERO_FORMAT Zero_real
   }
 
-  ADDRESS N
-  {
-      FORMAT      Digit_4
-      FORCE       always
-      MAX         999999 Truncate
-      LEADER      [$mom_sys_leader(N)]
-      ZERO_FORMAT Zero_int
-  }
-
   ADDRESS user_add_1
   {
       FORMAT      AbsCoord
@@ -388,6 +380,15 @@ FORMATTING
       MIN         99999.999 Truncate
       LEADER      "rap3"
       ZERO_FORMAT Zero_real
+  }
+
+  ADDRESS N
+  {
+      FORMAT      Digit_6
+      FORCE       always
+      MAX         999999 Truncate
+      LEADER      [$mom_sys_leader(N)]
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS Text

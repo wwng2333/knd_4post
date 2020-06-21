@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:11:02 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 13:15:14 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -107,6 +107,7 @@ Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:58:06
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:59:18 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 19:03:41 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:11:02 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:15:14 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -316,8 +317,8 @@ M_range           "$mom_sys_spindle_range_code($mom_spindle_range)"  0  "Spindle
 M_coolant         "$mom_sys_coolant_code($mom_coolant_status)"  0  "Coolant M-Code"  0
 M                 "$mom_sys_optional_stop_code"  0  "Other M-Codes"  0
 user_add          "$mom_usd_add_var"  0  "新地址"  1
-N                 ""  0  "Sequence Number"  0
 user_add_1        "$mom_usd_add_var"  0  "新地址"  1
+N                 ""  0  "Sequence Number"  0
 Text              ""  0  "Text String"  0
 ## MASTER SEQUENCE END
 
@@ -842,10 +843,10 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_tool_change_code" "6" "Tool Change"}
 {user_add} \
       {"" "" ""}
-{N} \
-      {"$mom_seqnum" "" "Sequence Number"}
 {user_add_1} \
       {"" "" ""}
+{N} \
+      {"$mom_seqnum" "" "Sequence Number"}
 {Text} \
       {"" "" ""}
 {New_Address} \
