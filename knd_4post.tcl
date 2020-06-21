@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 14:22:56 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 19:33:22 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -2940,7 +2940,7 @@ set mom_sys_helix_pitch_type    "rise_radian"
 #  END_POINT --    This mode will assume the control can define an entire
 #                  helix in a single block.
 
-   set mom_kin_helical_arc_output_mode QUADRANT
+   set mom_kin_helical_arc_output_mode FULL_CIRCLE
 
    MOM_reload_kinematics
 
@@ -2974,7 +2974,7 @@ proc MOM_helix_move { } {
       default { set mom_sys_helix_pitch_type "none" }
    }
 
-   MOM_force once X Y Z
+#   MOM_force once X Y Z
 
    if { [string compare "none" $mom_sys_helix_pitch_type] } {
       MOM_force once I J K
