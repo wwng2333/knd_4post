@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 19:33:22 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -196,7 +196,7 @@ proc PB_CMD___log_revisions { } {
   set mom_sys_sim_cycle_drill_dwell             "0"
   set mom_sys_sim_cycle_drill_deep              "0"
   set mom_sys_sim_cycle_drill_break_chip        "0"
-  set mom_sys_sim_cycle_tap                     "0"
+  set mom_sys_sim_cycle_tap                     "1"
   set mom_sys_sim_cycle_bore                    "0"
   set mom_sys_sim_cycle_bore_drag               "0"
   set mom_sys_sim_cycle_bore_nodrag             "0"
@@ -1553,6 +1553,7 @@ proc MOM_tap_move { } {
 
 
    PB_CMD_custom_command
+   PB_CMD_custom_command_2
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -2575,6 +2576,18 @@ MOM_force once G_adjust
 
 
 #=============================================================
+proc PB_CMD_custom_command_2 { } {
+#=============================================================
+global mom_spindle_direction mom_sys_cycle_tap_code
+if { $mom_spindle_direction == "CLW" } {
+    set mom_sys_cycle_tap_code "84"
+} elseif { $mom_spindle_direction == "CCLW" } {
+    set mom_sys_cycle_tap_code "74"
+}
+}
+
+
+#=============================================================
 proc PB_CMD_enable_ball_center_output { } {
 #=============================================================
 # This command can be added to the Start-of-Program event marker
@@ -2978,6 +2991,7 @@ proc MOM_helix_move { } {
 
    if { [string compare "none" $mom_sys_helix_pitch_type] } {
       MOM_force once I J K
+
 
    switch $mom_pos_arc_plane {
       XY { MOM_suppress once K ; MOM_force once I J }

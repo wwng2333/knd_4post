@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Robin Lu @ 2020Äê6ÔÂ21ÈÕ 19:33:22 中国标准时间
+#  Created by Robin Lu @ 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -118,6 +118,10 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:02:19
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:22:56 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 19:28:12 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 19:33:22 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:14:37 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:16:24 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:17:39 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -412,7 +416,7 @@ Text              ""  0  "Text String"  0
 {Drill Csink}              {}  {$gPB(event,cycle,drill_csink,name)}
 {Drill Deep}               {cycle_drill_deep}  {$gPB(event,cycle,drill_deep,name)}
 {Drill Break Chip}         {cycle_drill_break_chip}  {$gPB(event,cycle,drill_brk_chip,name)}
-{Tap}                      {cycle_tap}  {$gPB(event,cycle,tap,name)}
+{Tap}                      {PB_CMD_custom_command PB_CMD_custom_command_2 cycle_tap}  {$gPB(event,cycle,tap,name)}
 {Bore}                     {cycle_bore}  {$gPB(event,cycle,bore,name)}
 {Bore Dwell}               {cycle_bore_dwell}  {$gPB(event,cycle,bore_dwell,name)}
 {Bore Drag}                {cycle_bore_drag}  {$gPB(event,cycle,bore_drag,name)}
@@ -928,7 +932,7 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_sim_cycle_drill_dwell" "0" ""} \
       {"$mom_sys_sim_cycle_drill_deep" "0" ""} \
       {"$mom_sys_sim_cycle_drill_break_chip" "0" ""} \
-      {"$mom_sys_sim_cycle_tap" "0" ""} \
+      {"$mom_sys_sim_cycle_tap" "1" ""} \
       {"$mom_sys_sim_cycle_bore" "0" ""} \
       {"$mom_sys_sim_cycle_bore_drag" "0" ""} \
       {"$mom_sys_sim_cycle_bore_nodrag" "0" ""} \
@@ -1044,7 +1048,8 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_suppress_linear_block_plane_code" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
+      {"PB_CMD_custom_command_2" "" "Custom Command"}
 {Operator_Message} \
       {"comment_blk" "$mom_operation_name" "Operator Message"} \
       {"comment_blk_1" "$mom_tool_name" "Operator Message"}
