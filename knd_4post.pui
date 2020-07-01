@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Robin Lu @ 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间
+#  Created by Robin Lu @ 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -122,6 +122,8 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:14:37
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:16:24 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:17:39 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:37:53 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -407,7 +409,7 @@ Text              ""  0  "Text String"  0
 #Motions End
 
 #Cycles Start
-{Cycle Parameters}         {PB_CMD_custom_command post_cycle_set}  {$gPB(event,cycle,com_param,name)}
+{Cycle Parameters}         {PB_CMD_force_once_F cycle_parameters post_cycle_set}  {$gPB(event,cycle,com_param,name)}
 {Cycle Off}                {cycle_off}  {$gPB(event,cycle,cycle_off,name)}
 {Cycle Plane Change}       {}  {$gPB(event,cycle,plane_chng,name)}
 {Drill}                    {cycle_drill}  {$gPB(event,cycle,drill,name)}
@@ -416,7 +418,7 @@ Text              ""  0  "Text String"  0
 {Drill Csink}              {}  {$gPB(event,cycle,drill_csink,name)}
 {Drill Deep}               {cycle_drill_deep}  {$gPB(event,cycle,drill_deep,name)}
 {Drill Break Chip}         {cycle_drill_break_chip}  {$gPB(event,cycle,drill_brk_chip,name)}
-{Tap}                      {PB_CMD_custom_command PB_CMD_custom_command_2 cycle_tap}  {$gPB(event,cycle,tap,name)}
+{Tap}                      {PB_CMD_force_once_F PB_CMD_tap_check_spindle_direction tap cycle_tap}  {$gPB(event,cycle,tap,name)}
 {Bore}                     {cycle_bore}  {$gPB(event,cycle,bore,name)}
 {Bore Dwell}               {cycle_bore_dwell}  {$gPB(event,cycle,bore_dwell,name)}
 {Bore Drag}                {cycle_bore_drag}  {$gPB(event,cycle,bore_drag,name)}
@@ -1005,8 +1007,9 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_before_motion" "" "Custom Command"} \
       {"PB_CMD_clamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_clamp_fourth_axis" "" "Custom Command"} \
-      {"PB_CMD_custom_command" "" "Custom Command"} \
+      {"PB_CMD_force_once_F" "" "Custom Command"} \
       {"PB_CMD_custom_command_1" "" "Custom Command"} \
+      {"PB_CMD_tap_check_spindle_direction" "" "Custom Command"} \
       {"PB_CMD_enable_ball_center_output" "" "Custom Command"} \
       {"PB_CMD_end_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_fifth_axis_rotate_move" "" "Custom Command"} \
@@ -1048,8 +1051,7 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_suppress_linear_block_plane_code" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
-      {"PB_CMD_custom_command_2" "" "Custom Command"}
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
 {Operator_Message} \
       {"comment_blk" "$mom_operation_name" "Operator Message"} \
       {"comment_blk_1" "$mom_tool_name" "Operator Message"}

@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间
+#  Created by Robin Lu @ 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -706,7 +706,8 @@ proc MOM_bore_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore
    set cycle_init_flag FALSE
 }
@@ -738,7 +739,8 @@ proc MOM_bore_back_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_back
    set cycle_init_flag FALSE
 }
@@ -770,7 +772,8 @@ proc MOM_bore_drag_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_drag
    set cycle_init_flag FALSE
 }
@@ -802,7 +805,8 @@ proc MOM_bore_dwell_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_dwell
    set cycle_init_flag FALSE
 }
@@ -834,7 +838,8 @@ proc MOM_bore_manual_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_manual
    set cycle_init_flag FALSE
 }
@@ -866,7 +871,8 @@ proc MOM_bore_manual_dwell_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_manual_dwell
    set cycle_init_flag FALSE
 }
@@ -898,7 +904,8 @@ proc MOM_bore_no_drag_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_bore_no_drag
    set cycle_init_flag FALSE
 }
@@ -1012,7 +1019,8 @@ proc MOM_drill_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_drill
    set cycle_init_flag FALSE
 }
@@ -1044,7 +1052,8 @@ proc MOM_drill_break_chip_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_drill_break_chip
    set cycle_init_flag FALSE
 }
@@ -1076,7 +1085,8 @@ proc MOM_drill_deep_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_drill_deep
    set cycle_init_flag FALSE
 }
@@ -1108,7 +1118,8 @@ proc MOM_drill_dwell_move { } {
    }
 
 
-   PB_CMD_custom_command
+   PB_CMD_force_once_F
+   MOM_do_template cycle_parameters
    MOM_do_template cycle_drill_dwell
    set cycle_init_flag FALSE
 }
@@ -1552,8 +1563,9 @@ proc MOM_tap_move { } {
    }
 
 
-   PB_CMD_custom_command
-   PB_CMD_custom_command_2
+   PB_CMD_force_once_F
+   PB_CMD_tap_check_spindle_direction
+   MOM_do_template tap
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -2562,28 +2574,9 @@ proc PB_CMD_clamp_fourth_axis { } {
 
 
 #=============================================================
-proc PB_CMD_custom_command { } {
-#=============================================================
-MOM_force once F
-}
-
-
-#=============================================================
 proc PB_CMD_custom_command_1 { } {
 #=============================================================
 MOM_force once G_adjust
-}
-
-
-#=============================================================
-proc PB_CMD_custom_command_2 { } {
-#=============================================================
-global mom_spindle_direction mom_sys_cycle_tap_code
-if { $mom_spindle_direction == "CLW" } {
-    set mom_sys_cycle_tap_code "84"
-} elseif { $mom_spindle_direction == "CCLW" } {
-    set mom_sys_cycle_tap_code "74"
-}
 }
 
 
@@ -2893,6 +2886,13 @@ return
 } ;# uplevel
 #***********
 
+}
+
+
+#=============================================================
+proc PB_CMD_force_once_F { } {
+#=============================================================
+MOM_force once F
 }
 
 
@@ -4692,6 +4692,18 @@ return
    if { ![string match $mom_user_prev_cutcom_status $mom_cutcom_status] } {
       set mom_user_prev_cutcom_status $mom_cutcom_status
    }
+}
+
+
+#=============================================================
+proc PB_CMD_tap_check_spindle_direction { } {
+#=============================================================
+global mom_spindle_direction mom_sys_cycle_tap_code
+if { $mom_spindle_direction == "CLW" } {
+    set mom_sys_cycle_tap_code "84"
+} elseif { $mom_spindle_direction == "CCLW" } {
+    set mom_sys_cycle_tap_code "74"
+}
 }
 
 

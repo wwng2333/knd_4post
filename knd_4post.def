@@ -520,7 +520,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
@@ -534,7 +533,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_orient[$mom_cycle_orient]\opt
        F[$feed]
@@ -549,7 +547,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
@@ -563,7 +560,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_dwell[$mom_cycle_delay]\opt
        F[$feed]
@@ -578,7 +574,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
@@ -592,7 +587,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_dwell[$mom_cycle_delay]\opt
        F[$feed]
@@ -607,7 +601,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_orient[$mom_cycle_orient]\opt
        F[$feed]
@@ -622,7 +615,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
@@ -636,7 +628,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_step[$mom_cycle_step1]
        F[$feed]
@@ -651,7 +642,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_step[$mom_cycle_step1]
        F[$feed]
@@ -666,7 +656,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        cycle_dwell[$mom_cycle_delay]\opt
        F[$feed]
@@ -678,6 +667,11 @@ FORMATTING
        G_motion[$mom_sys_cycle_off]
   }
 
+  BLOCK_TEMPLATE cycle_parameters
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
   BLOCK_TEMPLATE cycle_tap
   {
        G_plane[$mom_sys_cutcom_plane_code($mom_cutcom_plane)]\opt
@@ -686,7 +680,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
@@ -983,6 +976,11 @@ FORMATTING
        T[$mom_next_tool_number]
   }
 
+  BLOCK_TEMPLATE tap
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
   BLOCK_TEMPLATE post_cycle_set
   {
        G_plane[$mom_sys_cutcom_plane_code($mom_cutcom_plane)]\opt
@@ -991,7 +989,6 @@ FORMATTING
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
-       fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
