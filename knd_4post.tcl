@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1246,7 +1246,7 @@ proc MOM_initial_move { } {
 proc MOM_length_compensation { } {
 #=============================================================
    TOOL_SET MOM_length_compensation
-   PB_CMD_custom_command_1
+   PB_CMD_once_G_adjust
    MOM_do_template tool_length_adjust
 }
 
@@ -1566,6 +1566,8 @@ proc MOM_tap_move { } {
    PB_CMD_force_once_F
    PB_CMD_tap_check_spindle_direction
    MOM_do_template tap
+   MOM_force Once S
+   MOM_do_template tap_1
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -2574,13 +2576,6 @@ proc PB_CMD_clamp_fourth_axis { } {
 
 
 #=============================================================
-proc PB_CMD_custom_command_1 { } {
-#=============================================================
-MOM_force once G_adjust
-}
-
-
-#=============================================================
 proc PB_CMD_enable_ball_center_output { } {
 #=============================================================
 # This command can be added to the Start-of-Program event marker
@@ -2893,6 +2888,13 @@ return
 proc PB_CMD_force_once_F { } {
 #=============================================================
 MOM_force once F
+}
+
+
+#=============================================================
+proc PB_CMD_force_once_S { } {
+#=============================================================
+MOM_force once S
 }
 
 
@@ -4150,6 +4152,13 @@ proc PB_CMD_negate_R_value { } {
 
 
 #=============================================================
+proc PB_CMD_once_G_adjust { } {
+#=============================================================
+MOM_force once G_adjust
+}
+
+
+#=============================================================
 proc PB_CMD_pause { } {
 #=============================================================
 # This command enables you to pause the UG/Post processing.
@@ -4698,12 +4707,26 @@ return
 #=============================================================
 proc PB_CMD_tap_check_spindle_direction { } {
 #=============================================================
-global mom_spindle_direction mom_sys_cycle_tap_code
-if { $mom_spindle_direction == "CLW" } {
-    set mom_sys_cycle_tap_code "84"
-} elseif { $mom_spindle_direction == "CCLW" } {
-    set mom_sys_cycle_tap_code "74"
-}
+# Determine the tapping G code according to thread direction for rigid tap.
+#
+# 06-25-2013 levi - Initial version
+# 08-07-2015 gsl  - "TRUE" was mistaken as TRUE (no quotes).
+
+  global mom_spindle_direction
+  global mom_cycle_thread_right_handed
+
+# Get the thread direction by feature first, if doesn't exist, get it from spindle rotation direction.
+  if { [info exists mom_cycle_thread_right_handed] } {
+     if { $mom_cycle_thread_right_handed == "TRUE" } {
+        set mom_sys_cycle_tap_code "84"
+     } else {
+        set mom_sys_cycle_tap_code "74"
+     }
+  } elseif { $mom_spindle_direction == "CLW" } {
+     set mom_sys_cycle_tap_code "84"
+  } elseif { $mom_spindle_direction == "CCLW" } {
+     set mom_sys_cycle_tap_code "74"
+  }
 }
 
 

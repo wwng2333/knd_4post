@@ -681,6 +681,7 @@ FORMATTING
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
+       cycle_dwell[$mom_cycle_delay]\opt
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
   }
@@ -942,6 +943,11 @@ FORMATTING
        M[$mom_sys_program_stop_code]
   }
 
+  BLOCK_TEMPLATE tap
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
   BLOCK_TEMPLATE tool_change
   {
        G_adjust[$mom_sys_adjust_code]
@@ -976,9 +982,10 @@ FORMATTING
        T[$mom_next_tool_number]
   }
 
-  BLOCK_TEMPLATE tap
+  BLOCK_TEMPLATE tap_1
   {
-       fourth_axis[$mom_out_angle_pos(0)]
+       Text[M29]
+       S[$mom_spindle_speed]
   }
 
   BLOCK_TEMPLATE post_cycle_set

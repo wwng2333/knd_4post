@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Robin Lu @ 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -124,6 +124,9 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:17:39
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:37:53 中国标准时间 by Robin Lu.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:18:56 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:19:55 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间 by Administrator.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -383,7 +386,7 @@ Text              ""  0  "Text String"  0
 ##Tool Path Start
 #Control Functions Start
 {Tool Change}              {}  {$gPB(event,tool_change,name)} {}
-{Length Compensation}      {PB_CMD_custom_command_1 tool_length_adjust}  {$gPB(event,length_compn,name)} {length_compensation}
+{Length Compensation}      {PB_CMD_once_G_adjust tool_length_adjust}  {$gPB(event,length_compn,name)} {length_compensation}
 {Set Modes}                {}  {$gPB(event,set_modes,name)} {set_modes}
 {Spindle RPM}              {spindle_rpm}  {$gPB(event,spindle_rpm,name)} {spindle}
 {Spindle Off}              {spindle_off}  {$gPB(event,spindle_off,name)} {spindle_off}
@@ -418,7 +421,7 @@ Text              ""  0  "Text String"  0
 {Drill Csink}              {}  {$gPB(event,cycle,drill_csink,name)}
 {Drill Deep}               {cycle_drill_deep}  {$gPB(event,cycle,drill_deep,name)}
 {Drill Break Chip}         {cycle_drill_break_chip}  {$gPB(event,cycle,drill_brk_chip,name)}
-{Tap}                      {PB_CMD_force_once_F PB_CMD_tap_check_spindle_direction tap cycle_tap}  {$gPB(event,cycle,tap,name)}
+{Tap}                      {PB_CMD_force_once_F PB_CMD_tap_check_spindle_direction tap tap_1 cycle_tap}  {$gPB(event,cycle,tap,name)}
 {Bore}                     {cycle_bore}  {$gPB(event,cycle,bore,name)}
 {Bore Dwell}               {cycle_bore_dwell}  {$gPB(event,cycle,bore_dwell,name)}
 {Bore Drag}                {cycle_bore_drag}  {$gPB(event,cycle,bore_drag,name)}
@@ -459,6 +462,8 @@ Text              ""  0  "Text String"  0
         {5 NULL 0 {G_cutcom G_plane G_mode}}
 {Spindle RPM} \
         {0 NULL 0 {S M_spindle}}
+{Tap} \
+        {3 NULL 0 {S}}
 {Return Move} \
         {0 NULL 0 {G_cutcom G_plane G_mode}}
 ## EVENTS ELEMENT EXECUTION END
@@ -1007,13 +1012,13 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_before_motion" "" "Custom Command"} \
       {"PB_CMD_clamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_clamp_fourth_axis" "" "Custom Command"} \
-      {"PB_CMD_force_once_F" "" "Custom Command"} \
-      {"PB_CMD_custom_command_1" "" "Custom Command"} \
-      {"PB_CMD_tap_check_spindle_direction" "" "Custom Command"} \
+      {"PB_CMD_once_G_adjust" "" "Custom Command"} \
       {"PB_CMD_enable_ball_center_output" "" "Custom Command"} \
       {"PB_CMD_end_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_fifth_axis_rotate_move" "" "Custom Command"} \
       {"PB_CMD_fix_RAPID_SET" "" "Custom Command"} \
+      {"PB_CMD_force_once_F" "" "Custom Command"} \
+      {"PB_CMD_force_once_S" "" "Custom Command"} \
       {"PB_CMD_fourth_axis_rotate_move" "" "Custom Command"} \
       {"PB_CMD_init_helix" "" "Custom Command"} \
       {"PB_CMD_init_rotary" "" "Custom Command"} \
@@ -1049,6 +1054,7 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_start_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_start_of_operation_force_addresses" "" "Custom Command"} \
       {"PB_CMD_suppress_linear_block_plane_code" "" "Custom Command"} \
+      {"PB_CMD_tap_check_spindle_direction" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
