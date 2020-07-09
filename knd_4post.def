@@ -45,7 +45,7 @@ FORMATTING
       LEADER      "G"
   }
 
-  ADDRESS M29
+  ADDRESS M291
   {
       FORMAT      String
       FORCE       off
@@ -676,6 +676,7 @@ FORMATTING
 
   BLOCK_TEMPLATE cycle_parameters
   {
+       G_motion[$mom_sys_rapid_code]\opt
        fourth_axis[$mom_out_angle_pos(0)]
   }
 
@@ -695,6 +696,7 @@ FORMATTING
 
   BLOCK_TEMPLATE cycle_tap_1
   {
+       G_motion[$mom_sys_rapid_code]\opt
        fourth_axis[$mom_out_angle_pos(0)]
   }
 
@@ -957,7 +959,7 @@ FORMATTING
 
   BLOCK_TEMPLATE sync_tap_invoke
   {
-       M29[29]
+       M291[29]
        S[$mom_spindle_speed]
   }
 

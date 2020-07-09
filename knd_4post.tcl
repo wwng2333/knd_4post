@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 17:57:07 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 19:43:11 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -4213,17 +4213,8 @@ proc PB_CMD_negate_R_value { } {
 #=============================================================
 proc PB_CMD_output_M29_to_active_rigid_tap { } {
 #=============================================================
-# For rigid tapping, need to output "M29 S" before the first cycle to active the rigid mode.
-#
-# 2014-03-17 levi - Initial version.
-
-  global dpp_ge
-  global mom_spindle_speed
-
-#  if { $dpp_ge(cycle_hole_counter) == 1 } {
-        MOM_force once M29 S
-        MOM_do_template sync_tap_invoke
-#  }
+#MOM_force once M29 S
+MOM_do_template sync_tap_invoke
 }
 
 
@@ -4776,11 +4767,27 @@ return
 #=============================================================
 proc PB_CMD_tap_check_spindle_direction { } {
 #=============================================================
-global mom_spindle_direction mom_sys_cycle_tap_code
-if { $mom_spindle_direction == "CLW" } {
-    set mom_sys_cycle_tap_code "84"
-} elseif { $mom_spindle_direction == "CCLW" } {
-    set mom_sys_cycle_tap_code "74"
+# Determine the tapping G code according to thread direction for rigid tap.
+#
+# 06-25-2013 levi - Initial version
+# 08-07-2015 gsl  - "TRUE" was mistaken as TRUE (no quotes).
+
+  global mom_spindle_direction
+  global mom_sys_cycle_tap_code
+  global mom_cycle_thread_right_handed
+
+# Get the thread direction by feature first, if doesn't exist, get it from spindle rotation direction.
+  if { [info exists mom_cycle_thread_right_handed] } {
+     if { $mom_cycle_thread_right_handed == "TRUE" } {
+        set mom_sys_cycle_tap_code "84"
+     } else {
+        set mom_sys_cycle_tap_code "74"
+     }
+  } elseif { $mom_spindle_direction == "CLW" } {
+     set mom_sys_cycle_tap_code "84"
+  } elseif { $mom_spindle_direction == "CCLW" } {
+     set mom_sys_cycle_tap_code "74"
+  }
 }
 }
 
