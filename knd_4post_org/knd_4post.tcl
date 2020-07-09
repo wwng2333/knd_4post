@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 17:57:07 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 17:51:20 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -4220,10 +4220,10 @@ proc PB_CMD_output_M29_to_active_rigid_tap { } {
   global dpp_ge
   global mom_spindle_speed
 
-#  if { $dpp_ge(cycle_hole_counter) == 1 } {
-        MOM_force once M29 S
+  if { $dpp_ge(cycle_hole_counter) == 1 } {
+        #MOM_force once M29 S
         MOM_do_template sync_tap_invoke
-#  }
+  }
 }
 
 
