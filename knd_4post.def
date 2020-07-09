@@ -685,6 +685,11 @@ FORMATTING
        M_coolant[$mom_sys_coolant_code(ON)]
   }
 
+  BLOCK_TEMPLATE cycle_tap_1
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
   BLOCK_TEMPLATE delay
   {
        G[$mom_sys_delay_code($mom_delay_mode)]
@@ -942,6 +947,11 @@ FORMATTING
        M[$mom_sys_program_stop_code]
   }
 
+  BLOCK_TEMPLATE tap
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
   BLOCK_TEMPLATE tool_change
   {
        G_adjust[$mom_sys_adjust_code]
@@ -974,11 +984,6 @@ FORMATTING
   BLOCK_TEMPLATE tool_preselect
   {
        T[$mom_next_tool_number]
-  }
-
-  BLOCK_TEMPLATE tap
-  {
-       fourth_axis[$mom_out_angle_pos(0)]
   }
 
   BLOCK_TEMPLATE post_cycle_set

@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 17:18:51 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1564,8 +1564,9 @@ proc MOM_tap_move { } {
 
 
    PB_CMD_force_once_F
+   PB_CMD_cal_feedrate_by_pitch_and_ss
    PB_CMD_tap_check_spindle_direction
-   MOM_do_template tap
+   MOM_do_template cycle_tap_1
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -1748,6 +1749,13 @@ proc PB_CMD_FEEDRATE_NUMBER { } {
    }
 
 return $f
+}
+
+
+#=============================================================
+proc PB_CMD__check_block_check_retract_setting { } {
+#=============================================================
+return 0
 }
 
 
@@ -2542,6 +2550,58 @@ return $mom_kin_machine_type
 proc PB_CMD_before_motion { } {
 #=============================================================
 PB_CMD__combine_rotary_check
+}
+
+
+#=============================================================
+proc PB_CMD_cal_feedrate_by_pitch_and_ss { } {
+#=============================================================
+# Calculate feedrate by thread pitch and spindle speed.
+#
+# 2014-03-20 levi - Initial version.
+# 2015-08-21 szl  - Enhance the warning message when users set wrong pitch and wrong spindle speed,fix PR7463004.
+
+  global mom_cycle_thread_pitch
+  global mom_tool_pitch
+  global mom_spindle_speed
+  global feed
+  global feed_mode
+  global mom_operation_name
+  global mom_cycle_feed_rate_mode
+  global mom_cycle_feed_rate
+  global mom_tool_name
+  global mom_feed_cut_unit
+  global mom_spindle_rpm
+
+# Calculate the pitch, get it from model first, if can't get from model, use the pitch of tool.
+  if { [info exists mom_tool_pitch]} {
+     if {[info exists mom_cycle_thread_pitch]} {
+        set pitch $mom_cycle_thread_pitch
+     } else {
+        set pitch $mom_tool_pitch
+     }
+  } else {
+     MOM_display_message "$mom_operation_name: No pitch defined on the tool. Please use Tap tool.\
+                          \n Post Processing will be aborted." "Postprocessor error message" "E"
+     MOM_abort "*** User Abort Post Processing *** "
+  }
+
+
+
+# Calculate the F parameter of cycle, if the feedrate mode is MMPR or IPR, use pitch as feedrate,
+# if the feedrate mode is MMPM or IPM, calculate it by $pitch*$mom_spindle_speed. Don't use the feedrate
+# value set in NX directly.
+  if {![info exists mom_spindle_speed] || [EQ_is_zero $mom_spindle_speed]} {
+      MOM_display_message "$mom_operation_name : spindle speed is 0.\
+                           \n Post Processing will be aborted." "Postprocessor error message" "E"
+      MOM_abort "*** User Abort Post Processing *** "
+  }
+
+  if {[string match "*PR" $feed_mode]} {
+     set feed $pitch
+  } else {
+     set feed [expr $pitch*$mom_spindle_rpm]
+  }
 }
 
 
