@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:51:39 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -127,6 +127,7 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:41:45 
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:18:56 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:19:55 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:51:39 中国标准时间 by Administrator.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -1012,7 +1013,6 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_before_motion" "" "Custom Command"} \
       {"PB_CMD_clamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_clamp_fourth_axis" "" "Custom Command"} \
-      {"PB_CMD_once_G_adjust" "" "Custom Command"} \
       {"PB_CMD_enable_ball_center_output" "" "Custom Command"} \
       {"PB_CMD_end_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_fifth_axis_rotate_move" "" "Custom Command"} \
@@ -1038,6 +1038,7 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_kin_start_of_program" "" "Custom Command"} \
       {"PB_CMD_linear_move" "" "Custom Command"} \
       {"PB_CMD_negate_R_value" "" "Custom Command"} \
+      {"PB_CMD_once_G_adjust" "" "Custom Command"} \
       {"PB_CMD_pause" "" "Custom Command"} \
       {"PB_CMD_reload_iks_parameters" "" "Custom Command"} \
       {"PB_CMD_reposition_move" "" "Custom Command"} \

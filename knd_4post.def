@@ -948,6 +948,12 @@ FORMATTING
        fourth_axis[$mom_out_angle_pos(0)]
   }
 
+  BLOCK_TEMPLATE tap_1
+  {
+       Text[M29]
+       S[$mom_spindle_speed]
+  }
+
   BLOCK_TEMPLATE tool_change
   {
        G_adjust[$mom_sys_adjust_code]
@@ -980,12 +986,6 @@ FORMATTING
   BLOCK_TEMPLATE tool_preselect
   {
        T[$mom_next_tool_number]
-  }
-
-  BLOCK_TEMPLATE tap_1
-  {
-       Text[M29]
-       S[$mom_spindle_speed]
   }
 
   BLOCK_TEMPLATE post_cycle_set

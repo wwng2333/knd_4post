@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ9ÈÕ 23:51:39 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -4714,6 +4714,7 @@ proc PB_CMD_tap_check_spindle_direction { } {
 
   global mom_spindle_direction
   global mom_cycle_thread_right_handed
+  global mom_sys_cycle_tap_code
 
 # Get the thread direction by feature first, if doesn't exist, get it from spindle rotation direction.
   if { [info exists mom_cycle_thread_right_handed] } {
