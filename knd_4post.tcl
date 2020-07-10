@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ10ÈÕ 14:06:40 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ10ÈÕ 14:38:24 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -964,6 +964,7 @@ proc MOM_cutcom_on { } {
          CATCH_WARNING "CUTCOM register $mom_cutcom_adjust_register must be within the range between 1 and 99"
       }
    }
+   PB_CMD_force_once_D
 }
 
 
@@ -1566,9 +1567,9 @@ proc MOM_tap_move { } {
    PB_CMD_force_once_F
    PB_CMD_cal_feedrate_by_pitch_and_ss
    PB_CMD_tap_check_spindle_direction
-   MOM_do_template tap
+   MOM_do_template cycle_tap_1
    MOM_force Once S
-   MOM_do_template tap_1
+   MOM_do_template cycle_tap_2
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -2934,6 +2935,13 @@ return
 } ;# uplevel
 #***********
 
+}
+
+
+#=============================================================
+proc PB_CMD_force_once_D { } {
+#=============================================================
+MOM_force once D
 }
 
 

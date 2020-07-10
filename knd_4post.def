@@ -686,6 +686,17 @@ FORMATTING
        M_coolant[$mom_sys_coolant_code(ON)]
   }
 
+  BLOCK_TEMPLATE cycle_tap_1
+  {
+       fourth_axis[$mom_out_angle_pos(0)]
+  }
+
+  BLOCK_TEMPLATE cycle_tap_2
+  {
+       Text[M29]
+       S[$mom_spindle_speed]
+  }
+
   BLOCK_TEMPLATE delay
   {
        G[$mom_sys_delay_code($mom_delay_mode)]
