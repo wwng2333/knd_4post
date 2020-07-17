@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ10ÈÕ 14:38:24 中国标准时间
+#  Created by Robin Lu @ 2020Äê7ÔÂ17ÈÕ 12:54:35 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -1191,6 +1191,10 @@ proc MOM_first_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
+   PB_CMD_G01_rapid_move
+   MOM_do_template initial_move
+   MOM_do_template initial_move_2
+   MOM_do_template initial_move_3
    catch { MOM_$mom_motion_event }
 }
 
@@ -1233,6 +1237,10 @@ proc MOM_initial_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
+   PB_CMD_G01_rapid_move
+   MOM_do_template initial_move
+   MOM_do_template initial_move_2
+   MOM_do_template initial_move_3
 
   global mom_programmed_feed_rate
    if { [EQ_is_equal $mom_programmed_feed_rate 0] } {
@@ -1247,7 +1255,7 @@ proc MOM_initial_move { } {
 proc MOM_length_compensation { } {
 #=============================================================
    TOOL_SET MOM_length_compensation
-   PB_CMD_once_G_adjust
+   PB_CMD_force_once_G_adjust
    MOM_do_template tool_length_adjust
 }
 
@@ -1752,6 +1760,22 @@ proc PB_CMD_FEEDRATE_NUMBER { } {
    }
 
 return $f
+}
+
+
+#=============================================================
+proc PB_CMD_G01_rapid_move { } {
+#=============================================================
+global mom_feed_rapid_output mom_sys_rapid_code feed mom_feed_rapid_value
+if { $mom_feed_rapid_output == 1 } {
+    set mom_sys_rapid_code 1
+    set feed $mom_feed_rapid_value
+    MOM_force Once F
+} else {
+    set feed ""
+    set mom_sys_rapid_code 0
+    MOM_suppress once F
+}
 }
 
 
@@ -2949,6 +2973,13 @@ MOM_force once D
 proc PB_CMD_force_once_F { } {
 #=============================================================
 MOM_force once F
+}
+
+
+#=============================================================
+proc PB_CMD_force_once_G_adjust { } {
+#=============================================================
+MOM_force once G_adjust
 }
 
 
@@ -4209,13 +4240,6 @@ proc PB_CMD_negate_R_value { } {
    if [expr $mom_arc_angle > 180.0] {
       set mom_arc_radius [expr -1*$mom_arc_radius]
    }
-}
-
-
-#=============================================================
-proc PB_CMD_once_G_adjust { } {
-#=============================================================
-MOM_force once G_adjust
 }
 
 

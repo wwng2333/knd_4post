@@ -478,6 +478,31 @@ FORMATTING
        Text[G54]
   }
 
+  BLOCK_TEMPLATE approach_move
+  {
+       S[$mom_spindle_speed]\opt
+       M_spindle[$mom_sys_spindle_direction_code($mom_spindle_direction)]\opt
+       Text[(test)]
+  }
+
+  BLOCK_TEMPLATE approach_move_1
+  {
+       G_motion[$mom_sys_linear_code]\opt
+       G_mode[$mom_sys_output_code($mom_output_mode)]\opt
+       X[$mom_pos(0)]\opt
+       Y[$mom_pos(1)]\opt
+       fourth_axis[$mom_out_angle_pos(0)]\opt
+       Text[(test)]
+  }
+
+  BLOCK_TEMPLATE approach_move_2
+  {
+       G_adjust[$mom_sys_adjust_code]\opt
+       Z[$mom_pos(2)]\opt
+       H[$mom_tool_adjust_register]\opt
+       Text[(test)]
+  }
+
   BLOCK_TEMPLATE auxfun
   {
        M[$mom_auxfun]
@@ -772,6 +797,30 @@ FORMATTING
   {
        S[$mom_spindle_speed]
        M_spindle[$mom_sys_spindle_direction_code($mom_spindle_direction)]\opt
+  }
+
+  BLOCK_TEMPLATE initial_move_1
+  {
+       S[$mom_spindle_speed]
+       M_spindle[$mom_sys_spindle_direction_code($mom_spindle_direction)]\opt
+  }
+
+  BLOCK_TEMPLATE initial_move_2
+  {
+       G_motion[$mom_sys_rapid_code]
+       G_mode[$mom_sys_output_code($mom_output_mode)]\opt
+       X[$mom_pos(0)]
+       Y[$mom_pos(1)]
+       fourth_axis[$mom_out_angle_pos(0)]
+       F[$feed]
+  }
+
+  BLOCK_TEMPLATE initial_move_3
+  {
+       G_adjust[$mom_sys_adjust_code]
+       Z[$mom_pos(2)]
+       H[$mom_tool_adjust_register]
+       M_coolant[$mom_sys_coolant_code(ON)]\opt
   }
 
   BLOCK_TEMPLATE linear_move
