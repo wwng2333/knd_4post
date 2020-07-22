@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Robin Lu @ 2020Äê7ÔÂ17ÈÕ 12:54:35 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ23ÈÕ 1:21:25 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -2183,9 +2183,6 @@ return
              (![string compare "RAPID"    $mom_motion_type] && ![string compare "RAPID"    $mom_nxt_motion_type]) ||\
              (![string compare "STEPOVER" $mom_motion_type] && ![string compare "STEPOVER" $mom_nxt_motion_type]) } {
 
-            if { [EQ_is_equal $PX $CX] && [EQ_is_equal $PY $CY] && [EQ_is_equal $PZ $CZ] &&\
-                 [EQ_is_equal $NX $CX] && [EQ_is_equal $NY $CY] && [EQ_is_equal $NZ $CZ] } {
-
                 if {![EQ_is_equal $P4 $C4] && [EQ_is_equal $P5 $C5] &&\
                     ![EQ_is_equal $N4 $C4] && [EQ_is_equal $N5 $C5] &&\
                      $mom_sys_combine_rotary_mode != 5 && ![string compare "NO" $switch_dir_4th] } {
@@ -2203,7 +2200,6 @@ return
                     MOM_force once fifth_axis
                     set mom_sys_combine_rotary_mode "5"
                 }
-            }
         }
 
 
