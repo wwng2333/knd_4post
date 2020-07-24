@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ23ÈÕ 1:21:25 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ24ÈÕ 17:15:33 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -69,7 +69,7 @@ proc PB_CMD___log_revisions { } {
      set mom_sys_list_file_columns                 "30"
      set mom_sys_warning_output                    "OFF"
      set mom_sys_warning_output_option             "FILE"
-     set mom_sys_group_output                      "OFF"
+     set mom_sys_group_output                      "ON"
      set mom_sys_list_file_suffix                  "lpt"
      set mom_sys_output_file_suffix                "NC"
      set mom_sys_commentary_output                 "ON"
@@ -424,6 +424,7 @@ proc MOM_end_of_program { } {
    MOM_do_template end_of_program
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
+   PB_CMD_output_at_end
 
 #**** The following procedure lists the tool list with time in commentary data
    LIST_FILE_TRAILER
@@ -1714,6 +1715,7 @@ proc PB_start_of_program { } {
 
    MOM_set_seq_off
    PB_CMD__combine_rotary_init
+   PB_CMD_output_at_start
    MOM_do_template rewind_stop_code
    MOM_do_template start_of_program
    MOM_set_seq_on
@@ -4236,6 +4238,44 @@ proc PB_CMD_negate_R_value { } {
    if [expr $mom_arc_angle > 180.0] {
       set mom_arc_radius [expr -1*$mom_arc_radius]
    }
+}
+
+
+#=============================================================
+proc PB_CMD_output_at_end { } {
+#=============================================================
+global gname output_extn mom_group_name dels
+global ptp_file_name txt1 txt2
+global st1 st2 st3 st4 group_level
+
+set st1 [string length $ptp_file_name]
+set st2 [expr [string last "\\" $ptp_file_name] +1]
+set st3 [string range $ptp_file_name $st2 [expr $st1 - 4]]
+set st4 [string range $ptp_file_name 0 [expr $st2-1]]
+if {$group_level != 0} {
+set gname $mom_group_name
+}
+set txt1 $st4$gname${output_extn}
+set txt2 $st4$st3\_$gname${output_extn}
+if {$group_level == 0} {
+file rename -force $txt2 $txt1
+set dels 0
+} else {
+set dels 1
+}
+}
+
+
+#=============================================================
+proc PB_CMD_output_at_start { } {
+#=============================================================
+global gname output_extn mom_group_name dels
+global ptp_file_name txt1 txt2
+global st1 st2 st3 st4 group_level
+
+if {[info exists dels] && $dels == 1} {
+file rename -force $txt2 $txt1
+}
 }
 
 

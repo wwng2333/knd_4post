@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2020Äê7ÔÂ23ÈÕ 1:21:25 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ24ÈÕ 17:15:34 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -151,6 +151,9 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:53:30
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:54:35 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 16:06:22 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ23ÈÕ 1:21:25 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 16:40:09 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 16:56:57 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 17:15:33 中国标准时间 by Administrator.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -159,7 +162,7 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ23ÈÕ 1:21:25 
 Listfileflag_warn              OFF
 Listfileflag                   OFF
 Listfileflag_alt_unit_post_name knd_4post__IN.pui
-Listfileflag_group             OFF
+Listfileflag_group             ON
 Listfileflag_verbose           OFF
 Listfileflag_tool              0
 Listfileflag_oper              0
@@ -390,7 +393,7 @@ Text              ""  0  "Text String"  0
 
 ## SEQUENCE START
 #Program Start Sequence Start
-{Start of Program}         {MOM_set_seq_off PB_CMD__combine_rotary_init rewind_stop_code start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET}  {$gPB(event,start_prog,name)}
+{Start of Program}         {MOM_set_seq_off PB_CMD__combine_rotary_init PB_CMD_output_at_start rewind_stop_code start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET}  {$gPB(event,start_prog,name)}
 #Program Start Sequence End
 
 #Operation Start Sequence Start
@@ -471,7 +474,7 @@ Text              ""  0  "Text String"  0
 #Operation End Sequence End
 
 #Program End Sequence Start
-{End of Program}           {end_of_program_1 gohome_move end_of_program MOM_set_seq_off rewind_stop_code}  {$gPB(event,end_prog,name)}
+{End of Program}           {end_of_program_1 gohome_move end_of_program MOM_set_seq_off rewind_stop_code PB_CMD_output_at_end}  {$gPB(event,end_prog,name)}
 #Program End Sequence End
 
 #Linked Posts Sequence Start
@@ -483,7 +486,7 @@ Text              ""  0  "Text String"  0
 
 ## EVENTS ELEMENT EXECUTION START
 {Start of Program} \
-        {5 NULL 0 {G_cutcom G_plane G_mode}}
+        {6 NULL 0 {G_cutcom G_plane G_mode}}
 {Spindle RPM} \
         {0 NULL 0 {S M_spindle}}
 {Tap} \
@@ -1084,7 +1087,9 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_tap_check_spindle_direction" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
+      {"PB_CMD_output_at_start" "" "Custom Command"} \
+      {"PB_CMD_output_at_end" "" "Custom Command"}
 {Operator_Message} \
       {"comment_blk" "$mom_operation_name" "Operator Message"} \
       {"comment_blk_1" "$mom_tool_name" "Operator Message"}
