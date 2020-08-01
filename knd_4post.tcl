@@ -5,7 +5,7 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê7ÔÂ24ÈÕ 19:05:15 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ31ÈÕ 20:24:21 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -971,6 +971,7 @@ proc MOM_cutcom_on { } {
 #=============================================================
 proc MOM_cycle_off { } {
 #=============================================================
+   PB_CMD_m29_disable_at_g80
    MOM_do_template cycle_off
 }
 
@@ -1573,11 +1574,11 @@ proc MOM_tap_move { } {
 
 
    PB_CMD_force_once_F
+   PB_CMD_force_once_M29
    PB_CMD_cal_feedrate_by_pitch_and_ss
    PB_CMD_tap_check_spindle_direction
    MOM_do_template cycle_tap_1
-   MOM_force Once S
-   MOM_do_template cycle_tap_2
+   MOM_do_template tap_2
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -2983,6 +2984,18 @@ MOM_force once G_adjust
 
 
 #=============================================================
+proc PB_CMD_force_once_M29 { } {
+#=============================================================
+global m29_enable
+
+if { ![info exists m29_enable] } {
+set m29_enable 1
+MOM_force once user_add_2 S
+}
+}
+
+
+#=============================================================
 proc PB_CMD_force_once_S { } {
 #=============================================================
 MOM_force once S
@@ -4330,6 +4343,15 @@ unset mom_cutcom_type
 }
 
 
+}
+
+
+#=============================================================
+proc PB_CMD_m29_disable_at_g80 { } {
+#=============================================================
+if { [info exists m29_enable] } {
+    unset m29_enable
+}
 }
 
 

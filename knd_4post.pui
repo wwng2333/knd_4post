@@ -8,7 +8,7 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2020Äê7ÔÂ24ÈÕ 19:05:15 中国标准时间
+#  Created by Administrator @ 2020Äê7ÔÂ31ÈÕ 20:24:21 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
@@ -174,6 +174,27 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:26:09
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:02:43 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:03:10 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:05:15 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:36:39 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:43:11 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:59:29 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:02:13 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:03:06 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:09:29 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:36:09 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:38:00 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:51:05 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:51:56 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:56:49 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:57:31 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:58:38 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:59:15 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:00:29 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:00:58 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:04:05 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:15:32 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:17:56 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:23:35 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:24:21 中国标准时间 by Administrator.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -365,6 +386,7 @@ J                 "$mom_sys_blank_code"  0  "Y Axis Position of the Circle Cente
 K                 "$mom_sys_blank_code"  0  "Z Axis Position of the Circle Center"  0
 R                 "$mom_sys_blank_code"  0  "Rapid Approach Position in a Canned Cycle Block"  0
 Q_cutcom          "$mom_sys_blank_code"  0  "Q-Cutcom"  0
+user_add_2        "$mom_usd_add_var"  0  "(user_add_2)"  1
 S                 "$mom_sys_blank_code"  0  "Spindle Speed"  0
 T                 "$mom_sys_blank_code"  0  "Tool Select Code"  0
 D                 "$mom_sys_blank_code"  0  "Tool Radius Compensation Register"  0
@@ -460,7 +482,7 @@ Text              ""  0  "Text String"  0
 
 #Cycles Start
 {Cycle Parameters}         {PB_CMD_force_once_F cycle_parameters post_cycle_set}  {$gPB(event,cycle,com_param,name)}
-{Cycle Off}                {cycle_off}  {$gPB(event,cycle,cycle_off,name)}
+{Cycle Off}                {PB_CMD_m29_disable_at_g80 cycle_off}  {$gPB(event,cycle,cycle_off,name)}
 {Cycle Plane Change}       {}  {$gPB(event,cycle,plane_chng,name)}
 {Drill}                    {cycle_drill}  {$gPB(event,cycle,drill,name)}
 {Drill Dwell}              {cycle_drill_dwell}  {$gPB(event,cycle,drill_dwell,name)}
@@ -468,7 +490,7 @@ Text              ""  0  "Text String"  0
 {Drill Csink}              {}  {$gPB(event,cycle,drill_csink,name)}
 {Drill Deep}               {cycle_drill_deep}  {$gPB(event,cycle,drill_deep,name)}
 {Drill Break Chip}         {cycle_drill_break_chip}  {$gPB(event,cycle,drill_brk_chip,name)}
-{Tap}                      {PB_CMD_force_once_F PB_CMD_cal_feedrate_by_pitch_and_ss PB_CMD_tap_check_spindle_direction cycle_tap_1 cycle_tap_2 cycle_tap}  {$gPB(event,cycle,tap,name)}
+{Tap}                      {PB_CMD_force_once_F PB_CMD_force_once_M29 PB_CMD_cal_feedrate_by_pitch_and_ss PB_CMD_tap_check_spindle_direction cycle_tap_1 tap_2 cycle_tap}  {$gPB(event,cycle,tap,name)}
 {Bore}                     {cycle_bore}  {$gPB(event,cycle,bore,name)}
 {Bore Dwell}               {cycle_bore_dwell}  {$gPB(event,cycle,bore_dwell,name)}
 {Bore Drag}                {cycle_bore_drag}  {$gPB(event,cycle,bore_drag,name)}
@@ -509,8 +531,6 @@ Text              ""  0  "Text String"  0
         {4 NULL 0 {G_cutcom G_plane G_mode}}
 {Spindle RPM} \
         {0 NULL 0 {S M_spindle}}
-{Tap} \
-        {4 NULL 0 {S}}
 {Return Move} \
         {0 NULL 0 {G_cutcom G_plane G_mode}}
 ## EVENTS ELEMENT EXECUTION END
@@ -855,6 +875,8 @@ Text              ""  0  "Text String"  0
       {"$mom_cycle_rapid_to" "" "Cycle Rapid To Distance"}
 {Q_cutcom} \
       {"$qval" "" "Cutcom (Custom Command)"}
+{user_add_2} \
+      {"" "" ""}
 {S} \
       {"$mom_spindle_speed" "" "Spindle Speed"} \
       {"$mom_spindle_maximum_rpm" "" "Spindle Max RPM"}
@@ -1116,7 +1138,9 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
       {"PB_CMD_tool_inf" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
+      {"PB_CMD_force_once_M29" "" "Custom Command"} \
+      {"PB_CMD_m29_disable_at_g80" "" "Custom Command"}
 {Operator_Message} \
       {"comment_blk" "$mom_operation_name" "Operator Message"}
 {PB_Spindle} \

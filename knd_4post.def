@@ -197,12 +197,21 @@ FORMATTING
 
   ADDRESS Q_cutcom
   {
-      FORMAT      Dwell_SECONDS
+      FORMAT      Coordinate
       FORCE       off
       MAX         99999.999 Truncate
       MIN         0.001 Truncate
       LEADER      "Q"
-      ZERO_FORMAT Zero_int
+      ZERO_FORMAT Zero_real
+  }
+
+  ADDRESS user_add_2
+  {
+      FORMAT      Digit_2
+      FORCE       off
+      MAX         29 Truncate
+      MIN         29 Truncate
+      LEADER      "M"
   }
 
   ADDRESS S
@@ -706,7 +715,7 @@ FORMATTING
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
-       cycle_dwell[$mom_cycle_delay]\opt
+       Q_cutcom[$mom_cycle_cam]\opt
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
   }
@@ -714,12 +723,6 @@ FORMATTING
   BLOCK_TEMPLATE cycle_tap_1
   {
        fourth_axis[$mom_out_angle_pos(0)]
-  }
-
-  BLOCK_TEMPLATE cycle_tap_2
-  {
-       Text[M29]
-       S[$mom_spindle_speed]
   }
 
   BLOCK_TEMPLATE delay
@@ -1046,6 +1049,12 @@ FORMATTING
   BLOCK_TEMPLATE tool_preselect
   {
        T[$mom_next_tool_number]
+  }
+
+  BLOCK_TEMPLATE tap_2
+  {
+       user_add_2[29]\opt
+       S[$mom_spindle_speed]\opt
   }
 
   BLOCK_TEMPLATE post_cycle_set
