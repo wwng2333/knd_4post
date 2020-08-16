@@ -8,14 +8,14 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:12:12 中国标准时间
+#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:14:32 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
 
 ## POST EVENT HANDLER START
-def_file  knd_4post.def
-tcl_file  knd_4post.tcl
+def_file  XK_OK.def
+tcl_file  XK_OK.tcl
 ## POST EVENT HANDLER END
 
 
@@ -196,6 +196,9 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:17:56
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:23:35 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:24:21 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:12:11 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:13:41 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:14:00 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:14:32 中国标准时间 by Administrator.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -203,7 +206,7 @@ Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:12:11
 ## LISTING FILE START
 Listfileflag_warn              OFF
 Listfileflag                   OFF
-Listfileflag_alt_unit_post_name knd_4post__IN.pui
+Listfileflag_alt_unit_post_name XK_OK__IN.pui
 Listfileflag_group             OFF
 Listfileflag_verbose           OFF
 Listfileflag_tool              0
@@ -242,7 +245,7 @@ Listfilename                   listfile.lpt
 "$mom_kin_4th_axis_point(0)"              "0.0"
 "$mom_kin_4th_axis_point(1)"              "0.0"
 "$mom_kin_4th_axis_point(2)"              "0.0"
-"$mom_kin_4th_axis_rotation"              "reverse"
+"$mom_kin_4th_axis_rotation"              "standard"
 "$mom_kin_4th_axis_type"                  "Table"
 "$mom_kin_4th_axis_vector(0)"             "1"
 "$mom_kin_4th_axis_vector(1)"             "0"
@@ -865,11 +868,11 @@ Text              ""  0  "Text String"  0
       {"$mom_out_angle_pos(0)" "" "4th Axis Angle"} \
       {"$mom_out_angle_pos(1)" "" "5th Axis Angle"}
 {I} \
-      {"$mom_pos_arc_center(0) - $mom_prev_pos(0)" "" "圆弧起点到中心 X-Axis"}
+      {"$mom_pos_arc_center(0) - $mom_prev_pos(0)" "" "圆弧起点到中心"}
 {J} \
-      {"$mom_pos_arc_center(1) - $mom_prev_pos(1)" "" "圆弧起点到中心 Y-Axis"}
+      {"$mom_pos_arc_center(1) - $mom_prev_pos(1)" "" "圆弧起点到中心"}
 {K} \
-      {"$mom_pos_arc_center(2) - $mom_prev_pos(2)" "" "圆弧起点到中心 Z-Axis"}
+      {"$mom_pos_arc_center(2) - $mom_prev_pos(2)" "" "圆弧起点到中心"}
 {R} \
       {"$mom_arc_radius" "" "Arc Radius"} \
       {"$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)" "" "Rapid Position in Cycle"} \

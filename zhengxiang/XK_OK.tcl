@@ -1,11 +1,11 @@
 ########################## TCL Event Handlers ##########################
 #
-#  knd_4post.tcl - 4_axis_table
+#  XK_OK.tcl - 4_axis_table
 #
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:12:11 中国标准时间
+#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:14:32 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
@@ -125,7 +125,7 @@ proc PB_CMD___log_revisions { } {
 
 
   set mom_sys_use_default_unit_fragment         "ON"
-  set mom_sys_alt_unit_post_name                "knd_4post__IN.pui"
+  set mom_sys_alt_unit_post_name                "XK_OK__IN.pui"
 
 
 ########## SYSTEM VARIABLE DECLARATIONS ##############
@@ -272,7 +272,7 @@ proc PB_CMD___log_revisions { } {
   set mom_kin_4th_axis_point(0)                 "0.0"
   set mom_kin_4th_axis_point(1)                 "0.0"
   set mom_kin_4th_axis_point(2)                 "0.0"
-  set mom_kin_4th_axis_rotation                 "reverse"
+  set mom_kin_4th_axis_rotation                 "standard"
   set mom_kin_4th_axis_type                     "Table"
   set mom_kin_4th_axis_vector(0)                "1"
   set mom_kin_4th_axis_vector(1)                "0"
