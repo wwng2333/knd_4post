@@ -8,12 +8,14 @@
 #  <WARNING> The contents of this file should not be modified!               #
 #                                                                            #
 ##############################################################################
-#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:12:12 中国标准时间
+#  Created by Robin Lu @ 2020Äê11ÔÂ23ÈÕ 23:20:07 中国标准时间
 #  with Post Builder version 10.0.3.
 #============================================================================#
 
 
 ## POST EVENT HANDLER START
+
+# Waring: Don't edit it by Post Builder, otherwise G_adjust will not working. 
 def_file  knd_4post.def
 tcl_file  knd_4post.tcl
 ## POST EVENT HANDLER END
@@ -106,96 +108,16 @@ Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:57:34
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:58:06 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 18:59:18 中国标准时间 by Administrator.
 Saved with NX/后处理构造器 版本 10.0.0.0 on 2017Äê5ÔÂ19ÈÕ 19:03:41 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:11:02 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:15:14 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:17:31 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:20:00 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:21:27 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:25:54 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:28:39 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 13:41:54 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:02:19 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 14:22:56 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 19:28:12 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 19:33:22 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:14:37 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:16:24 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ21ÈÕ 20:17:39 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê6ÔÂ23ÈÕ 20:46:20 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:37:53 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ1ÈÕ 23:41:45 中国标准时间 by Robin Lu.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:18:56 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:19:55 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:31:05 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ9ÈÕ 23:51:39 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ10ÈÕ 14:06:40 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ10ÈÕ 14:38:24 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ10ÈÕ 19:48:46 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ10ÈÕ 19:51:53 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ10ÈÕ 19:52:27 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 20:25:24 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 20:30:46 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 20:32:18 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 20:38:43 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 20:41:39 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ13ÈÕ 23:02:54 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ14ÈÕ 13:36:48 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ14ÈÕ 13:38:32 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ14ÈÕ 13:41:32 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:39:35 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:45:34 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:47:08 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:49:16 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:51:04 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:53:30 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 12:54:35 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ17ÈÕ 16:06:22 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ23ÈÕ 1:21:25 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 16:40:09 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 16:56:57 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 17:15:33 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 17:57:00 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 17:58:27 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:00:45 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:03:00 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:05:00 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:07:21 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:17:25 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:18:43 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:19:43 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:19:59 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:21:21 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:21:37 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:22:06 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:22:22 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:23:17 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:23:47 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 18:26:09 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:02:43 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:03:10 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ24ÈÕ 19:05:15 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:36:39 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:43:11 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 18:59:29 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:02:13 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:03:06 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:09:29 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:36:09 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:38:00 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:51:05 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:51:56 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:56:49 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:57:31 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:58:38 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 19:59:15 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:00:29 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:00:58 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:04:05 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:15:32 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:17:56 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:23:35 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê7ÔÂ31ÈÕ 20:24:21 中国标准时间 by Administrator.
-Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê8ÔÂ16ÈÕ 14:12:11 中国标准时间 by Administrator.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ12ÈÕ 21:28:25 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ17ÈÕ 15:22:04 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ17ÈÕ 15:22:08 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ18ÈÕ 19:29:52 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ18ÈÕ 21:21:24 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ19ÈÕ 19:04:21 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ23ÈÕ 23:04:24 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ23ÈÕ 23:18:19 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ23ÈÕ 23:19:17 中国标准时间 by Robin Lu.
+Saved with NX/后处理构造器 版本 10.0.3.0 on 2020Äê11ÔÂ23ÈÕ 23:20:07 中国标准时间 by Robin Lu.
 #  HISTORY END
 ## POST INFORMATION END
 
@@ -205,15 +127,14 @@ Listfileflag_warn              OFF
 Listfileflag                   OFF
 Listfileflag_alt_unit_post_name knd_4post__IN.pui
 Listfileflag_group             OFF
-Listfileflag_verbose           OFF
+Listfileflag_verbose           0
 Listfileflag_tool              0
 Listfileflag_oper              0
 Listfileflag_lpt_ext           lpt
 Listfileflag_ncfile_ext        NC
 Listfileflag_usertcl_name      new_post_user.tcl
-Listfileflag_review            OFF
+Listfileflag_review            0
 Listfileflag_start_path        0
-Listfileflag_warn_opt          FILE
 Listfileflag_head              OFF
 Listfileflag_use_default_unit_fragment 1
 Listfileflag_end_path          0
@@ -221,7 +142,7 @@ Listfilelines                  40
 Listfileflag_oper_time         0
 Listfileflag_tool_chng         0
 Listfilecolumn                 30
-Listfileflag_usertcl_check     OFF
+Listfileflag_usertcl_check     0
 Listfileflag_setup_time        0
 Listfilename                   listfile.lpt
 ## LISTING FILE END
@@ -339,15 +260,14 @@ Listfilename                   listfile.lpt
 "$mom_sys_cycle_ret_code(AUTO)"           "$gPB(g_code,cycle_retract_auto,name)"
 "$mom_sys_cycle_ret_code(MANUAL)"         "$gPB(g_code,cycle_retract_manual,name)"
 "$mom_sys_reset_code"                     "$gPB(g_code,reset,name)"
+"$mom_sys_feed_rate_mode_code(IPM)"       "$gPB(g_code,fr_ipm,name)"
+"$mom_sys_feed_rate_mode_code(IPR)"       "$gPB(g_code,fr_ipr,name)"
+"$mom_sys_feed_rate_mode_code(FRN)"       "$gPB(g_code,fr_frn,name)"
 "$mom_sys_spindle_mode_code(SFM)"         "$gPB(g_code,spindle_css,name)"
 "$mom_sys_spindle_mode_code(RPM)"         "$gPB(g_code,spindle_rpm,name)"
 "$mom_sys_return_code"                    "$gPB(g_code,ret_home,name)"
-"$mom_sys_feed_rate_mode_code(FRN)"       "$gPB(g_code,fr_frn,name)"
 "$mom_sys_feed_rate_mode_code(MMPM)"      "$gPB(g_code,feedmode_mm,pm)"
 "$mom_sys_feed_rate_mode_code(MMPR)"      "$gPB(g_code,feedmode_mm,pr)"
-"$mom_sys_feed_rate_mode_code(DPM)"       "$gPB(g_code,feedmode,dpm)"
-"$mom_sys_feed_rate_mode_code(IPM)"       "$gPB(g_code,feedmode_in,pm)"
-"$mom_sys_feed_rate_mode_code(IPR)"       "$gPB(g_code,feedmode_in,pr)"
 ## GCODES END
 
 ## MCODES START
@@ -387,7 +307,6 @@ J                 "$mom_sys_blank_code"  0  "Y Axis Position of the Circle Cente
 K                 "$mom_sys_blank_code"  0  "Z Axis Position of the Circle Center"  0
 R                 "$mom_sys_blank_code"  0  "Rapid Approach Position in a Canned Cycle Block"  0
 Q_cutcom          "$mom_sys_blank_code"  0  "Q-Cutcom"  0
-user_add_2        "$mom_usd_add_var"  0  "(user_add_2)"  1
 S                 "$mom_sys_blank_code"  0  "Spindle Speed"  0
 T                 "$mom_sys_blank_code"  0  "Tool Select Code"  0
 D                 "$mom_sys_blank_code"  0  "Tool Radius Compensation Register"  0
@@ -406,8 +325,8 @@ M_range           "$mom_sys_spindle_range_code($mom_spindle_range)"  0  "Spindle
 M_coolant         "$mom_sys_coolant_code($mom_coolant_status)"  0  "Coolant M-Code"  0
 M                 "$mom_sys_optional_stop_code"  0  "Other M-Codes"  0
 user_add          "$mom_usd_add_var"  0  "新地址"  1
-user_add_1        "$mom_usd_add_var"  0  "新地址"  1
 N                 ""  0  "Sequence Number"  0
+user_add_1        "$mom_usd_add_var"  0  "新地址"  1
 Text              ""  0  "Text String"  0
 ## MASTER SEQUENCE END
 
@@ -434,19 +353,26 @@ Text              ""  0  "Text String"  0
 #Cycle Block Share Common Block End
 ## CYCLE EVENT END
 
+## BLOCK MODALITY START
+## BLOCK MODALITY END
+
+## COMPOSITE BLOCKS START
+{}
+## COMPOSITE BLOCKS END
+
 ## SEQUENCE START
 #Program Start Sequence Start
-{Start of Program}         {MOM_set_seq_off PB_CMD__combine_rotary_init start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET PB_CMD_reset}  {$gPB(event,start_prog,name)}
+{Start of Program}         {MOM_set_seq_off rewind_stop_code start_of_program MOM_set_seq_on absolute_mode PB_CMD_fix_RAPID_SET}  {$gPB(event,start_prog,name)}
 #Program Start Sequence End
 
 #Operation Start Sequence Start
-{Start of Path}            {PB_CMD_safety_check PB_CMD_start_of_operation_force_addresses comment_blk}  {$gPB(event,opr_start,start_path,name)}
+{Start of Path}            {PB_CMD_start_of_operation_force_addresses}  {$gPB(event,opr_start,start_path,name)}
 {From Move}                {}  {$gPB(event,opr_start,from_move,name)}
 {First Tool}               {}  {$gPB(event,opr_start,fst_tool,name)}
-{Auto Tool Change}         {PB_CMD_tool_change_force_addresses PB_CMD_minz_reset PB_CMD_tool_inf}  {$gPB(event,opr_start,auto_tc,name)}
+{Auto Tool Change}         {PB_CMD_tool_change_force_addresses}  {$gPB(event,opr_start,auto_tc,name)}
 {Manual Tool Change}       {PB_CMD_tool_change_force_addresses stop}  {$gPB(event,opr_start,manual_tc,name)}
-{Initial Move}             {PB_CMD_G01_rapid_move initial_move initial_move_2 initial_move_3}  {$gPB(event,opr_start,init_move,name)}
-{First Move}               {PB_CMD_G01_rapid_move initial_move initial_move_2 initial_move_3}  {$gPB(event,opr_start,fst_move,name)}
+{Initial Move}             {}  {$gPB(event,opr_start,init_move,name)}
+{First Move}               {}  {$gPB(event,opr_start,fst_move,name)}
 {Approach Move}            {}  {$gPB(event,opr_start,appro_move,name)}
 {Engage Move}              {}  {$gPB(event,opr_start,engage_move,name)}
 {First Cut}                {}  {$gPB(event,opr_start,fst_cut,name)}
@@ -456,7 +382,7 @@ Text              ""  0  "Text String"  0
 ##Tool Path Start
 #Control Functions Start
 {Tool Change}              {}  {$gPB(event,tool_change,name)} {}
-{Length Compensation}      {PB_CMD_force_once_G_adjust tool_length_adjust}  {$gPB(event,length_compn,name)} {length_compensation}
+{Length Compensation}      {PB_CMD_custom_command_1 tool_length_adjust}  {$gPB(event,length_compn,name)} {length_compensation}
 {Set Modes}                {}  {$gPB(event,set_modes,name)} {set_modes}
 {Spindle RPM}              {spindle_rpm}  {$gPB(event,spindle_rpm,name)} {spindle}
 {Spindle Off}              {spindle_off}  {$gPB(event,spindle_off,name)} {spindle_off}
@@ -464,7 +390,7 @@ Text              ""  0  "Text String"  0
 {Coolant Off}              {coolant_off}  {$gPB(event,coolant_off,name)} {coolant_off}
 {Inch Metric Mode}         {}  {$gPB(event,inch_metric_mode,name)} {}
 {Feedrates}                {}  {$gPB(event,feedrates,name)} {}
-{Cutcom On}                {PB_CMD_force_once_D}  {$gPB(event,cutcom_on,name)} {cutcom}
+{Cutcom On}                {}  {$gPB(event,cutcom_on,name)} {cutcom}
 {Cutcom Off}               {}  {$gPB(event,cutcom_off,name)} {}
 {Delay}                    {delay}  {$gPB(event,delay,name)} {dwell}
 {Opstop}                   {opstop}  {$gPB(event,opstop,name)} {opstop}
@@ -476,14 +402,14 @@ Text              ""  0  "Text String"  0
 #Control Functions End
 
 #Motions Start
-{Linear Move}              {PB_CMD_suppress_linear_block_plane_code PB_CMD__combine_rotary_output linear_move}  {$gPB(event,linear,name)}
+{Linear Move}              {PB_CMD_suppress_linear_block_plane_code linear_move}  {$gPB(event,linear,name)}
 {Circular Move}            {circular_move}  {$gPB(event,circular,name)}
-{Rapid Move}               {PB_CMD__combine_rotary_output rapid_move rapid_traverse rapid_spindle}  {$gPB(event,rapid,name)}
+{Rapid Move}               {rapid_move rapid_traverse rapid_spindle}  {$gPB(event,rapid,name)}
 #Motions End
 
 #Cycles Start
-{Cycle Parameters}         {PB_CMD_force_once_F cycle_parameters post_cycle_set}  {$gPB(event,cycle,com_param,name)}
-{Cycle Off}                {PB_CMD_m29_disable_at_g80 cycle_off}  {$gPB(event,cycle,cycle_off,name)}
+{Cycle Parameters}         {PB_CMD_custom_command post_cycle_set}  {$gPB(event,cycle,com_param,name)}
+{Cycle Off}                {cycle_off}  {$gPB(event,cycle,cycle_off,name)}
 {Cycle Plane Change}       {}  {$gPB(event,cycle,plane_chng,name)}
 {Drill}                    {cycle_drill}  {$gPB(event,cycle,drill,name)}
 {Drill Dwell}              {cycle_drill_dwell}  {$gPB(event,cycle,drill_dwell,name)}
@@ -491,7 +417,7 @@ Text              ""  0  "Text String"  0
 {Drill Csink}              {}  {$gPB(event,cycle,drill_csink,name)}
 {Drill Deep}               {cycle_drill_deep}  {$gPB(event,cycle,drill_deep,name)}
 {Drill Break Chip}         {cycle_drill_break_chip}  {$gPB(event,cycle,drill_brk_chip,name)}
-{Tap}                      {PB_CMD_force_once_F PB_CMD_force_once_M29 PB_CMD_cal_feedrate_by_pitch_and_ss PB_CMD_tap_check_spindle_direction cycle_tap_1 tap_2 cycle_tap}  {$gPB(event,cycle,tap,name)}
+{Tap}                      {cycle_tap}  {$gPB(event,cycle,tap,name)}
 {Bore}                     {cycle_bore}  {$gPB(event,cycle,bore,name)}
 {Bore Dwell}               {cycle_bore_dwell}  {$gPB(event,cycle,bore_dwell,name)}
 {Bore Drag}                {cycle_bore_drag}  {$gPB(event,cycle,bore_drag,name)}
@@ -513,11 +439,11 @@ Text              ""  0  "Text String"  0
 {Retract Move}             {}  {$gPB(event,opr_end,ret_move,name)}
 {Return Move}              {absolute_mode}  {$gPB(event,opr_end,rtn_move,name)}
 {Gohome Move}              {}  {$gPB(event,opr_end,goh_move,name)}
-{End of Path}              {end_of_path_1 end_of_path_2 PB_CMD_list_set PB_CMD_minz_tcut_set}  {$gPB(event,opr_end,end_path,name)}
+{End of Path}              {end_of_path_1 end_of_path_2}  {$gPB(event,opr_end,end_path,name)}
 #Operation End Sequence End
 
 #Program End Sequence Start
-{End of Program}           {end_of_program_1 gohome_move end_of_program MOM_set_seq_off PB_CMD_list_out}  {$gPB(event,end_prog,name)}
+{End of Program}           {end_of_program_1 gohome_move end_of_program MOM_set_seq_off rewind_stop_code}  {$gPB(event,end_prog,name)}
 #Program End Sequence End
 
 #Linked Posts Sequence Start
@@ -532,6 +458,8 @@ Text              ""  0  "Text String"  0
         {4 NULL 0 {G_cutcom G_plane G_mode}}
 {Spindle RPM} \
         {0 NULL 0 {S M_spindle}}
+{Rapid Move} \
+        {2 NULL 0 {G_adjust}}
 {Return Move} \
         {0 NULL 0 {G_cutcom G_plane G_mode}}
 ## EVENTS ELEMENT EXECUTION END
@@ -783,12 +711,12 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_adjust_cancel_code" "49" "Cancel Tool Len Adjust"}
 {G_feed} \
       {"$mom_sys_feed_rate_mode_code($feed_mode)" "\$mom_sys_feed_rate_mode_code(MMPM)" "Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(IPM)" "94" "IPM Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(IPR)" "95" "IPR Feed Rate Mode"} \
+      {"$mom_sys_feed_rate_mode_code(FRN)" "93" "FRN Feed Rate Mode"} \
       {"$mom_sys_feed_rate_mode_code(DPM)" "94" "DPM Feed Rate Mode"} \
       {"$mom_sys_feed_rate_mode_code(MMPM)" "94" "MMPM Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(MMPR)" "95" "MMPR Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(FRN)" "93" "FRN Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(IPM)" "94" "IPM Feed Rate Mode"} \
-      {"$mom_sys_feed_rate_mode_code(IPR)" "95" "IPR Feed Rate Mode"}
+      {"$mom_sys_feed_rate_mode_code(MMPR)" "95" "MMPR Feed Rate Mode"}
 {G_spin} \
       {"$mom_sys_spindle_mode_code($mom_spindle_status)" "\$mom_sys_spindle_mode_code(RPM)" "Spindle output Mode (RPM/SFM)"} \
       {"$mom_sys_spindle_mode_code(SFM)" "96" "Spindle output (CSS)"} \
@@ -865,19 +793,17 @@ Text              ""  0  "Text String"  0
       {"$mom_out_angle_pos(0)" "" "4th Axis Angle"} \
       {"$mom_out_angle_pos(1)" "" "5th Axis Angle"}
 {I} \
-      {"$mom_pos_arc_center(0) - $mom_prev_pos(0)" "" "圆弧起点到中心 X-Axis"}
+      {"$mom_pos_arc_center(0) - $mom_prev_pos(0)" "" "圆弧起点到中心"}
 {J} \
-      {"$mom_pos_arc_center(1) - $mom_prev_pos(1)" "" "圆弧起点到中心 Y-Axis"}
+      {"$mom_pos_arc_center(1) - $mom_prev_pos(1)" "" "圆弧起点到中心"}
 {K} \
-      {"$mom_pos_arc_center(2) - $mom_prev_pos(2)" "" "圆弧起点到中心 Z-Axis"}
+      {"$mom_pos_arc_center(2) - $mom_prev_pos(2)" "" "圆弧起点到中心"}
 {R} \
       {"$mom_arc_radius" "" "Arc Radius"} \
       {"$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)" "" "Rapid Position in Cycle"} \
       {"$mom_cycle_rapid_to" "" "Cycle Rapid To Distance"}
 {Q_cutcom} \
       {"$qval" "" "Cutcom (Custom Command)"}
-{user_add_2} \
-      {"" "" ""}
 {S} \
       {"$mom_spindle_speed" "" "Spindle Speed"} \
       {"$mom_spindle_maximum_rpm" "" "Spindle Max RPM"}
@@ -932,10 +858,10 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_tool_change_code" "6" "Tool Change"}
 {user_add} \
       {"" "" ""}
-{user_add_1} \
-      {"" "" ""}
 {N} \
       {"$mom_seqnum" "" "Sequence Number"}
+{user_add_1} \
+      {"" "" ""}
 {Text} \
       {"" "" ""}
 {New_Address} \
@@ -1009,7 +935,7 @@ Text              ""  0  "Text String"  0
       {"$mom_sys_sim_cycle_drill_dwell" "0" ""} \
       {"$mom_sys_sim_cycle_drill_deep" "0" ""} \
       {"$mom_sys_sim_cycle_drill_break_chip" "0" ""} \
-      {"$mom_sys_sim_cycle_tap" "1" ""} \
+      {"$mom_sys_sim_cycle_tap" "0" ""} \
       {"$mom_sys_sim_cycle_bore" "0" ""} \
       {"$mom_sys_sim_cycle_bore_drag" "0" ""} \
       {"$mom_sys_sim_cycle_bore_nodrag" "0" ""} \
@@ -1068,33 +994,19 @@ Text              ""  0  "Text String"  0
       {"MOM_set_seq_off" "" "MOM Command"} \
       {"MOM_set_seq_on" "" "MOM Command"} \
       {"PB_CMD_FEEDRATE_NUMBER" "" "Custom Command"} \
-      {"PB_CMD_G01_rapid_move" "" "Custom Command"} \
       {"PB_CMD___log_revisions" "" "Custom Command"} \
-      {"PB_CMD__choose_preferred_solution" "" "Custom Command"} \
-      {"PB_CMD__combine_rotary_check" "" "Custom Command"} \
-      {"PB_CMD__combine_rotary_init" "" "Custom Command"} \
-      {"PB_CMD__combine_rotary_output" "" "Custom Command"} \
-      {"PB_CMD__config_post_options" "" "Custom Command"} \
       {"PB_CMD__log_revisions" "" "Custom Command"} \
       {"PB_CMD__manage_part_attributes" "" "Custom Command"} \
-      {"PB_CMD__validate_motion" "" "Custom Command"} \
       {"PB_CMD_abort_event" "" "Custom Command"} \
       {"PB_CMD_ask_machine_type" "" "Custom Command"} \
-      {"PB_CMD_before_motion" "" "Custom Command"} \
-      {"PB_CMD_cal_feedrate_by_pitch_and_ss" "" "Custom Command"} \
       {"PB_CMD_clamp_fifth_axis" "" "Custom Command"} \
       {"PB_CMD_clamp_fourth_axis" "" "Custom Command"} \
+      {"PB_CMD_custom_command" "" "Custom Command"} \
       {"PB_CMD_enable_ball_center_output" "" "Custom Command"} \
       {"PB_CMD_end_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_fifth_axis_rotate_move" "" "Custom Command"} \
       {"PB_CMD_fix_RAPID_SET" "" "Custom Command"} \
-      {"PB_CMD_force_once_D" "" "Custom Command"} \
-      {"PB_CMD_force_once_F" "" "Custom Command"} \
-      {"PB_CMD_force_once_G_adjust" "" "Custom Command"} \
-      {"PB_CMD_force_once_M29" "" "Custom Command"} \
-      {"PB_CMD_force_once_S" "" "Custom Command"} \
       {"PB_CMD_fourth_axis_rotate_move" "" "Custom Command"} \
-      {"PB_CMD_init_helix" "" "Custom Command"} \
       {"PB_CMD_init_rotary" "" "Custom Command"} \
       {"PB_CMD_kin__MOM_lintol" "" "Custom Command"} \
       {"PB_CMD_kin__MOM_rotate" "" "Custom Command"} \
@@ -1111,39 +1023,28 @@ Text              ""  0  "Text String"  0
       {"PB_CMD_kin_start_of_path" "" "Custom Command"} \
       {"PB_CMD_kin_start_of_program" "" "Custom Command"} \
       {"PB_CMD_linear_move" "" "Custom Command"} \
-      {"PB_CMD_list_out" "" "Custom Command"} \
-      {"PB_CMD_list_set" "" "Custom Command"} \
-      {"PB_CMD_m29_disable_at_g80" "" "Custom Command"} \
-      {"PB_CMD_minz_bef_set" "" "Custom Command"} \
-      {"PB_CMD_minz_reset" "" "Custom Command"} \
-      {"PB_CMD_minz_tcut_set" "" "Custom Command"} \
       {"PB_CMD_negate_R_value" "" "Custom Command"} \
-      {"PB_CMD_output_at_end" "" "Custom Command"} \
-      {"PB_CMD_output_at_start" "" "Custom Command"} \
       {"PB_CMD_pause" "" "Custom Command"} \
       {"PB_CMD_reload_iks_parameters" "" "Custom Command"} \
       {"PB_CMD_reposition_move" "" "Custom Command"} \
-      {"PB_CMD_reset" "" "Custom Command"} \
       {"PB_CMD_restore_work_plane_change" "" "Custom Command"} \
       {"PB_CMD_retract_move" "" "Custom Command"} \
       {"PB_CMD_reverse_rotation_vector" "" "Custom Command"} \
       {"PB_CMD_revert_dual_head_kin_vars" "" "Custom Command"} \
       {"PB_CMD_revise_new_iks" "" "Custom Command"} \
-      {"PB_CMD_run_postprocess" "" "Custom Command"} \
-      {"PB_CMD_safety_check" "" "Custom Command"} \
       {"PB_CMD_set_csys" "" "Custom Command"} \
       {"PB_CMD_set_cycle_plane" "" "Custom Command"} \
       {"PB_CMD_set_principal_axis" "" "Custom Command"} \
       {"PB_CMD_start_of_alignment_character" "" "Custom Command"} \
       {"PB_CMD_start_of_operation_force_addresses" "" "Custom Command"} \
       {"PB_CMD_suppress_linear_block_plane_code" "" "Custom Command"} \
-      {"PB_CMD_tap_check_spindle_direction" "" "Custom Command"} \
       {"PB_CMD_tool_change_force_addresses" "" "Custom Command"} \
-      {"PB_CMD_tool_inf" "" "Custom Command"} \
       {"PB_CMD_unclamp_fifth_axis" "" "Custom Command"} \
-      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"}
-{Operator_Message} \
-      {"comment_blk" "$mom_operation_name" "Operator Message"}
+      {"PB_CMD_unclamp_fourth_axis" "" "Custom Command"} \
+      {"PB_CMD_custom_command_1" "" "Custom Command"} \
+      {"PB_CMD_custom_command_2" "" "Custom Command"}
+{Operator Message} \
+      {"" "" ""}
 {PB_Spindle} \
       {"" "" ""}
 {PB_ZeroFmt} \
@@ -1155,6 +1056,60 @@ Text              ""  0  "Text String"  0
       {"$pb_rapid_1" "rapid_traverse" ""} \
       {"$pb_rapid_2" "rapid_spindle" ""}
 ## MOM SYS VARIABLES END
+
+## MOM SIM VARIABLES START
+    "$mom_sim_caxis_offset"                   "0.0"
+    "$mom_sim_control_equal_sign"             "="
+    "$mom_sim_control_var_leader"             "\#"
+    "$mom_sim_from_home"                      "29"
+    "$mom_sim_incr_linear_addrs"              ""
+    "$mom_sim_initial_motion"                 "RAPID"
+    "$mom_sim_input_mode"                     "ABS"
+    "$mom_sim_local_wcs"                      "52"
+    "$mom_sim_mach_cs"                        "53"
+    "$mom_sim_macro_modal"                    "ON"
+    "$mom_sim_mode_leader"                    "XYZ"
+    "$mom_sim_mt_axis(X)"                     "X"
+    "$mom_sim_mt_axis(Y)"                     "Y"
+    "$mom_sim_mt_axis(Z)"                     "Z"
+    "$mom_sim_num_machine_axes"               "4"
+    "$mom_sim_output_extended_nc"             "0"
+    "$mom_sim_output_vnc_msg"                 "0"
+    "$mom_sim_power_on_wcs"                   "1"
+    "$mom_sim_pre_com_list"                   ""
+    "$mom_sim_precod_list"                    ""
+    "$mom_sim_prog_rewind_stop_code"          "%"
+    "$mom_sim_rapid_dogleg"                   "0"
+    "$mom_sim_return_home"                    "30"
+    "$mom_sim_set_cutcom"                     "ON"
+    "$mom_sim_set_cycle"                      "ON"
+    "$mom_sim_set_f"                          "1"
+    "$mom_sim_set_s"                          "1"
+    "$mom_sim_set_scale"                      "ON"
+    "$mom_sim_spindle_comp"                   "SPINDLE"
+    "$mom_sim_spindle_direction"              "CLW"
+    "$mom_sim_spindle_jct"                    "TOOL_MOUNT_JCT"
+    "$mom_sim_spindle_mode"                   "REV_PER_MIN"
+    "$mom_sim_stroke_limit"                   "ON"
+    "$mom_sim_tl_adjust"                      "ON"
+    "$mom_sim_user_com_list"                  ""
+    "$mom_sim_vnc_msg_prefix"                 "VNC_MSG::"
+    "$mom_sim_wcs_0"                          "53"
+    "$mom_sim_wcs_1"                          "54"
+    "$mom_sim_wcs_2"                          "55"
+    "$mom_sim_wcs_3"                          "56"
+    "$mom_sim_wcs_4"                          "57"
+    "$mom_sim_wcs_5"                          "58"
+    "$mom_sim_wcs_6"                          "59"
+    "$mom_sim_wcs_rotate"                     "ON"
+    "$mom_sim_wcs_x"                          "0.0"
+    "$mom_sim_wcs_y"                          "0.0"
+    "$mom_sim_wcs_z"                          "0.0"
+    "$mom_sim_zcs_base"                       "X_SLIDE"
+## MOM SIM VARIABLES END
+
+## VNC COMMANDS START
+## VNC COMMANDS END
 
 ## FUNCTION INFO START
 ## FUNCTION INFO END

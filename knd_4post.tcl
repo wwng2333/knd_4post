@@ -5,26 +5,13 @@
 #    这是带轮盘的 4 轴
 #    铣床。
 #
-#  Created by Administrator @ 2020Äê8ÔÂ16ÈÕ 14:12:11 中国标准时间
+#  Created by Robin Lu @ 2020Äê11ÔÂ23ÈÕ 23:20:07 中国标准时间
 #  with Post Builder version 10.0.3.
 #
 ########################################################################
 
 
-
-#=============================================================
-proc PB_CMD___log_revisions { } {
-#=============================================================
-# Dummy command to log changes in this post --
-#
-# 15-Jul-2014 gsl - Initial version
-#
-}
-
-
-
   set cam_post_dir [MOM_ask_env_var UGII_CAM_POST_DIR]
-  set this_post_dir "[file dirname [info script]]"
 
 
   if { ![info exists mom_sys_post_initialized] } {
@@ -42,7 +29,7 @@ proc PB_CMD___log_revisions { } {
         set env(PB_SUPPRESS_UGPOST_DEBUG) 0
      }
  
-     if { $env(PB_SUPPRESS_UGPOST_DEBUG) } {
+     if $env(PB_SUPPRESS_UGPOST_DEBUG) {
         set mom_sys_debug_mode OFF
      }
  
@@ -68,13 +55,14 @@ proc PB_CMD___log_revisions { } {
      set mom_sys_list_file_rows                    "40"
      set mom_sys_list_file_columns                 "30"
      set mom_sys_warning_output                    "OFF"
-     set mom_sys_warning_output_option             "FILE"
      set mom_sys_group_output                      "OFF"
      set mom_sys_list_file_suffix                  "lpt"
      set mom_sys_output_file_suffix                "NC"
      set mom_sys_commentary_output                 "ON"
      set mom_sys_commentary_list                   "x y z 4axis 5axis feed speed"
      set mom_sys_pb_link_var_mode                  "OFF"
+     set mom_sys_use_default_unit_fragment         "ON"
+     set mom_sys_alt_unit_post_name                "knd_4post__IN.pui"
 
 
    #=============================================================
@@ -124,10 +112,6 @@ proc PB_CMD___log_revisions { } {
   }
 
 
-  set mom_sys_use_default_unit_fragment         "ON"
-  set mom_sys_alt_unit_post_name                "knd_4post__IN.pui"
-
-
 ########## SYSTEM VARIABLE DECLARATIONS ##############
   set mom_sys_rapid_code                        "0"
   set mom_sys_linear_code                       "1"
@@ -167,15 +151,14 @@ proc PB_CMD___log_revisions { } {
   set mom_sys_cycle_ret_code(AUTO)              "98"
   set mom_sys_cycle_ret_code(MANUAL)            "99"
   set mom_sys_reset_code                        "92"
+  set mom_sys_feed_rate_mode_code(IPM)          "94"
+  set mom_sys_feed_rate_mode_code(IPR)          "95"
+  set mom_sys_feed_rate_mode_code(FRN)          "93"
   set mom_sys_spindle_mode_code(SFM)            "96"
   set mom_sys_spindle_mode_code(RPM)            "97"
   set mom_sys_return_code                       "28"
-  set mom_sys_feed_rate_mode_code(FRN)          "93"
   set mom_sys_feed_rate_mode_code(MMPM)         "94"
   set mom_sys_feed_rate_mode_code(MMPR)         "95"
-  set mom_sys_feed_rate_mode_code(DPM)          "94"
-  set mom_sys_feed_rate_mode_code(IPM)          "94"
-  set mom_sys_feed_rate_mode_code(IPR)          "95"
   set mom_sys_program_stop_code                 "0"
   set mom_sys_optional_stop_code                "1"
   set mom_sys_end_of_program_code               "2"
@@ -196,7 +179,7 @@ proc PB_CMD___log_revisions { } {
   set mom_sys_sim_cycle_drill_dwell             "0"
   set mom_sys_sim_cycle_drill_deep              "0"
   set mom_sys_sim_cycle_drill_break_chip        "0"
-  set mom_sys_sim_cycle_tap                     "1"
+  set mom_sys_sim_cycle_tap                     "0"
   set mom_sys_sim_cycle_bore                    "0"
   set mom_sys_sim_cycle_bore_drag               "0"
   set mom_sys_sim_cycle_bore_nodrag             "0"
@@ -249,12 +232,10 @@ proc PB_CMD___log_revisions { } {
   set mom_sys_feed_param(MMPM,format)           "Feed_MMPM"
   set mom_sys_feed_param(MMPR,format)           "Feed_MMPR"
   set mom_sys_linearization_method              "angle"
-  set mom_sys_tool_number_max                   "32"
-  set mom_sys_tool_number_min                   "1"
   set mom_sys_post_description                  "这是带轮盘的 4 轴\n\
                                                  铣床。"
   set mom_sys_ugpadvkins_used                   "0"
-  set mom_sys_post_builder_version              "10.0.3"
+  set mom_sys_post_builder_version              "10.0.0"
 
 ####### KINEMATIC VARIABLE DECLARATIONS ##############
   set mom_kin_4th_axis_ang_offset               "0.0"
@@ -374,8 +355,8 @@ proc MOM_start_of_program { } {
 
     set is_from ""
 
-    catch { OPEN_files } ;# Open warning and listing files
-    LIST_FILE_HEADER     ;# List header in commentary listing
+    catch { OPEN_files } ; #open warning and listing files
+    LIST_FILE_HEADER ; #list header in commentary listing
 
 
 
@@ -423,7 +404,7 @@ proc MOM_end_of_program { } {
    MOM_do_template gohome_move
    MOM_do_template end_of_program
    MOM_set_seq_off
-   PB_CMD_list_out
+   MOM_do_template rewind_stop_code
 
 #**** The following procedure lists the tool list with time in commentary data
    LIST_FILE_TRAILER
@@ -706,8 +687,7 @@ proc MOM_bore_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore
    set cycle_init_flag FALSE
 }
@@ -739,8 +719,7 @@ proc MOM_bore_back_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_back
    set cycle_init_flag FALSE
 }
@@ -772,8 +751,7 @@ proc MOM_bore_drag_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_drag
    set cycle_init_flag FALSE
 }
@@ -805,8 +783,7 @@ proc MOM_bore_dwell_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_dwell
    set cycle_init_flag FALSE
 }
@@ -838,8 +815,7 @@ proc MOM_bore_manual_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_manual
    set cycle_init_flag FALSE
 }
@@ -871,8 +847,7 @@ proc MOM_bore_manual_dwell_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_manual_dwell
    set cycle_init_flag FALSE
 }
@@ -904,8 +879,7 @@ proc MOM_bore_no_drag_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_bore_no_drag
    set cycle_init_flag FALSE
 }
@@ -964,14 +938,12 @@ proc MOM_cutcom_on { } {
          CATCH_WARNING "CUTCOM register $mom_cutcom_adjust_register must be within the range between 1 and 99"
       }
    }
-   PB_CMD_force_once_D
 }
 
 
 #=============================================================
 proc MOM_cycle_off { } {
 #=============================================================
-   PB_CMD_m29_disable_at_g80
    MOM_do_template cycle_off
 }
 
@@ -1021,8 +993,7 @@ proc MOM_drill_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_drill
    set cycle_init_flag FALSE
 }
@@ -1054,8 +1025,7 @@ proc MOM_drill_break_chip_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_drill_break_chip
    set cycle_init_flag FALSE
 }
@@ -1087,8 +1057,7 @@ proc MOM_drill_deep_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_drill_deep
    set cycle_init_flag FALSE
 }
@@ -1120,8 +1089,7 @@ proc MOM_drill_dwell_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   MOM_do_template cycle_parameters
+   PB_CMD_custom_command
    MOM_do_template cycle_drill_dwell
    set cycle_init_flag FALSE
 }
@@ -1175,8 +1143,6 @@ proc MOM_end_of_path { } {
 
    MOM_do_template end_of_path_1
    MOM_do_template end_of_path_2
-   PB_CMD_list_set
-   PB_CMD_minz_tcut_set
    global mom_sys_in_operation
    set mom_sys_in_operation 0
 }
@@ -1194,11 +1160,7 @@ proc MOM_first_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
-   PB_CMD_G01_rapid_move
-   MOM_do_template initial_move
-   MOM_do_template initial_move_2
-   MOM_do_template initial_move_3
-   catch { MOM_$mom_motion_event }
+   catch {MOM_$mom_motion_event}
 }
 
 
@@ -1240,10 +1202,6 @@ proc MOM_initial_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
-   PB_CMD_G01_rapid_move
-   MOM_do_template initial_move
-   MOM_do_template initial_move_2
-   MOM_do_template initial_move_3
 
   global mom_programmed_feed_rate
    if { [EQ_is_equal $mom_programmed_feed_rate 0] } {
@@ -1258,7 +1216,7 @@ proc MOM_initial_move { } {
 proc MOM_length_compensation { } {
 #=============================================================
    TOOL_SET MOM_length_compensation
-   PB_CMD_force_once_G_adjust
+   PB_CMD_custom_command_1
    MOM_do_template tool_length_adjust
 }
 
@@ -1292,7 +1250,6 @@ proc MOM_linear_move { } {
    }
 
    PB_CMD_suppress_linear_block_plane_code
-   PB_CMD__combine_rotary_output
    MOM_do_template linear_move
 }
 
@@ -1300,19 +1257,7 @@ proc MOM_linear_move { } {
 #=============================================================
 proc MOM_load_tool { } {
 #=============================================================
-   global mom_tool_change_type mom_manual_tool_change
-   global mom_tool_number mom_next_tool_number
-   global mom_sys_tool_number_max mom_sys_tool_number_min
-
-   if { $mom_tool_number < $mom_sys_tool_number_min || \
-        $mom_tool_number > $mom_sys_tool_number_max } {
-
-      global mom_warning_info
-      set mom_warning_info "Tool number to be output ($mom_tool_number) exceeds limits of\
-                            ($mom_sys_tool_number_min/$mom_sys_tool_number_max)"
-      MOM_catch_warning
-   }
-
+  global mom_tool_change_type mom_manual_tool_change
 }
 
 
@@ -1351,7 +1296,6 @@ proc MOM_rapid_move { } {
 
    set aa(0) X ; set aa(1) Y ; set aa(2) Z
    RAPID_SET
-   PB_CMD__combine_rotary_output
    MOM_do_template rapid_move
    set rapid_spindle_blk {G_adjust G_motion G_mode X Y Z H}
    set rapid_spindle_x_blk {G_adjust G_motion G_mode X H}
@@ -1506,7 +1450,6 @@ proc MOM_spindle_rpm { } {
    MOM_do_template spindle_rpm
 }
 
-
 #=============================================================
 proc MOM_start_of_path { } {
 #=============================================================
@@ -1528,9 +1471,14 @@ proc MOM_start_of_path { } {
    }
 
    PB_CMD_safety_check
-   PB_CMD_start_of_operation_force_addresses
+
    global mom_operation_name
    MOM_output_literal "($mom_operation_name)"
+
+   global mom_tool_name
+   MOM_output_literal "($mom_tool_name)"
+
+   PB_CMD_start_of_operation_force_addresses
 }
 
 
@@ -1573,12 +1521,7 @@ proc MOM_tap_move { } {
    }
 
 
-   PB_CMD_force_once_F
-   PB_CMD_force_once_M29
-   PB_CMD_cal_feedrate_by_pitch_and_ss
-   PB_CMD_tap_check_spindle_direction
-   MOM_do_template cycle_tap_1
-   MOM_do_template tap_2
+   PB_CMD_custom_command
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -1587,19 +1530,7 @@ proc MOM_tap_move { } {
 #=============================================================
 proc MOM_tool_change { } {
 #=============================================================
-   global mom_tool_change_type mom_manual_tool_change
-   global mom_tool_number mom_next_tool_number
-   global mom_sys_tool_number_max mom_sys_tool_number_min
-
-   if { $mom_tool_number < $mom_sys_tool_number_min || \
-        $mom_tool_number > $mom_sys_tool_number_max } {
-
-      global mom_warning_info
-      set mom_warning_info "Tool number to be output ($mom_tool_number) exceeds limits of\
-                            ($mom_sys_tool_number_min/$mom_sys_tool_number_max)"
-      MOM_catch_warning
-   }
-
+  global mom_tool_change_type mom_manual_tool_change
    if { [info exists mom_tool_change_type] } {
       switch $mom_tool_change_type {
          MANUAL { PB_manual_tool_change }
@@ -1616,22 +1547,10 @@ proc MOM_tool_change { } {
 #=============================================================
 proc MOM_tool_preselect { } {
 #=============================================================
-   global mom_tool_preselect_number mom_tool_number mom_next_tool_number
-   global mom_sys_tool_number_max mom_sys_tool_number_min
-
-   if { [info exists mom_tool_preselect_number] } {
-      if { $mom_tool_preselect_number < $mom_sys_tool_number_min || \
-           $mom_tool_preselect_number > $mom_sys_tool_number_max } {
-
-         global mom_warning_info
-         set mom_warning_info "Preselected Tool number ($mom_tool_preselect_number) exceeds limits of\
-                               ($mom_sys_tool_number_min/$mom_sys_tool_number_max)"
-         MOM_catch_warning
-      }
-
+  global mom_tool_preselect_number mom_tool_number mom_next_tool_number
+   if {[info exists mom_tool_preselect_number]} {
       set mom_next_tool_number $mom_tool_preselect_number
    }
-
    MOM_do_template tool_preselect
 }
 
@@ -1651,8 +1570,6 @@ proc PB_auto_tool_change { } {
    }
 
    PB_CMD_tool_change_force_addresses
-   PB_CMD_minz_reset
-   PB_CMD_tool_inf
 }
 
 
@@ -1716,13 +1633,12 @@ proc PB_start_of_program { } {
    }
 
    MOM_set_seq_off
-   PB_CMD__combine_rotary_init
+   MOM_do_template rewind_stop_code
    MOM_do_template start_of_program
    MOM_set_seq_on
    MOM_force Once G_cutcom G_plane G_mode
    MOM_do_template absolute_mode
    PB_CMD_fix_RAPID_SET
-   PB_CMD_reset
 
    if [llength [info commands PB_CMD_kin_start_of_program_2] ] {
       PB_CMD_kin_start_of_program_2
@@ -1767,655 +1683,12 @@ return $f
 
 
 #=============================================================
-proc PB_CMD_G01_rapid_move { } {
+proc PB_CMD___log_revisions { } {
 #=============================================================
-global mom_feed_rapid_output mom_sys_rapid_code feed mom_feed_rapid_value
-if { $mom_feed_rapid_output == 1 } {
-    set mom_sys_rapid_code 1
-    set feed $mom_feed_rapid_value
-    MOM_force Once F
-} else {
-    set feed ""
-    set mom_sys_rapid_code 0
-    MOM_suppress once F
-}
-}
-
-
-#=============================================================
-proc PB_CMD__choose_preferred_solution { } {
-#=============================================================
-# ==> Do not rename this command!
+# Dummy command to log changes in this post --
 #
-#  This command will recompute rotary angles using the alternate solution
-#  of a 5-axis motion based on the setting of "mom_preferred_zone_flag"
-#  as the preferred delimiter.  The choices are:
+# 15-Jul-2014 gsl - Initial version
 #
-#    [XPLUS | XMINUS | YPLUS | YMINUS | FOURTH | FIFTH]
-#
-#
-#  => This command may be attached to Rapid Move or Cycle Plane Change
-#     to influence the solution of the rotary axes.
-#  => Initial rotary angle can be influenced by using a "Rotate" UDE.
-#  => May need to recompute FRN, since length of travel may change.
-#
-#-------------------------------------------------------------
-#<04-24-2014 gsl> Attempt to resolve PR#6738915
-#<07-13-2015 gsl> Reworked logic for FOURTH & FIFTH cases
-#
-#return
-
-
-  #----------------------------------------------------------
-  # Preferred zone flag can be set via an UDE or other means.
-  #
-   #   EVENT preferred_solution
-   #   {
-   #     UI_LABEL "Preferred Solution"
-   #     PARAM choose_preferred_zone
-   #     {
-   #        TYPE b
-   #        DEFVAL "TRUE"
-   #        UI_LABEL "Choose Preferred Zone"
-   #     }
-   #     PARAM preferred_zone_flag
-   #     {
-   #        TYPE o
-   #        DEFVAL "YPLUS"
-   #        OPTIONS "XPLUS","XMINUS","YPLUS","YMINUS","FOURTH","FIFTH"
-   #        UI_LABEL "Preferred Zone"
-   #     }
-   #   }
-
-
-   if { [info exists ::mom_preferred_zone_flag] } {
-
-     # Only handle Rapid & Cycles for the time being,
-     # user may add other cases as desired.
-      if { [string compare "RAPID" $::mom_motion_type] &&\
-           [string compare "CYCLE" $::mom_motion_type] } {
-return
-      }
-
-
-      if { ![info exists ::mom_prev_out_angle_pos] } {
-         array set ::mom_prev_out_angle_pos [array get ::mom_out_angle_pos]
-         MOM_reload_variable -a mom_prev_out_angle_pos
-return
-      }
-
-
-      set co "$::mom_sys_control_out"
-      set ci "$::mom_sys_control_in"
-
-      set __use_alternate 0
-
-      switch $::mom_preferred_zone_flag {
-         XPLUS  {
-            if { !([EQ_is_gt $::mom_pos(0) 0.0] || [EQ_is_zero $::mom_pos(0)]) } {
-               set __use_alternate 1
-            }
-         }
-         XMINUS {
-            if { !([EQ_is_le $::mom_pos(0) 0.0]) } {
-               set __use_alternate 1
-            }
-         }
-         YPLUS  {
-            if { !([EQ_is_gt $::mom_pos(1) 0.0] || [EQ_is_zero $::mom_pos(1)]) } {
-               set __use_alternate 1
-            }
-         }
-         YMINUS {
-            if { !([EQ_is_le $::mom_pos(1) 0.0]) } {
-               set __use_alternate 1
-            }
-         }
-         FOURTH {
-            set del4 [expr abs( $::mom_out_angle_pos(0) - $::mom_prev_out_angle_pos(0) )]
-
-            VMOV 5 ::mom_alt_pos ::mom_pos
-            set out_angle_4th [ROTSET $::mom_pos(3) $::mom_prev_out_angle_pos(0) $::mom_kin_4th_axis_direction\
-                                      $::mom_kin_4th_axis_leader ::mom_sys_leader(fourth_axis)\
-                                      $::mom_kin_4th_axis_min_limit $::mom_kin_4th_axis_max_limit]
-
-            set del4a [expr abs( $out_angle_4th - $::mom_prev_out_angle_pos(0) )]
-
-            if [expr $del4 > $del4a] {
-               set __use_alternate 1
-            }
-         }
-         FIFTH  {
-            set del5 [expr abs( $::mom_out_angle_pos(1) - $::mom_prev_out_angle_pos(1) )]
-
-            VMOV 5 ::mom_alt_pos ::mom_pos
-            set out_angle_5th [ROTSET $::mom_pos(4) $::mom_prev_out_angle_pos(1) $::mom_kin_5th_axis_direction\
-                                      $::mom_kin_5th_axis_leader ::mom_sys_leader(fifth_axis)\
-                                      $::mom_kin_5th_axis_min_limit $::mom_kin_5th_axis_max_limit]
-
-            set del5a [expr abs( $out_angle_5th - $::mom_prev_out_angle_pos(1) )]
-
-            if [expr $del5 > $del5a] {
-               set __use_alternate 1
-            }
-         }
-         default {
-            CATCH_WARNING "$co Preferred delimiter \"$::mom_preferred_zone_flag\" is not available! $ci"
-         }
-      }
-
-
-     # Recompute output when needed
-      if { $__use_alternate } {
-
-         set a4 $::mom_out_angle_pos(0)
-         set a5 $::mom_out_angle_pos(1)
-
-         VMOV 5 ::mom_alt_pos ::mom_pos
-         set ::mom_out_angle_pos(0) [ROTSET $::mom_pos(3) $::mom_prev_out_angle_pos(0) $::mom_kin_4th_axis_direction\
-                                            $::mom_kin_4th_axis_leader ::mom_sys_leader(fourth_axis)\
-                                            $::mom_kin_4th_axis_min_limit $::mom_kin_4th_axis_max_limit]
-         set ::mom_out_angle_pos(1) [ROTSET $::mom_pos(4) $::mom_prev_out_angle_pos(1) $::mom_kin_5th_axis_direction\
-                                            $::mom_kin_5th_axis_leader ::mom_sys_leader(fifth_axis)\
-                                            $::mom_kin_5th_axis_min_limit $::mom_kin_5th_axis_max_limit]
-
-         MOM_reload_variable -a mom_out_angle_pos
-         MOM_reload_variable -a mom_pos
-
-         set msg "$co Use alternate solution : $::mom_preferred_zone_flag \
-                      ($a4 / $a5) -> ($::mom_out_angle_pos(0) / $::mom_out_angle_pos(1)) $ci"
-
-         CATCH_WARNING $msg
-      }
-
-
-     # Recompute output coords for cycles
-      if { ![info exists ::mom_sys_cycle_after_initial] } {
-         set ::mom_sys_cycle_after_initial "FALSE"
-      }
-
-      if { [string match "CYCLE" $::mom_motion_type] } {
-
-         if { [string match "initial_move" $::mom_motion_event] } {
-            set ::mom_sys_cycle_after_initial "TRUE"
-return
-         }
-
-         if { [string match "TRUE" $::mom_sys_cycle_after_initial] } {
-            set ::mom_pos(0) [expr $::mom_pos(0) - $::mom_cycle_rapid_to * $::mom_tool_axis(0)]
-            set ::mom_pos(1) [expr $::mom_pos(1) - $::mom_cycle_rapid_to * $::mom_tool_axis(1)]
-            set ::mom_pos(2) [expr $::mom_pos(2) - $::mom_cycle_rapid_to * $::mom_tool_axis(2)]
-         }
-
-         set ::mom_sys_cycle_after_initial "FALSE"
-
-         if { [string match "Table" $::mom_kin_4th_axis_type] } {
-
-           #<04-16-2014 gsl> "mom_spindle_axis" would have incorporated the direction of head attachment already.
-            if [info exists ::mom_spindle_axis] {
-               VMOV 3 ::mom_spindle_axis ::mom_sys_spindle_axis
-            } else {
-               VMOV 3 ::mom_kin_spindle_axis ::mom_sys_spindle_axis
-            }
-
-         } elseif { [string match "Table" $::mom_kin_5th_axis_type] } {
-
-            VMOV 3 ::mom_tool_axis vec
-
-            switch $::mom_kin_4th_axis_plane {
-               XY {
-                  set vec(2) 0.0
-               }
-               ZX {
-                  set vec(1) 0.0
-               }
-               YZ {
-                  set vec(0) 0.0
-               }
-            }
-
-           #<04-16-2014 gsl> Reworked logic to prevent potential error
-            set len [VEC3_mag vec]
-            if { [EQ_is_gt $len 0.0] } {
-               VEC3_unitize vec ::mom_sys_spindle_axis
-            } else {
-               set ::mom_sys_spindle_axis(0) 0.0
-               set ::mom_sys_spindle_axis(1) 0.0
-               set ::mom_sys_spindle_axis(2) 1.0
-            }
-
-         } else {
-
-            VMOV 3 ::mom_tool_axis ::mom_sys_spindle_axis
-         }
-
-         set ::mom_cycle_feed_to_pos(0)    [expr $::mom_pos(0) + $::mom_cycle_feed_to    * $::mom_sys_spindle_axis(0)]
-         set ::mom_cycle_feed_to_pos(1)    [expr $::mom_pos(1) + $::mom_cycle_feed_to    * $::mom_sys_spindle_axis(1)]
-         set ::mom_cycle_feed_to_pos(2)    [expr $::mom_pos(2) + $::mom_cycle_feed_to    * $::mom_sys_spindle_axis(2)]
-
-         set ::mom_cycle_rapid_to_pos(0)   [expr $::mom_pos(0) + $::mom_cycle_rapid_to   * $::mom_sys_spindle_axis(0)]
-         set ::mom_cycle_rapid_to_pos(1)   [expr $::mom_pos(1) + $::mom_cycle_rapid_to   * $::mom_sys_spindle_axis(1)]
-         set ::mom_cycle_rapid_to_pos(2)   [expr $::mom_pos(2) + $::mom_cycle_rapid_to   * $::mom_sys_spindle_axis(2)]
-
-         set ::mom_cycle_retract_to_pos(0) [expr $::mom_pos(0) + $::mom_cycle_retract_to * $::mom_sys_spindle_axis(0)]
-         set ::mom_cycle_retract_to_pos(1) [expr $::mom_pos(1) + $::mom_cycle_retract_to * $::mom_sys_spindle_axis(1)]
-         set ::mom_cycle_retract_to_pos(2) [expr $::mom_pos(2) + $::mom_cycle_retract_to * $::mom_sys_spindle_axis(2)]
-      }
-   }
-}
-
-
-#=============================================================
-proc PB_CMD__combine_rotary_check { } {
-#=============================================================
-# Combine consecutive rotary moves
-#
-#
-# These custom commands will allow you to combine consecutive
-# rotary moves into a single move when there is no change in
-# X, Y and Z.
-#
-# Motion types that can be combined are:
-#     FIRSTCUT, CUT, STEPOVER & RAPID
-#
-# ==> This function will only work in NX3 or later.
-#
-# - Add PB_CMD__combine_rotary_init to Start of Program marker
-# - Add PB_CMD__combine_rotary_output to Linear and/or Rapid Move events
-#   before any blocks to be output
-# - Add PB_CMD__combine_rotary_check call in custom command PB_CMD_before_motion
-#
-# The combining of blocks will terminate when the rotary axis
-# being combined reverses or the total number of degrees of
-# the combined rotary move would have exceeded 180 degrees.
-#
-# The current linear or rapid move will be suppressed if current and
-# next motions are of the same type (FIRSTCUT, CUT, STEPOVER or RAPID).
-#
-#-------------------------------------------------------------
-# 27-Jul-2010 gsl - Added comments and rewrote by removing
-#                   the need of "format" commands, number of
-#                   decimal places and some funny logics
-# 30-Apr-2013 gsl - Added use of ROUND (ugpost_base)
-# 13-Jun-2013 gsl - Preserve or recompute feedrate when moves are combined
-# 13-Mov-2013 gsl - Allow pure rotary of rapid moves to be combined
-# 19-Mov-2013 gsl - Revised the way to recompute FRN
-#
-
-   # Skip execution, if function of combining rotary moves is not activated.
-   #
-    global mom_sys_combine_rotary_mode
-    if { ![info exists mom_sys_combine_rotary_mode] } {
-return
-    }
-
-
-   # This command should be called by PB_CMD_before_motion
-   #
-    if { ![CALLED_BY "PB_CMD_before_motion"] } {
-return
-    }
-
-
-    global mom_sys_skip_move
-
-    global mom_nxt_pos
-    global mom_pos
-    global mom_prev_pos
-    global mom_nxt_motion_type
-    global mom_motion_type
-
-    global prev_4th_output
-    global prev_5th_output
-    global last_4th_output
-    global last_5th_output
-    global last_4th_dir
-    global last_5th_dir
-
-
-    set mom_sys_skip_move "NO"
-
-
-   # Read-ahead must be enabled
-   #
-    if { [info exists mom_nxt_pos] && [info exists mom_nxt_motion_type] } {
-
-        global mom_kin_machine_resolution
-        global mom_kin_4th_axis_min_incr
-        global mom_kin_5th_axis_min_incr
-
-        set tolm $mom_kin_machine_resolution
-        set tol4 $mom_kin_4th_axis_min_incr
-        set tol5 $mom_kin_5th_axis_min_incr
-
-       # Initialize previous position
-        if { ![info exists prev_4th_output] } { set prev_4th_output [ROUND $mom_pos(3) $tol4] }
-        if { ![info exists prev_5th_output] } { set prev_5th_output [ROUND $mom_pos(4) $tol5] }
-
-       # Retain previous position
-        set P4 $prev_4th_output
-        set P5 $prev_5th_output
-
-        set prev_4th_output [ROUND $mom_pos(3) $tol4]
-        set prev_5th_output [ROUND $mom_pos(4) $tol5]
-
-       # Initialize last position
-        if { ![info exists last_4th_output] } { set last_4th_output $P4 }
-        if { ![info exists last_5th_output] } { set last_5th_output $P5 }
-
-       # Initialize last direction indicator
-        if { ![info exists last_4th_dir] } { set last_4th_dir 0 }
-        if { ![info exists last_5th_dir] } { set last_5th_dir 0 }
-
-
-        set PX [ROUND $mom_prev_pos(0) $tolm]
-        set PY [ROUND $mom_prev_pos(1) $tolm]
-        set PZ [ROUND $mom_prev_pos(2) $tolm]
-
-        set NX [ROUND $mom_nxt_pos(0) $tolm]
-        set NY [ROUND $mom_nxt_pos(1) $tolm]
-        set NZ [ROUND $mom_nxt_pos(2) $tolm]
-
-        set N4 [ROUND $mom_nxt_pos(3) $tol4]
-        set N5 [ROUND $mom_nxt_pos(4) $tol5]
-
-        set CX [ROUND $mom_pos(0) $tolm]
-        set CY [ROUND $mom_pos(1) $tolm]
-        set CZ [ROUND $mom_pos(2) $tolm]
-
-        set C4 [ROUND $mom_pos(3) $tol4]
-        set C5 [ROUND $mom_pos(4) $tol5]
-
-        set D4 [expr $C4 - $P4]
-
-        if [EQ_is_equal $D4 0] {
-            set cur_4th_dir 0
-        } elseif { ([EQ_is_gt $D4 -180] && [EQ_is_lt $D4 0]) || [EQ_is_gt $D4 180] } {
-            set cur_4th_dir -1
-        } else {
-            set cur_4th_dir 1
-        }
-
-        set T4 [expr $N4 - $last_4th_output]
-
-        if [EQ_is_equal $T4 0] {
-            set tot_4th_dir 0
-        } elseif { ([EQ_is_gt $T4 -180] && [EQ_is_lt $T4 0]) || [EQ_is_gt $T4 180] } {
-            set tot_4th_dir -1
-        } else {
-            set tot_4th_dir 1
-        }
-
-        if { [EQ_is_lt [expr $cur_4th_dir * $last_4th_dir] 0] ||\
-             [EQ_is_lt [expr $cur_4th_dir * $tot_4th_dir] 0] } {
-            set switch_dir_4th "YES"
-        } else {
-            set switch_dir_4th "NO"
-        }
-
-        set D5 [expr $C5 - $P5]
-
-        if [EQ_is_equal $D5 0] {
-            set cur_5th_dir 0
-        } elseif { ([EQ_is_gt $D5 -180] && [EQ_is_lt $D5 0]) || [EQ_is_gt $D5 180] } {
-            set cur_5th_dir -1
-        } else {
-            set cur_5th_dir 1
-        }
-
-        set T5 [expr $N5 - $last_5th_output]
-
-        if [EQ_is_equal $T5 0] {
-            set tot_5th_dir 0
-        } elseif { ([EQ_is_gt $T5 -180] && [EQ_is_lt $T5 0]) || [EQ_is_gt $T5 180] } {
-            set tot_5th_dir -1
-        } else {
-            set tot_5th_dir 1
-        }
-
-        if { [EQ_is_lt [expr $cur_5th_dir * $last_5th_dir] 0] ||\
-             [EQ_is_lt [expr $cur_5th_dir * $tot_5th_dir] 0] } {
-            set switch_dir_5th "YES"
-        } else {
-            set switch_dir_5th "NO"
-        }
-
-
-        if { (![string compare "CUT"      $mom_motion_type] && ![string compare "CUT"      $mom_nxt_motion_type]) ||\
-             (![string compare "FIRSTCUT" $mom_motion_type] && ![string compare "FIRSTCUT" $mom_nxt_motion_type]) ||\
-             (![string compare "RAPID"    $mom_motion_type] && ![string compare "RAPID"    $mom_nxt_motion_type]) ||\
-             (![string compare "STEPOVER" $mom_motion_type] && ![string compare "STEPOVER" $mom_nxt_motion_type]) } {
-
-                if {![EQ_is_equal $P4 $C4] && [EQ_is_equal $P5 $C5] &&\
-                    ![EQ_is_equal $N4 $C4] && [EQ_is_equal $N5 $C5] &&\
-                     $mom_sys_combine_rotary_mode != 5 && ![string compare "NO" $switch_dir_4th] } {
-
-                    set mom_sys_skip_move "YES"
-                    MOM_force once fourth_axis
-                    set mom_sys_combine_rotary_mode "4"
-
-                } elseif\
-                   { [EQ_is_equal $P4 $C4] && ![EQ_is_equal $P5 $C5] &&\
-                     [EQ_is_equal $N4 $C4] && ![EQ_is_equal $N5 $C5] &&\
-                     $mom_sys_combine_rotary_mode != 4 && ![string compare "NO" $switch_dir_5th] } {
-
-                    set mom_sys_skip_move "YES"
-                    MOM_force once fifth_axis
-                    set mom_sys_combine_rotary_mode "5"
-                }
-        }
-
-
-       # Skip next output -
-       # Preserve current feedrate
-        global mom_user_combined_rotary_feed feed
-        global mom_sys_contour_feed_mode
-
-        if { ![string compare $mom_sys_skip_move "YES"] } {
-
-          # Recompute feedrate, if it's FRN
-           if { [string match "FRN" $mom_sys_contour_feed_mode(ROTARY)] } {
-
-              if { ![info exists mom_user_combined_rotary_feed] } {
-                 set mom_user_combined_rotary_feed 0.0
-                 set current_feed_num 1.0
-              } else {
-                 set current_feed_num $mom_user_combined_rotary_feed
-              }
-
-              set mom_user_combined_rotary_feed \
-                  [expr $current_feed_num * $feed / ( $mom_user_combined_rotary_feed + $feed )]
-
-           } else {
-              if { ![info exists mom_user_combined_rotary_feed] } {
-                 set mom_user_combined_rotary_feed $feed
-              }
-           }
-return
-        }
-
-        if { [info exists mom_user_combined_rotary_feed] } {
-           set feed $mom_user_combined_rotary_feed
-           unset mom_user_combined_rotary_feed
-        }
-
-        set mom_sys_combine_rotary_mode "1"
-
-        set last_4th_output $C4
-        set last_5th_output $C5
-        set last_4th_dir $cur_4th_dir
-        set last_5th_dir $cur_5th_dir
-    }
-}
-
-
-#=============================================================
-proc PB_CMD__combine_rotary_init { } {
-#=============================================================
-# This command should only be called in "Start of Program"
-#
-#-------------------------------------------------------------
-# 06-May-2013 gsl - Added ROUND, if not present, to work with older NX/Post
-#
-
-# ==> Uncomment next statement to disable the combine-rotary functionality
-# return
-
-
-   # This command should be called by PB_start_of_program
-   #
-    if { ![CALLED_BY "PB_start_of_program"] } {
-return
-    }
-
-
-   # Function of combining rotary moves can only be used when
-   # "MOM_abort_event" is available (NX3 & up).
-   #
-    if { ![CMD_EXIST MOM_abort_event] } {
-        CATCH_WARNING "MOM_abort_event is an invalid command.  You must use NX3 or newer."
-return
-    }
-
-
-
-   #<04-30-2013 gsl> This version only works when ROUND command is available.
-   #
-    if ![CMD_EXIST ROUND] {
-
-    uplevel #0 {
-       #===============================================================================
-       proc ROUND { value {resol 1} } {
-       #===============================================================================
-       # This command rounds off a number by the given output resolution.
-       # When the resolution is not specified, it rounds the number to an integer.
-       #
-       #<04-24-2013 gsl> Initial implementation
-       #
-          set ret_val $value
-
-          # Perform regular rounding when output resolution is "1".
-          if { [EQ_is_equal $resol 1] } \
-          {
-             return [expr round( $value )]
-          }
-
-          # When the output resolution is near "0", the original value is returned.
-          if { ![EQ_is_zero $resol] } \
-          {
-              if [EQ_is_zero $value] \
-              {
-                 set ret_val 0.0
-
-              } else \
-              {
-                 set sign 1
-
-                 set x [expr $value / $resol]
-
-                 # Either value or resol can be negative; and that will cause x to be negative.
-                 if [expr $x < 0.0] \
-                 {
-                    set sign -1
-                 }
-
-                 # To compensate for the loss of floating point accuracy
-                 set x [expr floor( abs($x) + 0.501 )]
-
-                 set ret_val [expr $sign * $x * $resol]
-              }
-           }
-
-           return $ret_val
-       }
-
-    } ;# uplevel
-    }
-
-
-
-   # Clear possible residual
-    global mom_sys_combine_rotary_mode mom_sys_skip_move
-
-    if { [info exists mom_sys_skip_move] } {
-        unset mom_sys_skip_move
-    }
-
-
-   # Enable combining rotary moves with read-ahead function
-   #
-    global mom_kin_read_ahead_next_motion
-
-    set mom_sys_combine_rotary_mode     "1"
-    set mom_kin_read_ahead_next_motion  "TRUE"
-
-    MOM_reload_kinematics
-}
-
-
-#=============================================================
-proc PB_CMD__combine_rotary_output { } {
-#=============================================================
-# This command should be called by Linear and/or Rapid Move event
-# to skip the output when consecutive rotary moves can be combined.
-#
-
-   # Skip execution, if function of combining rotary moves is not activated.
-   # - This flag should be set in PB_CMD__combine_rotary_init
-   #
-    global mom_sys_combine_rotary_mode
-    if { ![info exists mom_sys_combine_rotary_mode] } {
-return
-    }
-
-
-   # This command should be called by MOM_linear_move or MOM_rapid_move
-   #
-    if { ![CALLED_BY "MOM_linear_move"] && ![CALLED_BY "MOM_rapid_move"] } {
-return
-    }
-
-
-   # Flag set in PB_CMD__combine_rotary_check to tell if next block should be combined.
-   #
-    global mom_sys_skip_move
-
-   # Need to skip output, exchange the end points' info then abort
-   #
-    if { ![string compare $mom_sys_skip_move "YES"] } {
-
-        global mom_pos mom_prev_pos
-        global mom_mcs_goto mom_prev_mcs_goto
-
-        VMOV 5 mom_prev_pos mom_pos
-        VMOV 3 mom_prev_mcs_goto mom_mcs_goto
-
-        MOM_reload_variable -a mom_pos
-        MOM_reload_variable -a mom_mcs_goto
-
-        MOM_abort_event
-    }
-}
-
-
-#=============================================================
-proc PB_CMD__config_post_options { } {
-#=============================================================
-# <PB v10.03>
-# This command should be called by Start-of-Program event;
-# it enables users to set options (not via UI) that would
-# affect the behavior and output of this post.
-#
-# Comment out next line to activate this command
-return
-
-  # <PB v10.03>
-  # - Feed mode for RETRACT motion has been handled as RAPID,
-  #   next option enables users to treat RETRACT as CONTOURing.
-  #
-   if { ![info exists ::mom_sys_retract_feed_mode] } {
-      set ::mom_sys_retract_feed_mode  "CONTOUR"
-   }
 }
 
 
@@ -2444,65 +1717,6 @@ proc PB_CMD__manage_part_attributes { } {
 return
    }
 
-}
-
-
-#=============================================================
-proc PB_CMD__validate_motion { } {
-#=============================================================
-# Validate legitimate motion outputs of different post configurations -
-# ==> Do not rename this command!
-#
-# For a 4-axis Table - The spindle axis (Vs) and tool axis (Vt) should be either co-linear or (||)
-#                      BOTH on the plane of rotation (Vp).
-# For a 4-axis Head  - The spindle axis (Vs) should be identical to the tool axis (Vt) and (&&)
-#                      must lie ON the plane of rotation (Vp).
-#
-# - "mom_spindle_axis" has accounted for the direction change resulted from
-#   the angled-head attachment added to the spindle.
-# - The max/min of the rotary axis will further constraint the reachability.
-# - Vectors' DOT product will be 0 or +/-1. (Vt.Vp => 0 || +/-1)
-#
-# ==> This command can be enhanced to validate outputs of other post configurations.
-#
-#   Return: 1 = Motion OK
-#           0 = Motion Bad
-#-------------------------------------------------------------
-# 04-29-2015 gsl - New
-#
-
-# return 1
-
-
-  # "mom_spindle_axis" would include transformation of head attachment.
-   if [info exists ::mom_spindle_axis] {
-      VMOV 3 ::mom_spindle_axis ::mom_sys_spindle_axis
-   } else {
-      VMOV 3 ::mom_kin_spindle_axis ::mom_sys_spindle_axis
-   }
-
-   if { [string match "4_axis_table" $::mom_kin_machine_type] } {
-
-      if { !( [EQ_is_equal [expr abs([VEC3_dot ::mom_sys_spindle_axis ::mom_tool_axis])] 1.0] || \
-              ( [EQ_is_equal [VEC3_dot ::mom_sys_spindle_axis ::mom_kin_4th_axis_vector] 0.0] && \
-                [EQ_is_equal [VEC3_dot ::mom_tool_axis        ::mom_kin_4th_axis_vector] 0.0] ) ) } {
-
-         CATCH_WARNING "Illegal motion for 4-axis table machine"
-         return 0
-      }
-   }
-
-   if { [string match "4_axis_head" $::mom_kin_machine_type] } {
-
-      if { !( [EQ_is_equal [VEC3_dot ::mom_sys_spindle_axis ::mom_tool_axis] 1.0] && \
-              [EQ_is_equal [VEC3_dot ::mom_sys_spindle_axis ::mom_kin_4th_axis_vector] 0.0] ) } {
-
-         CATCH_WARNING "Illegal motion for 4-axis head machine"
-         return 0
-      }
-   }
-
-   return 1
 }
 
 
@@ -2566,66 +1780,6 @@ return $mom_kin_machine_type
 
 
 #=============================================================
-proc PB_CMD_before_motion { } {
-#=============================================================
-PB_CMD__combine_rotary_check
-PB_CMD_minz_bef_set
-}
-
-
-#=============================================================
-proc PB_CMD_cal_feedrate_by_pitch_and_ss { } {
-#=============================================================
-# Calculate feedrate by thread pitch and spindle speed.
-#
-# 2014-03-20 levi - Initial version.
-# 2015-08-21 szl  - Enhance the warning message when users set wrong pitch and wrong spindle speed,fix PR7463004.
-
-  global mom_cycle_thread_pitch
-  global mom_tool_pitch
-  global mom_spindle_speed
-  global feed
-  global feed_mode
-  global mom_operation_name
-  global mom_cycle_feed_rate_mode
-  global mom_cycle_feed_rate
-  global mom_tool_name
-  global mom_feed_cut_unit
-  global mom_spindle_rpm
-
-# Calculate the pitch, get it from model first, if can't get from model, use the pitch of tool.
-  if { [info exists mom_tool_pitch]} {
-     if {[info exists mom_cycle_thread_pitch]} {
-        set pitch $mom_cycle_thread_pitch
-     } else {
-        set pitch $mom_tool_pitch
-     }
-  } else {
-     MOM_display_message "$mom_operation_name: No pitch defined on the tool. Please use Tap tool.\
-                          \n Post Processing will be aborted." "Postprocessor error message" "E"
-     MOM_abort "*** User Abort Post Processing *** "
-  }
-
-
-
-# Calculate the F parameter of cycle, if the feedrate mode is MMPR or IPR, use pitch as feedrate,
-# if the feedrate mode is MMPM or IPM, calculate it by $pitch*$mom_spindle_speed. Don't use the feedrate
-# value set in NX directly.
-  if {![info exists mom_spindle_speed] || [EQ_is_zero $mom_spindle_speed]} {
-      MOM_display_message "$mom_operation_name : spindle speed is 0.\
-                           \n Post Processing will be aborted." "Postprocessor error message" "E"
-      MOM_abort "*** User Abort Post Processing *** "
-  }
-
-  if {[string match "*PR" $feed_mode]} {
-     set feed $pitch
-  } else {
-     set feed [expr $pitch*$mom_spindle_rpm]
-  }
-}
-
-
-#=============================================================
 proc PB_CMD_clamp_fifth_axis { } {
 #=============================================================
 #  This command is used by auto clamping to output the code
@@ -2650,6 +1804,27 @@ proc PB_CMD_clamp_fourth_axis { } {
 #
 
    MOM_output_literal "M10"
+}
+
+
+#=============================================================
+proc PB_CMD_custom_command { } {
+#=============================================================
+MOM_force once F
+}
+
+
+#=============================================================
+proc PB_CMD_custom_command_1 { } {
+#=============================================================
+MOM_force once G43
+}
+
+
+#=============================================================
+proc PB_CMD_custom_command_2 { } {
+#=============================================================
+MOM_force once G43
 }
 
 
@@ -2963,46 +2138,6 @@ return
 
 
 #=============================================================
-proc PB_CMD_force_once_D { } {
-#=============================================================
-MOM_force once D
-}
-
-
-#=============================================================
-proc PB_CMD_force_once_F { } {
-#=============================================================
-MOM_force once F
-}
-
-
-#=============================================================
-proc PB_CMD_force_once_G_adjust { } {
-#=============================================================
-MOM_force once G_adjust
-}
-
-
-#=============================================================
-proc PB_CMD_force_once_M29 { } {
-#=============================================================
-global m29_enable
-
-if { ![info exists m29_enable] } {
-set m29_enable 1
-MOM_force once user_add_2 S
-}
-}
-
-
-#=============================================================
-proc PB_CMD_force_once_S { } {
-#=============================================================
-MOM_force once S
-}
-
-
-#=============================================================
 proc PB_CMD_fourth_axis_rotate_move { } {
 #=============================================================
 #  This command is used by the ROTATE ude command to output a
@@ -3018,6 +2153,24 @@ proc PB_CMD_fourth_axis_rotate_move { } {
    MOM_do_template fourth_axis_rotate_move
 }
 
+#=============================================================
+proc PB_CMD_safety_check { } {
+#=============================================================
+	global mom_spindle_speed
+	global mom_operation_name
+	global mom_tool_number
+
+	if { $mom_spindle_speed == 0 } {
+		set errmes "\n\n $mom_operation_name 的 转速 等于0 S=0 请检查\n\n"
+		MOM_abort "$errmes"
+	}
+
+	if { $mom_tool_number == 0 } {
+		set errmes "\n\n $mom_operation_name 的 刀具号 未设定 请检查\n\n"
+		MOM_abort "$errmes"
+	}
+
+}
 
 #=============================================================
 proc PB_CMD_init_helix { } {
@@ -3028,11 +2181,11 @@ uplevel #0 {
 # anytime it is loaded as a slave post of a linked post.
 #
 # This procedure can be used to enable your post to output helix.
-# You can choose from the following options to format the circle
+# You can choose from the following options to format the circle 
 # block template to output the helix parameters.
 #
 
-set mom_sys_helix_pitch_type    "rise_radian"
+set mom_sys_helix_pitch_type	"rise_radian"  
 
 #
 # The default setting for mom_sys_helix_pitch_type is "rise_radian".
@@ -3043,7 +2196,7 @@ set mom_sys_helix_pitch_type    "rise_radian"
 #    "none"                     Will suppress the output of pitch.
 #    "other"                    Allows you to calculate the pitch
 #                               using your own formula.
-#
+# 
 # This custom command uses the block template circular_move to output
 # the helix block.  If your post uses a block template with a different
 # name, you must edit the line that outputs the helix block.
@@ -3051,15 +2204,15 @@ set mom_sys_helix_pitch_type    "rise_radian"
 #
 #  The following variable deines the output mode for helical records.
 #
-#  FULL_CIRCLE  -- This mode will output a helix record for each 360
+#  FULL_CIRCLE  -- This mode will output a helix record for each 360 
 #                  degrees of the helix.
-#  QUADRANT  --    This mode will output a helix record for each 90
+#  QUADRANT  --    This mode will output a helix record for each 90 
 #                  degrees of the helix.
 #  LINEAR  --      This mode will output the entire helix as linear gotos.
 #  END_POINT --    This mode will assume the control can define an entire
 #                  helix in a single block.
 
-   set mom_kin_helical_arc_output_mode FULL_CIRCLE
+   set mom_kin_helical_arc_output_mode QUADRANT
 
    MOM_reload_kinematics
 
@@ -3087,17 +2240,16 @@ proc MOM_helix_move { } {
       rise_radian { set pitch [expr $mom_helix_pitch / ($PI * 2.0)]}
       other {
 #
-#    Place your custom helix pitch code here
+#	Place your custom helix pitch code here
 #
       }
       default { set mom_sys_helix_pitch_type "none" }
    }
-
-#   MOM_force once X Y Z
+    
+   MOM_force once X Y Z
 
    if { [string compare "none" $mom_sys_helix_pitch_type] } {
       MOM_force once I J K
-
 
    switch $mom_pos_arc_plane {
       XY { MOM_suppress once K ; MOM_force once I J }
@@ -3339,7 +2491,7 @@ return
    }
 
    if { $axis == 0 } {
-      CATCH_WARNING "Invalid rotary axis ($mom_rotate_axis_type) has been specified."
+      CATCH_WARNING "Invalid rotary axis"
       MOM_abort_event
    }
 
@@ -3590,17 +2742,6 @@ return
    }
 
 
-  # Validate legitimate motion
-   if { ![VALIDATE_MOTION] } {
-
-     # PB_CMD_abort_event should be revised to handle the new abort level.
-     # To abort the motion completely, it should not unset mom_sys_abort_next_event immediately.
-
-      set ::mom_sys_abort_next_event 3
-      return
-   }
-
-
   # Lock on and not circular move
    global mom_sys_lock_status  ;# Set in MOM_lock_axis
    global mom_current_motion
@@ -3638,12 +2779,8 @@ return
 #=============================================================
 proc PB_CMD_kin_before_output { } {
 #=============================================================
-# Broker command ensuring PB_CMD_before_output, if present, gets executed
+# Broker command ensuring PB_CMD_before_output,if present, gets executed
 # by MOM_before_output.
-#
-# ==> DO NOT add anything here!
-# ==> All customization must be done in PB_CMD_before_output!
-# ==> PB_CMD_before_output MUST NOT call any "MOM_output" commands!
 #
    if [llength [info commands PB_CMD_before_output] ] {
       PB_CMD_before_output
@@ -3737,6 +2874,7 @@ proc PB_CMD_kin_feedrate_set { } {
       }
 
       FROM -
+      RETRACT -
       RETURN -
       LIFT -
       TRAVERSAL -
@@ -3752,21 +2890,6 @@ proc PB_CMD_kin_feedrate_set { } {
          } else {
             SUPER_FEED_MODE_SET CONTOUR
          }
-      }
-   }
-
-  # Treat RETRACT as cutting when specified
-   global mom_sys_retract_feed_mode
-   if { [string match "RETRACT" $mom_motion_type] } {
-
-      if { [info exist mom_sys_retract_feed_mode] && [string match "CONTOUR" $mom_sys_retract_feed_mode] } {
-         if { [EQ_is_zero $f_pm] && [EQ_is_zero $f_pr] } {
-            SUPER_FEED_MODE_SET RAPID
-         } else {
-            SUPER_FEED_MODE_SET CONTOUR
-         }
-      } else {
-         SUPER_FEED_MODE_SET RAPID
       }
    }
 
@@ -3962,24 +3085,9 @@ proc MOM_rotate { } {
 #=============================================================
 proc MOM_lock_axis { } {
 #=============================================================
-# This command handles a Lock Axis UDE.
-#
-# Key parameters set in UDE -
-#   mom_locke_axis               :  [ XAXIS | YAXIS | ZAXIS | AAXIS | BAXIS | CAXIS | FOURTH | FIFTH | OFF ]
-#   mom_locke_axis_plane         :  [ XYPLANE | YZPLANE | ZXPLANE | NONE ]
-#   mom_locke_axis_value         :  Angle or coordinate value in Absolute Coordinates System
-#   mom_locke_axis_value_defined :  [ 0 | 1 ]
-
   global mom_sys_lock_value mom_sys_lock_plane
   global mom_sys_lock_axis mom_sys_lock_status
 
- # Check if the rotary axis is the locked axis, it must be the 4th axis for a 4-axis machine,
- # or the 5th axis for a 5-axis machine. Otherwise, an error will be returned, or lock-axis will be turned off.
- #
- # It determines the locked axis  (axis: 0=X, 1=Y, 2=Z, 3=4th, 4=5th),
- #                   locked plane (plane: 0=YZ, 1=ZX, 2=XY), and
- #                   locked value (value: angle or coordinate that can be carried out)
- #
    set status [SET_LOCK axis plane value]
 
    # Handle "error" condition returned from SET_LOCK
@@ -4185,7 +3293,7 @@ proc PB_CMD_kin_start_of_program { } {
 
          lappend command_list  PB_CMD_kin_init_mill_xzc
          lappend command_list  PB_CMD_kin_mill_xzc_init
-         lappend command_list  PB_CMD_kin_init_mill_turn
+        # lappend command_list  PB_CMD_kin_init_mill_turn
          lappend command_list  PB_CMD_kin_mill_turn_initialize
       }
    }
@@ -4236,223 +3344,6 @@ proc PB_CMD_linear_move { } {
 
 
 #=============================================================
-proc PB_CMD_list_out { } {
-#=============================================================
-global ptp_file_name
-set tmp_file_name "${ptp_file_name}_"
-if {[file exists $tmp_file_name]} {
-MOM_remove_file $tmp_file_name
-}
-MOM_close_output_file $ptp_file_name
-file rename $ptp_file_name $tmp_file_name
-set ifile [open $tmp_file_name r]
-set ofile [open $ptp_file_name w]
-
-global tooli numbers toolnumbers sametoolZmin
-global mom_output_file_basename
-global mom_part_name
-global  mom_date numbers
-puts $ofile "%"
-#puts $ofile "(Equipment: FANUC)"
-
-global mom_part_name
-#puts $ofile "(Part: $mom_part_name)"
-global mom_date
-set datee [clock format [clock seconds] -format "%Y/%m/%d %H:%M /%w"]
-#puts $ofile "($datee)"
-global mom_output_file_basename
-#puts $ofile "(NC name: $mom_output_file_basename.nc)"
-global mom_machine_time
-#puts $ofile "(Machine time: [format "%.2f" $mom_machine_time] MIN)"
-#puts $ofile "(Total Tool:$numbers)"
-global toollistend ii iii Step numbers sametooltcut
-
-for { set ii 0 } { $ii < $numbers } { incr ii } {
-set iii [expr $ii+1 ]
-#puts $ofile "($toollistend($ii) MinZ=[format "%.2f" $sametoolZmin($toolnumbers($iii))])"
-puts $ofile "($toollistend($ii) MinZ=[string trimright [format "%.2f" $sametoolZmin($toolnumbers($iii))] "0"] Time=[string trimright [format "%.2f" $sametooltcut($toolnumbers($iii))] "0"]MIN)"
-
-}
-
-set buf ""
-while { [gets $ifile buf] > 0 } {
-puts $ofile $buf
-}
-puts $ofile "%"
-close $ifile
-close $ofile
-MOM_remove_file $tmp_file_name
-MOM_open_output_file $ptp_file_name
-
-
-
-}
-
-
-#=============================================================
-proc PB_CMD_list_set { } {
-#=============================================================
-global Step t mom_tool_number i toollistendi toollistend hhh ddd td
-global mom_cutcom_adjust_register mom_tool_cutcom_register
-global mom_tool_adjust_register mom_tool_length_adjust_register
-global mom_tool_number mom_tool_name rr2
-global mom_tool_name mom_tool_diameter mom_tool_number toollistendi toollistend
-
-global mom_cutcom_type mom_tool_cutcom_register mom_tool_diameter
-if {[info exists mom_cutcom_type] && $mom_cutcom_type != 0 } {
-set td $ddd
-} else {
-set td 0
-}
-set Step [expr $Step+1]
-set t($Step) $mom_tool_number
-for { set i 0 } { $i < $Step } { incr i } {
-if { $t($i) == $mom_tool_number } {
-set Step [expr $Step-1]
-return
-}
-}
-
-global toollist  mom_tool_cutcom_register mom_cutcom_adjust_register mom_tool_name mom_tool_diameter rr2 mom_tool_adjust_register mom_tool_adj_reg_defined mom_tool_number
-set tdi [ format  "%.2f" $mom_tool_diameter]
-if [info exists mom_tool_number] {
-    set tt $mom_tool_number
-} else {
-    set tt 0
-}
-
-set tt [format "%02.0f" $tt]
-set th [format "%02.0f" $hhh]
-
-
-  global mom_next_oper_has_tool_change
-  global mom_current_oper_is_last_oper_in_program
-
-
-if { $td == 0 } {
-lappend toollistend($toollistendi) T$mom_tool_number=$mom_tool_name D=[string trimright [ format  "%.3f" $mom_tool_diameter ] "0"] $rr2 H$th
-} else {
-lappend toollistend($toollistendi)  T$mom_tool_number=$mom_tool_name D=[string trimright [ format  "%.3f" $mom_tool_diameter ] "0"] $rr2 H$th D$td
-}
-set toollistendi [expr $toollistendi+1]
-if {([info exists mom_next_oper_has_tool_change] && $mom_next_oper_has_tool_change == "YES") || ([info exists mom_current_oper_is_last_oper_in_program] && $mom_current_oper_is_last_oper_in_program == "YES")} {
-
-if {[info exists mom_cutcom_type] && $mom_cutcom_type != 0 } {
-unset mom_cutcom_type
-}
-}
-
-
-}
-
-
-#=============================================================
-proc PB_CMD_m29_disable_at_g80 { } {
-#=============================================================
-if { [info exists m29_enable] } {
-    unset m29_enable
-}
-}
-
-
-#=============================================================
-proc PB_CMD_minz_bef_set { } {
-#=============================================================
-global max_x
-global min_x
-global max_y
-global min_y
-global max_z
-global min_z
-global mom_pos
-global mom_cycle_rapid_to_pos
-global mom_cycle_feed_to_pos
-global mom_cycle_retract_to_pos
-global mom_motion_type
-if { $mom_pos(0) < $min_x  }  {  set min_x  $mom_pos(0)  }
-if { $mom_pos(0) > $max_x  }  {  set max_x  $mom_pos(0)  }
-if { $mom_pos(1) < $min_y  }  {  set min_y  $mom_pos(1)  }
-if { $mom_pos(1) > $max_y  }  {  set max_y  $mom_pos(1)  }
-if { $mom_pos(2) < $min_z  }  {  set min_z  $mom_pos(2)  }
-if { $mom_pos(2) > $max_z  }  {  set max_z  $mom_pos(2)  }
-if { ![string compare "CYCLE" $mom_motion_type] } {
-         if {$mom_cycle_rapid_to_pos(2) < $min_z} {
-            set min_z $mom_cycle_rapid_to_pos(2)
-         }
-         if {$mom_cycle_rapid_to_pos(2) > $max_z} {
-            set max_z $mom_cycle_rapid_to_pos(2)
-         }
-         if {$mom_cycle_feed_to_pos(2) < $min_z} {
-            set min_z $mom_cycle_feed_to_pos(2)
-         }
-         if {$mom_cycle_feed_to_pos(2) > $max_z} {
-            set max_z $mom_cycle_feed_to_pos(2)
-         }
-         if {$mom_cycle_retract_to_pos(2) < $min_z} {
-            set min_z $mom_cycle_retract_to_pos(2)
-         }
-         if {$mom_cycle_retract_to_pos(2) > $max_z} {
-            set max_z $mom_cycle_retract_to_pos(2)
-         }
-}
-
-
-}
-
-
-#=============================================================
-proc PB_CMD_minz_reset { } {
-#=============================================================
-global max_x
-global min_x
-global max_y
-global min_y
-global max_z
-global min_z
-global mom_pos
-set max_x -1000
-set min_x 1000
-set max_y -550
-set min_y 550
-set max_z -550
-set min_z 550
-global tcut mom_machine_time
-set tcut $mom_machine_time
-}
-
-
-#=============================================================
-proc PB_CMD_minz_tcut_set { } {
-#=============================================================
-global min_z hhh ddd
-global sametoolZmin mom_tool_number toolnumber sametooltcut
-set toolnumber $mom_tool_number
-if {[info exists sametoolZmin($toolnumber)]} {
-if { $sametoolZmin($toolnumber) > $min_z } {
-set sametoolZmin($toolnumber) $min_z
-}
-} else {
-set sametoolZmin($toolnumber) $min_z
-}
-
-global mom_machine_time tcut tcut1
-global mom_next_oper_has_tool_change
-global mom_current_oper_is_last_oper_in_program
-
-if {([info exists mom_next_oper_has_tool_change] && $mom_next_oper_has_tool_change == "YES") || ([info exists mom_current_oper_is_last_oper_in_program] && $mom_current_oper_is_last_oper_in_program == "YES")} {
-set tcut1 [format "%.2f" [expr $mom_machine_time-$tcut]]
-if {[info exists sametooltcut($toolnumber)]} {
-set sametooltcut($toolnumber) [expr $sametooltcut($toolnumber)+$tcut1]
-} else {
-set sametooltcut($toolnumber) $tcut1
-#MOM_output_literal "(Machine time: [format "%.2f" [expr $mom_machine_time-$tcut]] MIN)"
-}
-
-}
-}
-
-
-#=============================================================
 proc PB_CMD_negate_R_value { } {
 #=============================================================
 # This command negates the value of radius when the included angle
@@ -4469,44 +3360,6 @@ proc PB_CMD_negate_R_value { } {
    if [expr $mom_arc_angle > 180.0] {
       set mom_arc_radius [expr -1*$mom_arc_radius]
    }
-}
-
-
-#=============================================================
-proc PB_CMD_output_at_end { } {
-#=============================================================
-global gname output_extn mom_group_name dels
-global ptp_file_name txt1 txt2
-global st1 st2 st3 st4 group_level
-
-set st1 [string length $ptp_file_name]
-set st2 [expr [string last "\\" $ptp_file_name] +1]
-set st3 [string range $ptp_file_name $st2 [expr $st1 - 4]]
-set st4 [string range $ptp_file_name 0 [expr $st2-1]]
-if {$group_level != 0} {
-set gname $mom_group_name
-}
-set txt1 $st4$gname${output_extn}
-set txt2 $st4$st3\_$gname${output_extn}
-if {$group_level == 0} {
-file rename -force $txt2 $txt1
-set dels 0
-} else {
-set dels 1
-}
-}
-
-
-#=============================================================
-proc PB_CMD_output_at_start { } {
-#=============================================================
-global gname output_extn mom_group_name dels
-global ptp_file_name txt1 txt2
-global st1 st2 st3 st4 group_level
-
-if {[info exists dels] && $dels == 1} {
-file rename -force $txt2 $txt1
-}
 }
 
 
@@ -4564,22 +3417,6 @@ proc PB_CMD_reposition_move { } {
 
    MOM_suppress once X Y Z
    MOM_do_template rapid_traverse
-}
-
-
-#=============================================================
-proc PB_CMD_reset { } {
-#=============================================================
-global mom_operation_name nStep Step tcut
-global numbers
-global times
-set times 1
-set Step -1
-set nStep -1
-set numbers 0
-global toollistendi
-set toollistendi 0
-set tcut 0
 }
 
 
@@ -4781,49 +3618,6 @@ proc PB_CMD_revise_new_iks { } {
 
       MOM_reload_kinematics
    }
-}
-
-
-#=============================================================
-proc PB_CMD_run_postprocess { } {
-#=============================================================
-# This is an example showing how MOM_run_postprocess can be used.
-# It can be called in the Start of Program event (or anywhere)
-# to process the same objects being posted with a secondary post.
-#
-# ==> It's advisable NOT to use the active post and the same
-#     output file for this secondary posting process.
-# ==> Ensure legitimate and fully qualified post processor and
-#     output file are specified with the command.
-#
-
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-# CAUTION - Uncomment next line to activate this function!
-return
-#+++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
-   MOM_run_postprocess "[file dirname $::mom_event_handler_file_name]/MORI_HORI_Sub.tcl"\
-                       "[file dirname $::mom_event_handler_file_name]/MORI_HORI_Sub.def"\
-                       "${::mom_output_file_directory}sub_program.out"
-}
-
-
-#=============================================================
-proc PB_CMD_safety_check { } {
-#=============================================================
-    global mom_spindle_speed
-    global mom_operation_name
-    global mom_tool_number
-
-    if { $mom_spindle_speed == 0 } {
-        set errmes "\n\n $mom_operation_name 的 转速 等于0 S=0 请检查\n\n"
-        MOM_abort "$errmes"
-    }
-
-    if { $mom_tool_number == 0 } {
-        set errmes "\n\n $mom_operation_name 的 刀具号 未设定 请检查\n\n"
-        MOM_abort "$errmes"
-    }
 }
 
 
@@ -5073,113 +3867,9 @@ return
 
 
 #=============================================================
-proc PB_CMD_tap_check_spindle_direction { } {
-#=============================================================
-# Determine the tapping G code according to thread direction for rigid tap.
-#
-# 06-25-2013 levi - Initial version
-# 08-07-2015 gsl  - "TRUE" was mistaken as TRUE (no quotes).
-
-  global mom_spindle_direction
-  global mom_cycle_thread_right_handed
-  global mom_sys_cycle_tap_code
-
-# Get the thread direction by feature first, if doesn't exist, get it from spindle rotation direction.
-  if { [info exists mom_cycle_thread_right_handed] } {
-     if { $mom_cycle_thread_right_handed == "TRUE" } {
-        set mom_sys_cycle_tap_code "84"
-     } else {
-        set mom_sys_cycle_tap_code "74"
-     }
-  } elseif { $mom_spindle_direction == "CLW" } {
-     set mom_sys_cycle_tap_code "84"
-  } elseif { $mom_spindle_direction == "CCLW" } {
-     set mom_sys_cycle_tap_code "74"
-  }
-}
-
-
-#=============================================================
 proc PB_CMD_tool_change_force_addresses { } {
 #=============================================================
    MOM_force once G_adjust H X Y Z S fourth_axis fifth_axis
-}
-
-
-#=============================================================
-proc PB_CMD_tool_inf { } {
-#=============================================================
-global mom_tool_number group1
-global mom_tool_diameter
-global mom_tool_flute_length hhh mom_tool_length_adjust_register
-global mom_tool_corner1_radius mom_tool_lower_corner_radius
-global mom_tool_type mom_operation_name mom_group_name
-global mom_tool_name mom_tool_cutcom_register
-global mom_tool_corner1_radius mom_cutcom_adjust_register
-global mom_tool_description tname mom_tool_adjust_register
-global mom_tool_length rr2 g9g mom_tool_point_angle ddd mmm
-set g9g 0
-
-if {[info exists mom_tool_cutcom_register] } {
-set ddd $mom_tool_cutcom_register
-} else {
-if {[info exists mom_cutcom_adjust_register] } {
-set ddd $mom_cutcom_adjust_register
-}
-}
-
-if {[info exists mom_tool_adjust_register] } {
-set hhh $mom_tool_adjust_register
-} else {
-if {[info exists mom_tool_length_adjust_register] } {
-set hhh $mom_tool_length_adjust_register
-} else {
-set hhh 0
-}
-}
-
-if {$mom_tool_type == "Milling Tool-T Cutter"} {
-#MOM_set_seq_on
-#MOM_output_literal "(T_N=[format  "%03.0f" $mom_tool_number] D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"] H=[format  "%02.0f" $hhh])"
-#MOM_set_seq_off
-set rr2 "CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"]"
-} else {
-#string first str1 str2
-if { [ string first "Drill" $mom_tool_type ] == "-1" } {
-#MOM_set_seq_on
-#MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name  D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] R=[string trimright [format "%.2f" $mom_tool_corner1_radius] "0"] H=[format  "%02.0f" $hhh])"
-#MOM_set_seq_off
-set rr2 "R=[string trimright [format "%0.2f" $mom_tool_corner1_radius] "0"]"
-} else {
-#MOM_set_seq_on
-#MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]] H=[format  "%02.0f" $hhh])"
-#MOM_set_seq_off
-set rr2 "DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]]"
-}
-
-}
- if {$mom_tool_number == 0 } {
-MOM_abort "\n\n 「 $mom_operation_name」使用的刀具：「 $mom_tool_name 」未设置刀号\n\n"
-}
-
-global numbers toolnumbers mom_operation_name
-global nStep nt mom_tool_number ni ntd mom_tool_name
-set nStep [expr $nStep+1]
-set nt($nStep) $mom_tool_number
-set ntd($nStep) $mom_tool_name
-for { set ni 0 } { $ni < $nStep } { incr ni } {
-if { $nt($ni) == $mom_tool_number } {
-set nStep [expr $nStep-1]
-
-if { [string compare $ntd($ni) $mom_tool_name] } {
-MOM_abort "\n\n 「 $mom_operation_name」使用的刀具：「 $mom_tool_name 」与前面刀具的刀号相同！\n\n"
-}
-return
-}
-}
-set numbers [expr $numbers+1]
-set toolnumbers($numbers) $mom_tool_number
-
 }
 
 
@@ -5334,38 +4024,6 @@ proc ARCTAN { y x } {
 
 
 #=============================================================
-proc ARR_sort_array_to_list { ARR {by_value 0} } {
-#=============================================================
-# This command will sort and build a list of elements of an array.
-#
-#   ARR      : Array Name
-#   by_value : 0 Sort elements by names (default)
-#              1 Sort elements by values
-#
-#   Return a list of {name value} couplets
-#
-   upvar $ARR arr
-
-   set list [list]
-   foreach { e v } [array get arr] {
-      lappend list "$e $v"
-   }
-
-   set val [lindex [lindex $list 0] $by_value]
-
-   if [string is integer "$val"] {
-      set list [lsort -integer    -decreasing -index $by_value $list]
-   } elseif [string is double "$val"] {
-      set list [lsort -real       -decreasing -index $by_value $list]
-   } else {
-      set list [lsort -dictionary -decreasing -index $by_value $list]
-   }
-
-return $list
-}
-
-
-#=============================================================
 proc ARR_sort_array_vals { ARR } {
 #=============================================================
 # This command will sort and build a list of elements of an array.
@@ -5478,9 +4136,7 @@ return
 #=============================================================
 proc AXIS_SET { axis } {
 #=============================================================
-# Called by MOM_rotate & SET_LOCK to detect if the given axis is the 4th or 5th rotary axis.
-# It returns 0, if no match has been found.
-#
+# called by MOM_rotate & SET_LOCK
 
   global mom_sys_leader
 
@@ -5891,12 +4547,11 @@ proc LINEARIZE_LOCK_MOTION {  } {
 #  that do not violate the tolerance.
 #
 #<04-08-2014 gsl> - Corrected error with use of mom_outangle_pos.
-#<12-03-2014 gsl> - Declaration of global unlocked_pos & unlocked_prev_pos were commented out in pb903.
 #
    global mom_pos
    global mom_prev_pos
-   global unlocked_pos
-   global unlocked_prev_pos
+  # global unlocked_pos
+  # global unlocked_prev_pos
    global mom_kin_linearization_tol
    global mom_kin_machine_resolution
    global mom_out_angle_pos
@@ -5997,8 +4652,6 @@ proc LINEARIZE_LOCK_MOTION {  } {
 proc LINEARIZE_LOCK_OUTPUT { count } {
 #=============================================================
 # called by LOCK_AXIS_MOTION & LINEARIZE_LOCK_MOTION
-#
-# Jul-16-2013 - pb1003
 
    global mom_out_angle_pos
    global mom_pos
@@ -6028,7 +4681,7 @@ proc LINEARIZE_LOCK_OUTPUT { count } {
                                      $mom_kin_4th_axis_leader mom_sys_leader(fourth_axis)\
                                      $mom_kin_4th_axis_min_limit $mom_kin_4th_axis_max_limit]
 
-   if { [string match "5_axis*" $mom_kin_machine_type] } {
+   if { [info exists mom_kin_5th_axis_direction] } {
       set mom_out_angle_pos(1)  [ROTSET $mom_pos(4) $mom_prev_rot_ang_5th $mom_kin_5th_axis_direction\
                                         $mom_kin_5th_axis_leader mom_sys_leader(fifth_axis)\
                                         $mom_kin_5th_axis_min_limit $mom_kin_5th_axis_max_limit]
@@ -6037,28 +4690,30 @@ proc LINEARIZE_LOCK_OUTPUT { count } {
 #
 #  Re-calcualte the distance and feed rate number
 #
+
    if { $count < 0 } {
       VEC3_sub mom_mcs_goto mom_prev_mcs_goto delta
    } else {
       VEC3_sub unlocked_pos unlocked_prev_pos delta
    }
-
    set mom_motion_distance [VEC3_mag delta]
-
    if { [EQ_is_lt $mom_motion_distance $mom_kin_machine_resolution] } {
       set mom_feed_rate_number $mom_kin_max_frn
    } else {
       set mom_feed_rate_number [expr $mom_feed_rate / $mom_motion_distance]
    }
 
+  #<04-08-2014 gsl> Why only (3)?
    set mom_pos(3) $mom_out_angle_pos(0)
 
-  # Is it only needed for a 5-axis?
+  #<04-08-2014 gsl> Adding (4) doesn't seem to make difference (?)
    set mom_pos(4) $mom_out_angle_pos(1)
 
    FEEDRATE_SET
 
    if { $count > 0 } { PB_CMD_linear_move }
+
+#   set mom_prev_pos(3) $mom_out_angle_pos(0)
 }
 
 
@@ -6319,7 +4974,7 @@ proc LOCK_AXIS_INITIALIZE {  } {
                                    $mom_sys_linear_axis_index_2 -\
                                    $mom_sys_lock_axis]
 
-
+#<gsl>
 #MOM_output_text "( >>> mom_sys_lock_plane          : $mom_sys_lock_plane )"
 #MOM_output_text "( >>> mom_sys_lock_axis           : $mom_sys_lock_axis )"
 #MOM_output_text "( >>> mom_sys_unlocked_axis       : $mom_sys_unlocked_axis )"
@@ -6347,7 +5002,11 @@ proc LOCK_AXIS_MOTION {  } {
 #  output correctly if the fifth axis is rotated so it is perpendicular
 #  to the spindle axis.
 #
-# Jul-16-2015 - Of pb1003
+# (pb903)
+# 04-15-2014 gsl - Account for angled-head attachment
+# 04-16-2014 gsl - Validate legitimacy of a 4-axis post
+# 08-19-2014 gsl - Do not skip RAPID motion type
+# 08-20-2014 gsl - Declare mom_kin_machine_type earlier
 #
 
   # Must be called by PB_CMD_kin_before_motion
@@ -6356,15 +5015,16 @@ return
    }
 
 
-   if { [string match "circular_move" $::mom_current_motion] } {
-return
-   }
-
-
-
-   global mom_sys_lock_status
+  global mom_sys_lock_status
 
    if { [string match "ON" $mom_sys_lock_status] } {
+
+      global mom_current_motion
+
+      if { [string match "circular_move" $mom_current_motion] } {
+return
+      }
+
 
       global mom_pos mom_out_angle_pos
       global mom_motion_type
@@ -6403,8 +5063,7 @@ return
       }
 
       if { [string match "CYCLE" $mom_motion_type] } {
-#<lll>
-if 0 {
+
          if { [string match "initial_move" $mom_motion_event] } {
             set mom_sys_cycle_after_initial "TRUE"
 return
@@ -6417,11 +5076,10 @@ return
          }
 
          set mom_sys_cycle_after_initial "FALSE"
-}
 
          if { [string match "Table" $mom_kin_4th_axis_type] } {
 
-           # "mom_spindle_axis" would have the head attachment incorporated.
+           #<04-16-2014 gsl> "mom_spindle_axis" would have the head attachment incorporated already.
             global mom_spindle_axis
             if [info exists mom_spindle_axis] {
                VMOV 3 mom_spindle_axis mom_sys_spindle_axis
@@ -6445,7 +5103,7 @@ return
                }
             }
 
-           # Reworked logic to prevent potential error
+           #<04-16-2014 gsl> Reworked logic to prevent potential error
             set len [VEC3_mag vec]
             if { [EQ_is_gt $len 0.0] } {
                VEC3_unitize vec mom_sys_spindle_axis
@@ -6460,82 +5118,116 @@ return
             VMOV 3 mom_tool_axis mom_sys_spindle_axis
          }
 
-         set mom_cycle_feed_to_pos(0)    [expr $mom_pos(0) + $mom_cycle_feed_to    * $mom_sys_spindle_axis(0)]
-         set mom_cycle_feed_to_pos(1)    [expr $mom_pos(1) + $mom_cycle_feed_to    * $mom_sys_spindle_axis(1)]
-         set mom_cycle_feed_to_pos(2)    [expr $mom_pos(2) + $mom_cycle_feed_to    * $mom_sys_spindle_axis(2)]
+        #<04-15-2014 gsl> Account for angled-head attachment
+        #<04-16-2014 gsl> Legitimate 4-axis post -
+        #
+        # => "mom_spindle_axis" will account for the direction change resulted from the angled-head attachment to the spindle.
+        # For a 4-axis Table - the spindle axis (Vs) and tool axis (Vt) should be either co-linear '||' BOTH on the plane of rotation (Vp).
+        # For a 4-axis Head  - the spindle axis (Vs) MUST lie ON the plane of rotation (Vp) '&&' Identical to the tool axis (Vt).
+        # - The max/min of the rotary axis will further constraint the reachability.
+        # - Vectors' Dot product will be 0 or +/-1. (Vt.Vp => 0 || +/-1)
+        #   => Perhaps, this verification should be performed in the before-motion!
+        #
+         global mom_kin_4th_axis_vector
 
-         set mom_cycle_rapid_to_pos(0)   [expr $mom_pos(0) + $mom_cycle_rapid_to   * $mom_sys_spindle_axis(0)]
-         set mom_cycle_rapid_to_pos(1)   [expr $mom_pos(1) + $mom_cycle_rapid_to   * $mom_sys_spindle_axis(1)]
-         set mom_cycle_rapid_to_pos(2)   [expr $mom_pos(2) + $mom_cycle_rapid_to   * $mom_sys_spindle_axis(2)]
+         if [string match "4_axis_table" $mom_kin_machine_type] {
+
+            if { !( [EQ_is_equal [expr abs( [VEC3_dot mom_sys_spindle_axis mom_tool_axis] )] 1.0] ||\
+                    ( [EQ_is_equal [VEC3_dot mom_sys_spindle_axis mom_kin_4th_axis_vector] 0.0] &&\
+                      [EQ_is_equal [VEC3_dot mom_tool_axis mom_kin_4th_axis_vector] 0.0] ) ) } {
+
+                 CATCH_WARNING "Illegal motion for 4-axis table machine"
+                 MOM_abort_event
+              return
+            }
+
+           if 0 { ;# old logic
+            # When tool axis is not on the plane of rotation AND not identical to spindle axis, error out
+            if { ![EQ_is_equal [VEC3_dot mom_tool_axis mom_kin_4th_axis_vector] 0.0] &&\
+                 ![EQ_is_equal [VEC3_dot mom_tool_axis mom_sys_spindle_axis] 1.0] } {
+
+                 CATCH_WARNING "Illegal motion for 4-axis table machine"
+                 MOM_abort_event
+              return
+            }
+           }
+         }
+
+         if [string match "4_axis_head" $mom_kin_machine_type] {
+
+            if { !( [EQ_is_equal [VEC3_dot mom_sys_spindle_axis mom_kin_4th_axis_vector] 0.0] &&\
+                    [EQ_is_equal [VEC3_dot mom_sys_spindle_axis mom_tool_axis] 1.0] ) } {
+
+                 CATCH_WARNING "Illegal motion for 4-axis head machine"
+                 MOM_abort_event
+              return
+            }
+         }
+
+        # What about 5 axis table??? <-- There would be many permutations.
+
+
+#MOM_output_text "(mom_sys_spindle_axis : $mom_sys_spindle_axis(0)  $mom_sys_spindle_axis(1)  $mom_sys_spindle_axis(2))"
+
+         set mom_cycle_feed_to_pos(0)    [expr $mom_pos(0) + $mom_cycle_feed_to * $mom_sys_spindle_axis(0)]
+         set mom_cycle_feed_to_pos(1)    [expr $mom_pos(1) + $mom_cycle_feed_to * $mom_sys_spindle_axis(1)]
+         set mom_cycle_feed_to_pos(2)    [expr $mom_pos(2) + $mom_cycle_feed_to * $mom_sys_spindle_axis(2)]
+
+         set mom_cycle_rapid_to_pos(0)   [expr $mom_pos(0) + $mom_cycle_rapid_to * $mom_sys_spindle_axis(0)]
+         set mom_cycle_rapid_to_pos(1)   [expr $mom_pos(1) + $mom_cycle_rapid_to * $mom_sys_spindle_axis(1)]
+         set mom_cycle_rapid_to_pos(2)   [expr $mom_pos(2) + $mom_cycle_rapid_to * $mom_sys_spindle_axis(2)]
 
          set mom_cycle_retract_to_pos(0) [expr $mom_pos(0) + $mom_cycle_retract_to * $mom_sys_spindle_axis(0)]
          set mom_cycle_retract_to_pos(1) [expr $mom_pos(1) + $mom_cycle_retract_to * $mom_sys_spindle_axis(1)]
          set mom_cycle_retract_to_pos(2) [expr $mom_pos(2) + $mom_cycle_retract_to * $mom_sys_spindle_axis(2)]
       }
 
-
       global mom_kin_linearization_flag
 
-     #<lll> Removed RETARCT and add CYCLE & rapid_move
-      if { ![string compare "TRUE"       $mom_kin_linearization_flag] &&\
-            [string compare "RAPID"      $mom_motion_type]            &&\
-            [string compare "CYCLE"      $mom_motion_type]            &&\
-            [string compare "rapid_move" $mom_motion_event] } {
+      if { ![string compare "TRUE"    $mom_kin_linearization_flag] &&\
+            [string compare "RAPID"   $mom_motion_type]            &&\
+            [string compare "RETRACT" $mom_motion_type] } {
 
          LINEARIZE_LOCK_MOTION
-
-        # Only needed after linearization
-         MOM_reload_variable -a mom_pos
 
       } else {
 
          if { ![info exists mom_prev_rot_ang_4th] } { set mom_prev_rot_ang_4th 0.0 }
          if { ![info exists mom_prev_rot_ang_5th] } { set mom_prev_rot_ang_5th 0.0 }
 
-        # Add condition to march along shortest route
-         set __reload_kin 0
+        #<04-08-2014 gsl> Add condition to march along shortest route
          if [string match "5_axis_*table" $mom_kin_machine_type] {
+            set save_kin_5th_axis_direction $mom_kin_5th_axis_direction
+            set mom_kin_5th_axis_direction "SHORTEST_DISTANCE" ;# Will cause ROTSET not to do anything
 
-           #<gsl> Not to reload during contouring
-            if { [string compare "initial_move" $mom_motion_event] &&\
-                 [string compare "first_move"   $mom_motion_event] &&\
-                 [string compare "linear_move"  $mom_motion_event] &&\
-                 [string compare "APPROACH"     $mom_motion_type]  &&\
-                 [string compare "DEPARTURE"    $mom_motion_type] } {
-
-               set save_kin_5th_axis_direction $mom_kin_5th_axis_direction
-               set mom_kin_5th_axis_direction "SHORTEST_DISTANCE" ;# Will cause ROTSET not to do anything
-               set __reload_kin 1
-            }
+            MOM_reload_kinematics
          }
 
-         if [string match "4_axis_table" $mom_kin_machine_type] {
+#MOM_output_text "(Are we here? mom_kin_4th_axis_direction : $mom_kin_4th_axis_direction)"
 
+        # What about also doing this for the 4th axis?
+         if [string match "4_axis_table" $mom_kin_machine_type] {
             set save_kin_4th_axis_direction $mom_kin_4th_axis_direction
             set mom_kin_4th_axis_direction "SHORTEST_DISTANCE" ;# Will cause ROTSET not to do anything
-            set __reload_kin 1
-         }
 
-         if { $__reload_kin } { MOM_reload_kinematics }
+            MOM_reload_kinematics
+         }
 
 
          LINEARIZE_LOCK_OUTPUT -1
 
 
-         set __reload_kin 0
          if { [info exists save_kin_5th_axis_direction] } {
             set mom_kin_5th_axis_direction $save_kin_5th_axis_direction
             unset save_kin_5th_axis_direction
-            set __reload_kin 1
+            MOM_reload_kinematics
          }
 
          if { [info exists save_kin_4th_axis_direction] } {
             set mom_kin_4th_axis_direction $save_kin_4th_axis_direction
             unset save_kin_4th_axis_direction
-            set __reload_kin 1
+            MOM_reload_kinematics
          }
-
-         if { $__reload_kin } { MOM_reload_kinematics }
 
 
          #<09-15-09 wbh> We must call ROTSET only one time for the 4th and/or 5th axis.
@@ -6548,7 +5240,7 @@ return
             if { [string match "MAGNITUDE_DETERMINES_DIRECTION" $mom_kin_5th_axis_direction] &&\
                  [string match "Table" $mom_kin_5th_axis_type] } {
 
-              # ==> DOT tool axis vector with table axis vector to reverse rotation
+              # ==> Dot tool axis vector with table axis vector to reverse rotation
                global mom_kin_5th_axis_vector
                set sign [expr ([VEC3_dot mom_tool_axis mom_kin_5th_axis_vector] > 0) ? 1 : -1]
                set mom_out_angle_pos(1) [expr $sign*$mom_out_angle_pos(1)]
@@ -6563,8 +5255,8 @@ return
       MOM_reload_variable mom_prev_rot_ang_4th
 
 
-     #VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
-     # > Do not reload mom_pos here!
+     #VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
+     #<04-08-2014 gsl> ==> Do not reload mom_pos here; it messes up internal data.
      # MOM_reload_variable -a mom_pos
    }
 }
@@ -6768,18 +5460,14 @@ return $a
 }
 
 
+########################################################################
+# DO NOT define any Other Commands before PB_CMD_xxx commands;
+# for unknown (yet) reason, they won't get sourced in properly!
+########################################################################
 #=============================================================
-proc OPERATOR_MSG { msg {seq_no 0} } {
+proc OPERATOR_MSG { msg } {
 #=============================================================
-   foreach s [split $msg \n] {
-      if { !$seq_no } {
-         MOM_output_text "$::mom_sys_control_out $s $::mom_sys_control_in"
-      } else {
-         MOM_output_literal "$::mom_sys_control_out $s $::mom_sys_control_in"
-      }
-   }
-
-   set ::mom_o_buffer ""
+   MOM_output_text "$::mom_sys_control_out $msg $::mom_sys_control_in"
 }
 
 
@@ -7049,33 +5737,6 @@ proc PAUSE_x { args } {
          }
          default { return }
       }
-   }
-}
-
-
-#=============================================================
-proc PREFERRED_SOLUTION {  } {
-#=============================================================
-# To be called by PB_CMD_kin_before_motion
-# ==> Perhaps, after the 4-axis output validation!
-# ==> Not yet released officially
-#
-#  UDE "Set Preferred Solution" can be specified with the operation in question.
-#  This event will be handled before "Lock Axis" to choose, possibly,
-#  the alternate solution of a 5-axis motion based on the perferred
-#  delimiter (mom_preferred_zone_flag) such as X/Y-plus(or minus) or
-#  4th/5th-angle etc. Choices can be
-#
-#    [XPLUS | XMINUS | YPLUS | YMINUS | FOURTH | FIFTH].
-#
-#
-#  => Should this flag be in effect forever until cancelled by
-#     another instance of the same UDE that turns it off?
-#  => Initial rotary angle can be influenced by using a "Rotate" UDE.
-#
-#
-   if [CMD_EXIST PB_CMD__choose_preferred_solution] {
-      PB_CMD__choose_preferred_solution
    }
 }
 
@@ -8120,20 +6781,14 @@ return 0
 
 
 #=============================================================
-proc TRACE { {up_level 0} } {
+proc TRACE {  } {
 #=============================================================
-# up_level to be a negative integer
-#
    set start_idx 1
 
    set str ""
-   set level [expr [info level] - int(abs($up_level))]
-   for { set i $start_idx } { $i <= $level } { incr i } {
-      if { $i < $level } {
-         set str "${str}[lindex [info level $i] 0]\n"
-      } else {
-         set str "${str}[lindex [info level $i] 0]"
-      }
+   set level [info level]
+   for { set i $start_idx } { $i < $level } { incr i } {
+      set str "${str}[lindex [info level $i] 0]\n"
    }
 
 return $str
@@ -8269,20 +6924,6 @@ return
       if { [info exists var] } {
          unset var
       }
-   }
-}
-
-
-#=============================================================
-proc VALIDATE_MOTION {  } {
-#=============================================================
-# To be called by PB_CMD_kin_before_motion
-
-   if [CMD_EXIST PB_CMD__validate_motion] {
-return [PB_CMD__validate_motion]
-   } else {
-      # Assume OK, when no validation is done.
-return 1
    }
 }
 
