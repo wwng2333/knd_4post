@@ -1539,8 +1539,12 @@ proc MOM_tap_move { } {
       }
    }
 
+   PB_CMD_cal_feedrate_by_pitch_and_ss
+   PB_CMD_tapping_g_code_string_determine_for_float_tap
+
    MOM_do_template cycle_tap_M29
    PB_CMD_custom_command
+   MOM_force Once X Y
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
 }
@@ -1870,6 +1874,68 @@ return $mom_kin_machine_type
    }
 }
 
+#=============================================================
+proc PB_CMD_cal_feedrate_by_pitch_and_ss { } {
+#=============================================================
+# Calculate feedrate by thread pitch and spindle speed.
+#
+# 2014-03-20 levi - Initial version.
+
+  global mom_cycle_thread_pitch
+  global mom_tool_pitch
+  global mom_spindle_speed
+  global feed
+  global feed_mode
+  global mom_operation_name
+
+# Calculate the pitch, get it from model first, if can't get from model, use the pitch of tool.
+  if { ![info exists mom_cycle_thread_pitch] && ![info exists mom_tool_pitch]} {
+     MOM_abort "$mom_operation_name: No thread pitch!"
+  } elseif {[info exists mom_cycle_thread_pitch]} {
+     set pitch $mom_cycle_thread_pitch
+  } else {
+     set pitch $mom_tool_pitch
+  }
+
+# Calculate the F parameter of cycle, if the feedrate mode is MMPR or IPR, use pitch as feedrate,
+# if the feedrate mode is MMPM or IPM, calculate it by $pitch*$mom_spindle_speed. Don't use the feedrate
+# value set in NX directly.
+  if {[EQ_is_equal $mom_spindle_speed 0]} {
+     MOM_abort "$mom_operation_name: spindle speed is 0, please set it!"
+  }
+
+  if {[string match "*PR" $feed_mode]} {
+     set feed $pitch
+  } else {
+     set feed [expr $pitch*$mom_spindle_speed]
+  }
+
+}
+
+#=============================================================
+proc PB_CMD_tapping_g_code_string_determine_for_float_tap { } {
+#=============================================================
+# Determine the tapping G code according to thread direction for float tap.
+#
+# 06-25-2013 levi - Initial version
+
+  global mom_spindle_direction
+  global final_tap_mode
+  global mom_cycle_thread_right_handed
+
+# Get the thread direction by feature first, if doesn't exist, get it from spindle rotation direction.
+  if {[info exists mom_cycle_thread_right_handed]} {
+     if {$mom_cycle_thread_right_handed == TRUE} {
+        set final_tap_mode "84"
+     } else {
+        set final_tap_mode "74"
+     }
+  } elseif { $mom_spindle_direction == "CLW" } {
+     set final_tap_mode "84"
+  } elseif { $mom_spindle_direction == "CCLW" } {
+     set final_tap_mode "74"
+  }
+}
 
 #=============================================================
 proc PB_CMD_clamp_fifth_axis { } {

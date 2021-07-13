@@ -725,7 +725,7 @@ FORMATTING
   {
        G_plane[$mom_sys_cutcom_plane_code($mom_cutcom_plane)]\opt
        G_return[$mom_sys_cycle_ret_code($mom_cycle_retract_mode)]\opt
-       G_motion[$mom_sys_cycle_tap_code]
+       G_motion[$final_tap_mode]
        X[$mom_cycle_feed_to_pos(0)]
        Y[$mom_cycle_feed_to_pos(1)]
        Z[$mom_cycle_feed_to_pos(2)]
