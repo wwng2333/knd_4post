@@ -756,7 +756,7 @@ FORMATTING
   BLOCK_TEMPLATE end_of_path_1
   {
 	   G_motion[$mom_sys_rapid_code]
-	   Z[200]
+	   Text[Z200.]
   }
   
   BLOCK_TEMPLATE end_of_program
@@ -788,7 +788,7 @@ FORMATTING
        Text[G53]
 	   G_mode[$mom_sys_output_code($mom_output_mode)]
 	   G_motion[$mom_sys_rapid_code]
-	   Y[0]
+	   Text[Y0.]
   }
 
   BLOCK_TEMPLATE inch_metric_mode

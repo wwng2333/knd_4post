@@ -1890,7 +1890,7 @@ proc PB_CMD_cal_feedrate_by_pitch_and_ss { } {
 
 # Calculate the pitch, get it from model first, if can't get from model, use the pitch of tool.
   if { ![info exists mom_cycle_thread_pitch] && ![info exists mom_tool_pitch]} {
-     MOM_abort "$mom_operation_name: No thread pitch!"
+     MOM_abort "$mom_operation_name: 请设定丝锥螺距!"
   } elseif {[info exists mom_cycle_thread_pitch]} {
      set pitch $mom_cycle_thread_pitch
   } else {
@@ -1901,7 +1901,7 @@ proc PB_CMD_cal_feedrate_by_pitch_and_ss { } {
 # if the feedrate mode is MMPM or IPM, calculate it by $pitch*$mom_spindle_speed. Don't use the feedrate
 # value set in NX directly.
   if {[EQ_is_equal $mom_spindle_speed 0]} {
-     MOM_abort "$mom_operation_name: spindle speed is 0, please set it!"
+     MOM_abort "$mom_operation_name: 请设定主轴转速!"
   }
 
   if {[string match "*PR" $feed_mode]} {
