@@ -202,15 +202,15 @@ FORMATTING
       LEADER      "R"
       ZERO_FORMAT Zero_real
   }
-
+  
   ADDRESS Q_cutcom
   {
-      FORMAT      Dwell_SECONDS
+      FORMAT      AbsCoord
       FORCE       off
       MAX         99999.999 Truncate
-      MIN         0.001 Truncate
+      MIN         0 Truncate
       LEADER      "Q"
-      ZERO_FORMAT Zero_int
+      ZERO_FORMAT Zero_real
   }
 
   ADDRESS S
@@ -371,6 +371,14 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       always
       LEADER      "M"
+  }
+
+  ADDRESS user_add_M29
+  {
+      FORMAT      Digit_2
+      FORCE       off
+      LEADER      "M"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS user_add
@@ -723,8 +731,14 @@ FORMATTING
        Z[$mom_cycle_feed_to_pos(2)]
        fourth_axis[$mom_out_angle_pos(0)]
        R[$mom_cycle_rapid_to_pos($mom_cycle_spindle_axis)]
+       Q_cutcom[$mom_cycle_delay]\opt
        F[$feed]
        M_coolant[$mom_sys_coolant_code(ON)]
+  }
+
+  BLOCK_TEMPLATE cycle_tap_M29
+  {
+       user_add_M29[29]
   }
 
   BLOCK_TEMPLATE delay

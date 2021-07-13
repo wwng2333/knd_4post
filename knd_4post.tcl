@@ -1532,7 +1532,6 @@ proc MOM_tap_move { } {
 #=============================================================
    global cycle_init_flag
 
-
    global mom_sys_abort_next_event
    if { [info exists mom_sys_abort_next_event] } {
       if { [llength [info commands PB_CMD_kin_abort_event]] } {
@@ -1540,7 +1539,7 @@ proc MOM_tap_move { } {
       }
    }
 
-
+   MOM_do_template cycle_tap_M29
    PB_CMD_custom_command
    MOM_do_template cycle_tap
    set cycle_init_flag FALSE
