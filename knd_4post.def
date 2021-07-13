@@ -497,7 +497,6 @@ FORMATTING
        Z[$mom_pos(2)]
        fourth_axis[$mom_out_angle_pos(0)]
        H[$mom_tool_adjust_register]
-       H[$mom_tool_adjust_register]
   }
 
   BLOCK_TEMPLATE initial_move_XYA
