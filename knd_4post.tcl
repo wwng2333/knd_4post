@@ -1143,12 +1143,9 @@ proc MOM_end_of_path { } {
    }
 
    if { [PB_CMD__check_block_spindle_off] } {
+      MOM_do_template end_of_path_1
       MOM_output_literal "M5"
       MOM_output_literal "M9"
-   }
-   
-   if { [PB_CMD__check_block_spindle_off] } {
-      MOM_do_template end_of_path_1
       MOM_do_template gohome_move
    }
    
@@ -3905,7 +3902,7 @@ proc PB_CMD_start_of_alignment_character { } {
 #=============================================================
 proc PB_CMD_start_of_operation_force_addresses { } {
 #=============================================================
-   MOM_force once S M_spindle X Y Z fourth_axis D F
+   MOM_force once S M_spindle X Y Z fourth_axis D F H G_adjust
 }
 
 

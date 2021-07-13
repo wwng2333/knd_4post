@@ -771,7 +771,10 @@ FORMATTING
 
   BLOCK_TEMPLATE gohome_move
   {
-       Text[G53 G90 G0 Y0]
+       Text[G53]
+	   G_mode[$mom_sys_output_code($mom_output_mode)]
+	   G_motion[$mom_sys_rapid_code]
+	   Y[0]
   }
 
   BLOCK_TEMPLATE inch_metric_mode
