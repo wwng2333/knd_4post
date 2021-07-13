@@ -15,9 +15,9 @@
 
 ## POST EVENT HANDLER START
 
-# Waring: Don't edit it by Post Builder, otherwise G_adjust will not working. 
-def_file  knd_4post.def
-tcl_file  knd_4post.tcl
+# Waring: Don't edit it with Post Builder, otherwise G_adjust will not working. 
+def_file  test.def
+tcl_file  test.tcl
 ## POST EVENT HANDLER END
 
 

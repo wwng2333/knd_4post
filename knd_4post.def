@@ -13,7 +13,7 @@ FORMATTING
 ################ FORMAT DECLARATIONS #################
   FORMAT AbsCoord "&__5.3_"
   FORMAT Coordinate "&__5.3_"
-  FORMAT Digit_2 "&_02_00"
+  FORMAT Digit_2 "&__2_00"
   FORMAT Digit_4 "&__4_00"
   FORMAT Digit_5 "&__5_00"
   FORMAT Digit_6 "&__6_00"
@@ -40,16 +40,18 @@ FORMATTING
   {
       FORMAT      Digit_2
       FORCE       off
-      MAX         999999999.9999 Truncate
-      MIN         -999999999.9999 Truncate
+      MAX         999999.9999 Truncate
+      MIN         0.0001 Truncate
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
-
+  
   ADDRESS G_plane
   {
       FORMAT      Digit_2
       FORCE       off
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G_adjust
@@ -64,6 +66,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G_spin
@@ -71,6 +74,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G_return
@@ -78,6 +82,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G_motion
@@ -87,6 +92,7 @@ FORMATTING
       MAX         9999 Truncate
       MIN         -9999 Truncate
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G_mode
@@ -94,6 +100,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS G
@@ -103,6 +110,7 @@ FORMATTING
       MAX         99 Truncate
       MIN         0 Truncate
       LEADER      "G"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS X
@@ -337,6 +345,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "M"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS M_range
@@ -344,6 +353,7 @@ FORMATTING
       FORMAT      Digit_2
       FORCE       off
       LEADER      "M"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS M_coolant
@@ -353,6 +363,7 @@ FORMATTING
       MAX         99 Truncate
       MIN         0 Truncate
       LEADER      "M"
+      ZERO_FORMAT Zero_int
   }
 
   ADDRESS M
@@ -468,14 +479,37 @@ FORMATTING
 ############ BLOCK TEMPLATE DECLARATIONS #############
   BLOCK_TEMPLATE absolute_mode
   {
-       Text[G98]
        G_cutcom[$mom_sys_cutcom_code(OFF)]
        G_plane[$mom_sys_cutcom_plane_code(XY)]
        G_adjust[$mom_sys_adjust_cancel_code]
-       G_motion[$mom_sys_rapid_code]
-       G_mode[$mom_sys_output_code(ABSOLUTE)]
        Text[G80]
+       Text[G98]
+       Text[G94]
+  }
+
+  BLOCK_TEMPLATE initial_move_Z
+  {
+       G_mode[$mom_sys_output_code($mom_output_mode)]\opt
+       G_adjust[$mom_sys_adjust_code]
+       G_motion[$mom_sys_rapid_code]
+       X[$mom_pos(0)]
+       Y[$mom_pos(1)]
+       Z[$mom_pos(2)]
+       fourth_axis[$mom_out_angle_pos(0)]
+       H[$mom_tool_adjust_register]
+  }
+
+  BLOCK_TEMPLATE initial_move_XYA
+  {
+       G_mode[$mom_sys_output_code($mom_output_mode)]\opt
        Text[G54]
+       G_motion[$mom_sys_rapid_code]
+       X[$mom_pos(0)]
+       Y[$mom_pos(1)]
+       fourth_axis[$mom_out_angle_pos(0)]
+       S[$mom_spindle_speed]
+       M_spindle[$mom_sys_spindle_direction_code($mom_spindle_direction)]\opt
+	   F[$feed]\opt
   }
 
   BLOCK_TEMPLATE auxfun
@@ -707,17 +741,12 @@ FORMATTING
 
   BLOCK_TEMPLATE end_of_path_1
   {
-       Text[G00 Z200]
+       Text[G0 Z200.]
   }
 
   BLOCK_TEMPLATE end_of_program
   {
        M[$mom_sys_rewind_code]
-  }
-
-  BLOCK_TEMPLATE end_of_program_1
-  {
-       M_coolant[$mom_sys_coolant_code(OFF)]
   }
 
   BLOCK_TEMPLATE fifth_axis_rotate_move
@@ -976,11 +1005,11 @@ FORMATTING
 
   BLOCK_TEMPLATE end_of_path_2
   {
+       Text[G0]
        G_return[$mom_sys_cycle_ret_code($mom_cycle_retract_mode)]\opt
        Text[G40]
        Text[G54]
        Text[G90]
-       Text[G00]
        Text[G80]
   }
 

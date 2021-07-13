@@ -400,8 +400,8 @@ proc MOM_msys { } {
 #=============================================================
 proc MOM_end_of_program { } {
 #=============================================================
-   MOM_do_template end_of_program_1
    MOM_do_template gohome_move
+   MOM_output_literal "G8.1 P1"
    MOM_do_template end_of_program
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
@@ -938,6 +938,8 @@ proc MOM_cutcom_on { } {
          CATCH_WARNING "CUTCOM register $mom_cutcom_adjust_register must be within the range between 1 and 99"
       }
    }
+   
+   MOM_force once D
 }
 
 
@@ -1141,6 +1143,11 @@ proc MOM_end_of_path { } {
       PB_CMD_kin_end_of_path
    }
 
+   if { [PB_CMD__check_block_spindle_off] } {
+      MOM_output_literal "M05"
+      MOM_output_literal "M09"
+   }
+   
    MOM_do_template end_of_path_1
    MOM_do_template end_of_path_2
    global mom_sys_in_operation
@@ -1160,6 +1167,7 @@ proc MOM_first_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
+   PB_CMD_initial_position
    catch {MOM_$mom_motion_event}
 }
 
@@ -1185,6 +1193,7 @@ proc MOM_first_tool { } {
 proc MOM_from_move { } {
 #=============================================================
   global mom_feed_rate mom_feed_rate_per_rev  mom_motion_type mom_kin_max_fpm
+  PB_CMD_from_position
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
 }
 
@@ -1202,6 +1211,7 @@ proc MOM_initial_move { } {
   global mom_feed_rate mom_feed_rate_per_rev mom_motion_type
   global mom_kin_max_fpm mom_motion_event
    COOLANT_SET ; CUTCOM_SET ; SPINDLE_SET ; RAPID_SET
+   PB_CMD_initial_position
 
   global mom_programmed_feed_rate
    if { [EQ_is_equal $mom_programmed_feed_rate 0] } {
@@ -1453,7 +1463,7 @@ proc MOM_spindle_rpm { } {
 #=============================================================
 proc MOM_start_of_path { } {
 #=============================================================
-  global mom_sys_in_operation
+  global mom_sys_in_operation mom_output_file_basename mom_tool_name mom_tool_adjust_register
    set mom_sys_in_operation 1
 
   global first_linear_move ; set first_linear_move 0
@@ -1470,6 +1480,19 @@ proc MOM_start_of_path { } {
       PB_CMD_kin_start_of_path
    }
 
+   if { [PB_CMD__check_block_start_of_program] } {
+      #MOM_do_template start_of_path
+      #MOM_output_literal "($mom_output_file_basename,$mom_tool_name=H$mom_tool_adjust_register)"
+   }
+   if { [PB_CMD__check_block_start_of_program] } {
+      MOM_do_template start_of_program
+   }
+   MOM_set_seq_on
+   if { [PB_CMD__check_block_absolute_mode] } {
+      MOM_force Once G_cutcom G_plane G_mode
+      MOM_do_template absolute_mode
+   }
+   
    PB_CMD_safety_check
 
    global mom_operation_name
@@ -1477,10 +1500,9 @@ proc MOM_start_of_path { } {
 
    global mom_tool_name
    MOM_output_literal "($mom_tool_name)"
-
+   
    PB_CMD_start_of_operation_force_addresses
 }
-
 
 #=============================================================
 proc MOM_start_of_subop_path { } {
@@ -1623,7 +1645,6 @@ proc PB_return_move { } {
    MOM_do_template absolute_mode
 }
 
-
 #=============================================================
 proc PB_start_of_program { } {
 #=============================================================
@@ -1634,10 +1655,6 @@ proc PB_start_of_program { } {
 
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
-   MOM_do_template start_of_program
-   MOM_set_seq_on
-   MOM_force Once G_cutcom G_plane G_mode
-   MOM_do_template absolute_mode
    PB_CMD_fix_RAPID_SET
 
    if [llength [info commands PB_CMD_kin_start_of_program_2] ] {
@@ -1645,12 +1662,37 @@ proc PB_start_of_program { } {
    }
 }
 
-
 #=============================================================
 proc PB_user_def_axis_limit_action { args } {
 #=============================================================
 }
 
+#=============================================================
+proc PB_CMD_initial_position { } {
+#=============================================================
+global from_point
+if {[info exists from_point] && $from_point == 1} {
+set from_point 0
+return
+ }
+
+global mom_feed_rapid_output mom_sys_rapid_code fff mom_feed_rapid_value
+if { $mom_feed_rapid_output == 1 } {
+set mom_sys_rapid_code 1
+set fff $mom_feed_rapid_value
+MOM_force Once F
+} else {
+set fff ""
+set mom_sys_rapid_code 0
+MOM_suppress once F
+}
+
+MOM_do_template initial_move_XYA
+MOM_do_template initial_move_Z
+#MOM_do_template initial_M8
+
+
+}
 
 #=============================================================
 proc PB_CMD_FEEDRATE_NUMBER { } {
@@ -1679,6 +1721,59 @@ proc PB_CMD_FEEDRATE_NUMBER { } {
    }
 
 return $f
+}
+
+#=============================================================
+proc PB_CMD__check_block_absolute_mode { } {
+#=============================================================
+# This custom command should return
+#   1 : Output BLOCK
+#   0 : No output
+
+   global xxx
+
+if { ![info exists xxx] } {
+set xxx 1
+ return 1
+} else {
+ return 0
+}
+}
+
+#=============================================================
+proc PB_CMD__check_block_spindle_off { } {
+#=============================================================
+# This custom command should return
+#   1 : Output BLOCK
+#   0 : No output
+
+global mom_current_oper_is_last_oper_in_program
+
+#MOM_output_literal "$mom_current_oper_is_last_oper_in_program"
+
+if { ![string compare $mom_current_oper_is_last_oper_in_program "YES"] } {
+    return 1
+} else {
+    return 0
+}
+
+}
+
+#=============================================================
+proc PB_CMD__check_block_start_of_program { } {
+#=============================================================
+# This custom command should return
+#   1 : Output BLOCK
+#   0 : No output
+
+   global xxx
+
+if { ![info exists xxx] } {
+
+ return 1
+} else {
+ return 0
+}
 }
 
 
@@ -2151,6 +2246,23 @@ proc PB_CMD_fourth_axis_rotate_move { } {
 
    MOM_force once fourth_axis
    MOM_do_template fourth_axis_rotate_move
+}
+
+#=============================================================
+proc PB_CMD_from_position { } {
+#=============================================================
+
+global first_point
+if {[info exists first_point] && $first_point == 1} {
+set first_point 0
+return
+ }
+MOM_do_template initial_move_XYA
+MOM_do_template initial_move_Z
+#MOM_do_template initial_M8
+
+global from_point
+set from_point 1
 }
 
 #=============================================================
