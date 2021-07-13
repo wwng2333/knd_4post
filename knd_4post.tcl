@@ -400,8 +400,7 @@ proc MOM_msys { } {
 #=============================================================
 proc MOM_end_of_program { } {
 #=============================================================
-   MOM_do_template gohome_move
-   MOM_output_literal "G8.1 P1"
+   
    MOM_do_template end_of_program
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
@@ -1144,11 +1143,15 @@ proc MOM_end_of_path { } {
    }
 
    if { [PB_CMD__check_block_spindle_off] } {
-      MOM_output_literal "M05"
-      MOM_output_literal "M09"
+      MOM_output_literal "M5"
+      MOM_output_literal "M9"
    }
    
-   MOM_do_template end_of_path_1
+   if { [PB_CMD__check_block_spindle_off] } {
+      MOM_do_template end_of_path_1
+      MOM_do_template gohome_move
+   }
+   
    MOM_do_template end_of_path_2
    global mom_sys_in_operation
    set mom_sys_in_operation 0
@@ -1495,12 +1498,10 @@ proc MOM_start_of_path { } {
    
    PB_CMD_safety_check
 
-   global mom_operation_name
-   MOM_output_literal "($mom_operation_name)"
+   global mom_operation_name mom_tool_name
+   MOM_output_literal "(Prog:$mom_operation_name)"
+   MOM_output_literal "(Tool:$mom_tool_name)"
 
-   global mom_tool_name
-   MOM_output_literal "($mom_tool_name)"
-   
    PB_CMD_start_of_operation_force_addresses
 }
 

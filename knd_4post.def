@@ -481,9 +481,9 @@ FORMATTING
   {
        G_cutcom[$mom_sys_cutcom_code(OFF)]
        G_plane[$mom_sys_cutcom_plane_code(XY)]
-       G_adjust[$mom_sys_adjust_cancel_code]
+       G_mode[$mom_sys_output_code($mom_output_mode)]
        Text[G80]
-       Text[G98]
+       G_adjust[$mom_sys_adjust_cancel_code]
        Text[G94]
   }
 
@@ -496,6 +496,7 @@ FORMATTING
        Y[$mom_pos(1)]
        Z[$mom_pos(2)]
        fourth_axis[$mom_out_angle_pos(0)]
+       H[$mom_tool_adjust_register]
        H[$mom_tool_adjust_register]
   }
 
@@ -741,9 +742,10 @@ FORMATTING
 
   BLOCK_TEMPLATE end_of_path_1
   {
-       Text[G0 Z200.]
+	   G_motion[$mom_sys_rapid_code]
+	   Z[200]
   }
-
+  
   BLOCK_TEMPLATE end_of_program
   {
        M[$mom_sys_rewind_code]
@@ -1005,12 +1007,10 @@ FORMATTING
 
   BLOCK_TEMPLATE end_of_path_2
   {
-       Text[G0]
+       G_motion[$mom_sys_rapid_code]
        G_return[$mom_sys_cycle_ret_code($mom_cycle_retract_mode)]\opt
-       Text[G40]
-       Text[G54]
-       Text[G90]
-       Text[G80]
+       G_cutcom[$mom_sys_cutcom_code(OFF)]
+       G_mode[$mom_sys_output_code($mom_output_mode)]
   }
 
   BLOCK_TEMPLATE post_cycle_set
