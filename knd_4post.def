@@ -752,12 +752,6 @@ FORMATTING
        M_spindle[$mom_sys_spindle_direction_code(OFF)]
        M_coolant[$mom_sys_coolant_code(OFF)]
   }
-
-  BLOCK_TEMPLATE end_of_path_1
-  {
-	   G_motion[$mom_sys_rapid_code]
-	   Text[Z200.]
-  }
   
   BLOCK_TEMPLATE end_of_program
   {
@@ -781,14 +775,6 @@ FORMATTING
        X[$mom_from_pos(0)]
        Y[$mom_from_pos(1)]
        Z[$mom_from_pos(2)]
-  }
-
-  BLOCK_TEMPLATE gohome_move
-  {
-       Text[G53]
-	   G_mode[$mom_sys_output_code($mom_output_mode)]
-	   G_motion[$mom_sys_rapid_code]
-	   Text[Y0.]
   }
 
   BLOCK_TEMPLATE inch_metric_mode

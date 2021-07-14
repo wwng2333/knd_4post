@@ -1143,10 +1143,10 @@ proc MOM_end_of_path { } {
    }
 
    if { [PB_CMD__check_block_spindle_off] } {
-      MOM_do_template end_of_path_1
+      MOM_output_literal "G53 G90 G0 Z0."
       MOM_output_literal "M5"
       MOM_output_literal "M9"
-      MOM_do_template gohome_move
+      MOM_output_literal "G53 G90 G0 Y0."
    }
    
    MOM_do_template end_of_path_2
@@ -1428,6 +1428,7 @@ proc MOM_rapid_move { } {
       PB_FORCE Once $mod_traverse
       MOM_do_template rapid_traverse
    }
+   MOM_force once G_feed F
 }
 
 
@@ -1484,9 +1485,11 @@ proc MOM_start_of_path { } {
       #MOM_do_template start_of_path
       #MOM_output_literal "($mom_output_file_basename,$mom_tool_name=H$mom_tool_adjust_register)"
    }
+   
    if { [PB_CMD__check_block_start_of_program] } {
       MOM_do_template start_of_program
    }
+   
    MOM_set_seq_on
    if { [PB_CMD__check_block_absolute_mode] } {
       MOM_force Once G_cutcom G_plane G_mode
