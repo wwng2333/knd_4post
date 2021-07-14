@@ -928,7 +928,7 @@ proc MOM_cutcom_on { } {
 #=============================================================
    CUTCOM_SET
 
-   global mom_cutcom_adjust_register
+   global mom_tool_number mom_cutcom_adjust_register
    set cutcom_register_min 1
    set cutcom_register_max 99
    if { [info exists mom_cutcom_adjust_register] } {
@@ -937,7 +937,7 @@ proc MOM_cutcom_on { } {
          CATCH_WARNING "CUTCOM register $mom_cutcom_adjust_register must be within the range between 1 and 99"
       }
    }
-   
+   set mom_cutcom_adjust_register $mom_tool_number
    MOM_force once D
 }
 
@@ -1225,8 +1225,8 @@ proc MOM_initial_move { } {
 proc MOM_length_compensation { } {
 #=============================================================
    TOOL_SET MOM_length_compensation
-   PB_CMD_custom_command_1
-   MOM_do_template tool_length_adjust
+   #PB_CMD_custom_command_1
+   #MOM_do_template tool_length_adjust
 }
 
 
@@ -1983,12 +1983,6 @@ proc PB_CMD_custom_command { } {
 #MOM_force once F
 }
 
-
-#=============================================================
-proc PB_CMD_custom_command_1 { } {
-#=============================================================
-MOM_force once G43
-}
 
 #=============================================================
 proc PB_CMD_enable_ball_center_output { } {
