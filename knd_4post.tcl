@@ -945,6 +945,11 @@ proc MOM_cutcom_on { } {
 proc MOM_cycle_off { } {
 #=============================================================
    MOM_do_template cycle_off
+   
+   global dxy
+   if {[info exists dxy]} {
+      unset dxy
+   }
 }
 
 
