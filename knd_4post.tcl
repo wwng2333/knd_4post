@@ -1504,6 +1504,9 @@ proc MOM_start_of_path { } {
       MOM_do_template absolute_mode
    }
    
+   global mom_tool_number
+   set mom_tool_adjust_register $mom_tool_number
+   
    PB_CMD_safety_check
 
    global mom_operation_name mom_tool_name
