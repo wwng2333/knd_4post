@@ -1305,7 +1305,7 @@ proc MOM_rapid_move { } {
 
    set aa(0) X ; set aa(1) Y ; set aa(2) Z
    RAPID_SET
-   MOM_do_template rapid_move
+   #MOM_do_template rapid_move
    set rapid_spindle_blk {G_adjust G_motion G_mode X Y Z H}
    set rapid_spindle_x_blk {G_adjust G_motion G_mode X H}
    set rapid_spindle_y_blk {G_adjust G_motion G_mode Y H}
@@ -1456,8 +1456,17 @@ proc MOM_spindle_off { } {
 proc MOM_spindle_rpm { } {
 #=============================================================
    SPINDLE_SET
+   
+   global mom_spindle_start
+   
    MOM_force Once S M_spindle
    MOM_do_template spindle_rpm
+
+   if { ![info exists mom_spindle_start] } {
+      set mom_spindle_start 1
+   } else {
+      MOM_output_literal "G4 X3.0"
+   }
 }
 
 #=============================================================
@@ -1486,7 +1495,7 @@ proc MOM_start_of_path { } {
    }
    
    if { [PB_CMD__check_block_start_of_program] } {
-      MOM_do_template start_of_program
+      #MOM_do_template start_of_program
    }
    
    MOM_set_seq_on
@@ -1658,6 +1667,7 @@ proc PB_start_of_program { } {
 
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
+   MOM_do_template start_of_program
    PB_CMD_fix_RAPID_SET
 
    if [llength [info commands PB_CMD_kin_start_of_program_2] ] {
@@ -1769,9 +1779,9 @@ proc PB_CMD__check_block_start_of_program { } {
 #   1 : Output BLOCK
 #   0 : No output
 
-   global xxx
+   global xxy
 
-if { ![info exists xxx] } {
+if { ![info exists xxy] } {
 
  return 1
 } else {
