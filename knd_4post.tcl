@@ -1990,14 +1990,6 @@ proc PB_CMD_custom_command_1 { } {
 MOM_force once G43
 }
 
-
-#=============================================================
-proc PB_CMD_custom_command_2 { } {
-#=============================================================
-MOM_force once G43
-}
-
-
 #=============================================================
 proc PB_CMD_enable_ball_center_output { } {
 #=============================================================
@@ -3979,7 +3971,7 @@ proc PB_CMD_start_of_alignment_character { } {
 #=============================================================
 proc PB_CMD_start_of_operation_force_addresses { } {
 #=============================================================
-   MOM_force once S M_spindle X Y Z fourth_axis D F H G_adjust
+   MOM_force once S M_spindle X Y Z fourth_axis F H G_adjust
 }
 
 
