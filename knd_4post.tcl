@@ -404,7 +404,9 @@ proc MOM_end_of_program { } {
    MOM_do_template end_of_program
    MOM_set_seq_off
    MOM_do_template rewind_stop_code
-
+   
+   PB_CMD_list_out
+   
 #**** The following procedure lists the tool list with time in commentary data
    LIST_FILE_TRAILER
 
@@ -486,7 +488,8 @@ proc MOM_before_motion { } {
   global mom_motion_event mom_motion_type
 
    FEEDRATE_SET
-
+   
+   PB_CMD_minz_bef_set
 
    switch $mom_motion_type {
       ENGAGE   { PB_engage_move }
@@ -1155,6 +1158,10 @@ proc MOM_end_of_path { } {
    }
    
    MOM_do_template end_of_path_2
+   
+   PB_CMD_list_set
+   PB_CMD_minz_tcut_set
+   
    global mom_sys_in_operation
    set mom_sys_in_operation 0
 }
@@ -1517,7 +1524,7 @@ proc MOM_start_of_path { } {
 
    global mom_operation_name mom_tool_name
    MOM_output_literal "(Prog:$mom_operation_name)"
-   MOM_output_literal "(Tool:$mom_tool_name)"
+   #MOM_output_literal "(Tool:$mom_tool_name)"
 
    PB_CMD_start_of_operation_force_addresses
 }
@@ -1613,6 +1620,8 @@ proc PB_auto_tool_change { } {
    }
 
    PB_CMD_tool_change_force_addresses
+   PB_CMD_minz_reset
+   PB_CMD_tool_inf
 }
 
 
@@ -1675,8 +1684,9 @@ proc PB_start_of_program { } {
    }
 
    MOM_set_seq_off
-   MOM_do_template rewind_stop_code
-   MOM_do_template start_of_program
+   #MOM_do_template rewind_stop_code
+   #MOM_do_template start_of_program
+   PB_CMD_reset
    PB_CMD_fix_RAPID_SET
 
    if [llength [info commands PB_CMD_kin_start_of_program_2] ] {
@@ -7083,6 +7093,313 @@ proc UNLOCK_AXIS__pb901 { locked_point unlocked_point } {
    }
 }
 
+#===============================================================================
+# Exported Custom Commands created by Zhuai
+# on Wednesday, January 29 2020, 20:36:19 +0800
+#===============================================================================
+
+
+
+#=============================================================
+proc PB_CMD_list_out { } {
+#=============================================================
+global ptp_file_name
+set tmp_file_name "${ptp_file_name}_"
+if {[file exists $tmp_file_name]} {
+MOM_remove_file $tmp_file_name
+}
+MOM_close_output_file $ptp_file_name
+file rename $ptp_file_name $tmp_file_name
+set ifile [open $tmp_file_name r]
+set ofile [open $ptp_file_name w]
+
+global tooli numbers toolnumbers sametoolZmin
+global mom_output_file_basename
+global mom_part_name
+global  mom_date numbers
+puts $ofile "%"
+#puts $ofile "(Equipment: FANUC)"
+
+global mom_part_name
+#puts $ofile "(Part: $mom_part_name)"
+global mom_date
+#set datee [clock format [clock seconds] -format "%Y/%m/%d %H:%M /%w"]
+#puts $ofile "($datee)"
+global mom_output_file_basename
+#puts $ofile "(NC name: $mom_output_file_basename.nc)"
+global mom_machine_time
+#puts $ofile "(Machine time: [format "%.2f" $mom_machine_time] MIN)"
+#puts $ofile "(Total Tool:$numbers)"
+puts $ofile "O0001"
+global toollistend ii iii Step numbers sametooltcut
+
+for { set ii 0 } { $ii < $numbers } { incr ii } {
+set iii [expr $ii+1 ]
+puts $ofile "($toollistend($ii) MinZ=[format "%.2f" $sametoolZmin($toolnumbers($iii))])"
+#puts $ofile "($toollistend($ii) MinZ=[string trimright [format "%.2f" $sametoolZmin($toolnumbers($iii))] "0"] Time=[string trimright [format "%.2f" $sametooltcut($toolnumbers($iii))] "0"]MIN)"
+
+}
+
+set buf ""
+while { [gets $ifile buf] > 0 } {
+puts $ofile $buf
+}
+#puts $ofile "%"
+close $ifile
+close $ofile
+MOM_remove_file $tmp_file_name
+MOM_open_output_file $ptp_file_name
+
+
+
+}
+
+
+#=============================================================
+proc PB_CMD_list_set { } {
+#=============================================================
+global Step t mom_tool_number i toollistendi toollistend hhh ddd td
+global mom_cutcom_adjust_register mom_tool_cutcom_register
+global mom_tool_adjust_register mom_tool_length_adjust_register
+global mom_tool_number mom_tool_name rr2
+global mom_tool_name mom_tool_diameter mom_tool_number toollistendi toollistend
+
+global mom_cutcom_type mom_tool_cutcom_register mom_tool_diameter
+if {[info exists mom_cutcom_type] && $mom_cutcom_type != 0 } {
+set td $ddd
+} else {
+set td 0
+}
+set Step [expr $Step+1]
+set t($Step) $mom_tool_number
+for { set i 0 } { $i < $Step } { incr i } {
+if { $t($i) == $mom_tool_number } {
+set Step [expr $Step-1]
+return
+}
+}
+
+global toollist  mom_tool_cutcom_register mom_cutcom_adjust_register mom_tool_name mom_tool_diameter rr2 mom_tool_adjust_register mom_tool_adj_reg_defined mom_tool_number
+set tdi [ format  "%.2f" $mom_tool_diameter]
+if [info exists mom_tool_number] {
+    set tt $mom_tool_number
+} else {
+    set tt 0
+}
+
+set tt [format "%02.0f" $tt]
+set th [format "%02.0f" $hhh]
+
+
+  global mom_next_oper_has_tool_change
+  global mom_current_oper_is_last_oper_in_program
+
+
+if { $td == 0 } {
+lappend toollistend($toollistendi) T$mom_tool_number=$mom_tool_name D=[string trimright [ format  "%.3f" $mom_tool_diameter ] "0"] $rr2 H$th
+} else {
+lappend toollistend($toollistendi)  T$mom_tool_number=$mom_tool_name D=[string trimright [ format  "%.3f" $mom_tool_diameter ] "0"] $rr2 H$th D$td
+}
+set toollistendi [expr $toollistendi+1]
+if {([info exists mom_next_oper_has_tool_change] && $mom_next_oper_has_tool_change == "YES") || ([info exists mom_current_oper_is_last_oper_in_program] && $mom_current_oper_is_last_oper_in_program == "YES")} {
+
+if {[info exists mom_cutcom_type] && $mom_cutcom_type != 0 } {
+unset mom_cutcom_type
+}
+}
+
+
+}
+
+
+#=============================================================
+proc PB_CMD_minz_bef_set { } {
+#=============================================================
+global max_x
+global min_x
+global max_y
+global min_y
+global max_z
+global min_z
+global mom_pos
+global mom_cycle_rapid_to_pos
+global mom_cycle_feed_to_pos
+global mom_cycle_retract_to_pos
+global mom_motion_type
+if { $mom_pos(0) < $min_x  }  {  set min_x  $mom_pos(0)  }
+if { $mom_pos(0) > $max_x  }  {  set max_x  $mom_pos(0)  }
+if { $mom_pos(1) < $min_y  }  {  set min_y  $mom_pos(1)  }
+if { $mom_pos(1) > $max_y  }  {  set max_y  $mom_pos(1)  }
+if { $mom_pos(2) < $min_z  }  {  set min_z  $mom_pos(2)  }
+if { $mom_pos(2) > $max_z  }  {  set max_z  $mom_pos(2)  }
+if { ![string compare "CYCLE" $mom_motion_type] } {
+         if {$mom_cycle_rapid_to_pos(2) < $min_z} {
+            set min_z $mom_cycle_rapid_to_pos(2)
+         }
+         if {$mom_cycle_rapid_to_pos(2) > $max_z} {
+            set max_z $mom_cycle_rapid_to_pos(2)
+         }
+         if {$mom_cycle_feed_to_pos(2) < $min_z} {
+            set min_z $mom_cycle_feed_to_pos(2)
+         }
+         if {$mom_cycle_feed_to_pos(2) > $max_z} {
+            set max_z $mom_cycle_feed_to_pos(2)
+         }
+         if {$mom_cycle_retract_to_pos(2) < $min_z} {
+            set min_z $mom_cycle_retract_to_pos(2)
+         }
+         if {$mom_cycle_retract_to_pos(2) > $max_z} {
+            set max_z $mom_cycle_retract_to_pos(2)
+         }
+}
+
+
+}
+
+
+#=============================================================
+proc PB_CMD_minz_reset { } {
+#=============================================================
+global max_x
+global min_x
+global max_y
+global min_y
+global max_z
+global min_z
+global mom_pos
+set max_x -1000
+set min_x 1000
+set max_y -550
+set min_y 550
+set max_z -550
+set min_z 550
+global tcut mom_machine_time
+set tcut $mom_machine_time
+}
+
+
+#=============================================================
+proc PB_CMD_minz_tcut_set { } {
+#=============================================================
+global min_z hhh ddd
+global sametoolZmin mom_tool_number toolnumber sametooltcut
+set toolnumber $mom_tool_number
+if {[info exists sametoolZmin($toolnumber)]} {
+if { $sametoolZmin($toolnumber) > $min_z } {
+set sametoolZmin($toolnumber) $min_z
+}
+} else {
+set sametoolZmin($toolnumber) $min_z
+}
+
+global mom_machine_time tcut tcut1
+global mom_next_oper_has_tool_change
+global mom_current_oper_is_last_oper_in_program
+
+if {([info exists mom_next_oper_has_tool_change] && $mom_next_oper_has_tool_change == "YES") || ([info exists mom_current_oper_is_last_oper_in_program] && $mom_current_oper_is_last_oper_in_program == "YES")} {
+set tcut1 [format "%.2f" [expr $mom_machine_time-$tcut]]
+if {[info exists sametooltcut($toolnumber)]} {
+set sametooltcut($toolnumber) [expr $sametooltcut($toolnumber)+$tcut1]
+} else {
+set sametooltcut($toolnumber) $tcut1
+#MOM_output_literal "(Machine time: [format "%.2f" [expr $mom_machine_time-$tcut]] MIN)"
+}
+
+}
+}
+
+
+#=============================================================
+proc PB_CMD_reset { } {
+#=============================================================
+global mom_operation_name nStep Step tcut
+global numbers
+global times
+set times 1
+set Step -1
+set nStep -1
+set numbers 0
+global toollistendi
+set toollistendi 0
+set tcut 0
+}
+
+
+#=============================================================
+proc PB_CMD_tool_inf { } {
+#=============================================================
+global mom_tool_number group1
+global mom_tool_diameter
+global mom_tool_flute_length hhh mom_tool_length_adjust_register
+global mom_tool_corner1_radius mom_tool_lower_corner_radius
+global mom_tool_type mom_operation_name mom_group_name
+global mom_tool_name mom_tool_cutcom_register
+global mom_tool_corner1_radius mom_cutcom_adjust_register
+global mom_tool_description tname mom_tool_adjust_register
+global mom_tool_length rr2 g9g mom_tool_point_angle ddd mmm
+set g9g 0
+
+if {[info exists mom_tool_cutcom_register] } {
+set ddd $mom_tool_cutcom_register
+} else {
+if {[info exists mom_cutcom_adjust_register] } {
+set ddd $mom_cutcom_adjust_register
+}
+}
+
+if {[info exists mom_tool_adjust_register] } {
+set hhh $mom_tool_adjust_register
+} else {
+if {[info exists mom_tool_length_adjust_register] } {
+set hhh $mom_tool_length_adjust_register
+} else {
+set hhh 0
+}
+}
+
+if {$mom_tool_type == "Milling Tool-T Cutter"} {
+MOM_set_seq_on
+MOM_output_literal "(T_N=[format  "%03.0f" $mom_tool_number] D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"] H=[format  "%02.0f" $hhh])"
+MOM_set_seq_off
+set rr2 "CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"]"
+} else {
+string first str1 str2
+if { [ string first "Drill" $mom_tool_type ] == "-1" } {
+MOM_set_seq_on
+MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name  D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] R=[string trimright [format "%.2f" $mom_tool_corner1_radius] "0"] H=[format  "%02.0f" $hhh])"
+MOM_set_seq_off
+set rr2 "R=[string trimright [format "%0.2f" $mom_tool_corner1_radius] "0"]"
+} else {
+MOM_set_seq_on
+MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]] H=[format  "%02.0f" $hhh])"
+MOM_set_seq_off
+set rr2 "DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]]"
+}
+MOM_set_seq_on
+}
+ if {$mom_tool_number == 0 } {
+MOM_abort "\n\n 「 $mom_operation_name」使用的刀具：「 $mom_tool_name 」未设置刀号\n\n"
+}
+
+global numbers toolnumbers mom_operation_name
+global nStep nt mom_tool_number ni ntd mom_tool_name
+set nStep [expr $nStep+1]
+set nt($nStep) $mom_tool_number
+set ntd($nStep) $mom_tool_name
+for { set ni 0 } { $ni < $nStep } { incr ni } {
+if { $nt($ni) == $mom_tool_number } {
+set nStep [expr $nStep-1]
+
+if { [string compare $ntd($ni) $mom_tool_name] } {
+MOM_abort "\n\n 「 $mom_operation_name」使用的刀具：「 $mom_tool_name 」与前面刀具的刀号相同！\n\n"
+}
+return
+}
+}
+set numbers [expr $numbers+1]
+set toolnumbers($numbers) $mom_tool_number
+
+}
 
 #=============================================================
 proc UNSET_VARS { args } {
