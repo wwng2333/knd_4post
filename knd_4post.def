@@ -490,7 +490,7 @@ FORMATTING
        G_cutcom[$mom_sys_cutcom_code(OFF)]
        G_plane[$mom_sys_cutcom_plane_code(XY)]
        G_mode[$mom_sys_output_code($mom_output_mode)]
-       Text[G80]
+       G_motion[$mom_sys_cycle_off]
        G_adjust[$mom_sys_adjust_cancel_code]
        G_feed[$mom_sys_feed_rate_mode_code($feed_mode)]
   }
