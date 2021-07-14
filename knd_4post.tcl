@@ -946,6 +946,7 @@ proc MOM_cycle_off { } {
 #=============================================================
    MOM_do_template cycle_off
    
+   # 循环结束, 清理dxy @ PB_CMD_custom_command
    global dxy
    if {[info exists dxy]} {
       unset dxy
@@ -1991,6 +1992,7 @@ proc PB_CMD_custom_command { } {
    #MOM_force once F
    
    # 让钻孔循环第一次输出时不输出XY
+   # 在 MOM_cycle_off 清除 dxy
    
    global dxy
    if {![info exists dxy]} {
