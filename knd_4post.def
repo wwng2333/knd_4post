@@ -492,7 +492,7 @@ FORMATTING
        G_mode[$mom_sys_output_code($mom_output_mode)]
        Text[G80]
        G_adjust[$mom_sys_adjust_cancel_code]
-       Text[G94]
+	   G_feed[$mom_sys_feed_rate_mode_code($feed_mode)]
   }
 
   BLOCK_TEMPLATE initial_move_Z
