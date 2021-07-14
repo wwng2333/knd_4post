@@ -1983,7 +1983,15 @@ proc PB_CMD_clamp_fourth_axis { } {
 #=============================================================
 proc PB_CMD_custom_command { } {
 #=============================================================
-#MOM_force once F
+   #MOM_force once F
+   
+   # 让钻孔循环第一次输出时不输出XY
+   
+   global dxy
+   if {![info exists dxy]} {
+      MOM_suppress once X Y
+      set dxy 1
+   }
 }
 
 
