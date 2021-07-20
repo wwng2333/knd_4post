@@ -3994,6 +3994,11 @@ proc PB_CMD_start_of_alignment_character { } {
 proc PB_CMD_start_of_operation_force_addresses { } {
 #=============================================================
    MOM_force once S M_spindle X Y Z fourth_axis F H G_adjust
+   
+   global mom_spindle_start
+   if { [info exists mom_spindle_start] } {
+      unset mom_spindle_start
+   }
 }
 
 
@@ -7359,19 +7364,19 @@ set hhh 0
 
 if {$mom_tool_type == "Milling Tool-T Cutter"} {
 MOM_set_seq_on
-MOM_output_literal "(T_N=[format  "%03.0f" $mom_tool_number] D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"] H=[format  "%02.0f" $hhh])"
+#MOM_output_literal "(T_N=[format  "%03.0f" $mom_tool_number] D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"] H=[format  "%02.0f" $hhh])"
 MOM_set_seq_off
 set rr2 "CR=[string trimright [format "%.2f" $mom_tool_lower_corner_radius] "0"]"
 } else {
 string first str1 str2
 if { [ string first "Drill" $mom_tool_type ] == "-1" } {
 MOM_set_seq_on
-MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name  D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] R=[string trimright [format "%.2f" $mom_tool_corner1_radius] "0"] H=[format  "%02.0f" $hhh])"
+#MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name  D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] R=[string trimright [format "%.2f" $mom_tool_corner1_radius] "0"] H=[format  "%02.0f" $hhh])"
 MOM_set_seq_off
 set rr2 "R=[string trimright [format "%0.2f" $mom_tool_corner1_radius] "0"]"
 } else {
 MOM_set_seq_on
-MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]] H=[format  "%02.0f" $hhh])"
+#MOM_output_literal "(T[ format  "%01.0f" $mom_tool_number]:$mom_tool_name D=[string trimright [format "%.2f" $mom_tool_diameter] "0"] DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]] H=[format  "%02.0f" $hhh])"
 MOM_set_seq_off
 set rr2 "DR_angle=[format "%.0f" [expr (180.0 / 3.14159) * $mom_tool_point_angle]]"
 }
